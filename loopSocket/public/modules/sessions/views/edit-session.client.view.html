@@ -23,9 +23,14 @@
 </section>
 <section data-ng-controller="PlaybackController">
     <div>
+    <!--
         <button ng-click="play()">
           Play
         </button>
+        -->
+        <a href="#" class="btn btn-lg btn-default" id="playBtn" ng-click="toggle_play()"><span class="glyphicon glyphicon-play"></span> </a>
+        
+        <a href="#" class="btn btn-lg btn-default" id="stopBtn" ng-click="toggle_stop()"><span class="glyphicon glyphicon-pause"></span> </a>
         <pre>{{checkModel}}</pre>
         <pre>{{timeModel}}</pre>
         <table>
