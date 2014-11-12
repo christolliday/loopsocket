@@ -3,35 +3,53 @@
 // Sessions controller
 angular.module('sessions').controller('PlaybackController', ['$scope',
 	function($scope) {
+
+		var time = 0;
+		var audio = new Audio('samples/hi-hat-closed.wav');
+
 		// Create new Session
 		$scope.play = function() {
 			console.log("play");
 
-			var audio = new Audio('samples/hi-hat-closed.wav');
 			audio.play();
-			for(i=1;i<=8;i++) {
-				$scope.timeModel[i] = true;
+			setTimeout(update_clock, 1000);
+		};
+		function update_clock() {
+			//$scope.timeModel[time] = true;
+			console.log(time);
+			if($scope.hi_hat[time]) {
+				audio.play();
 			}
-		};
-		$scope.timeModel = {
-		    1: false,
-		    2: false,
-		    3: false,
-		    4: false,
-		    5: false,
-		    6: false,
-		    7: false,
-		    8: false
-		};
-		$scope.checkModel = {
-		    1: false,
-		    2: false,
-		    3: false,
-		    4: false,
-		    5: false,
-		    6: false,
-		    7: false,
-		    8: false
-		};
+
+			for(var i=0;i<8;i++) {
+				$scope.time_model[i] = false;
+			}
+			$scope.time_model[time] = true;
+			time = (time+1)%8;
+			if($scope.playing) {
+				setTimeout(update_clock, 1000);
+			}
+		}
+		$scope.sample_click = function(index) {
+			$scope.hi_hat[index] = true;
+		}
+		function enable_beat() {
+
+		}
+		$scope.beats = [];
+		for(var i=0;i<8;i++) {
+			$scope.beats[i] = i+1;
+		}
+		$scope.hi_hat = [];
+		$scope.time_model = [];
+		$scope.playing = false;
+		/*$scope.hihatModel = [];
+		for(var i=0;i<8;i++) {
+			$scope.hihatModel[i] = false;
+		}
+		$scope.timeModel = [];
+		for(var i=0;i<8;i++) {
+			$scope.timeModel[i] = false;
+		}*/
 	}
 ]);
