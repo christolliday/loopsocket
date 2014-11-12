@@ -7,13 +7,13 @@ var mongoose = require('mongoose'),
 	Schema = mongoose.Schema;
 
 /**
- * User session Schema
+ * Loop Schema
  */
-var UserSessionSchema = new Schema({
+var LoopSchema = new Schema({
 	name: {
 		type: String,
 		default: '',
-		required: 'Please fill User session name',
+		required: 'Please fill Loop name',
 		trim: true
 	},
 	created: {
@@ -26,4 +26,4 @@ var UserSessionSchema = new Schema({
 	}
 });
 
-mongoose.model('UserSession', UserSessionSchema);
+mongoose.model('Loop', LoopSchema);
