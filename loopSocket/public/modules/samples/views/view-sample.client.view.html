@@ -1,0 +1,24 @@
+<section data-ng-controller="SamplesController" data-ng-init="findOne()">
+	<div class="page-header">
+		<h1 data-ng-bind="sample.name"></h1>
+		<button ng-click="play(sample.audiofile)">
+          Play
+        </button>
+	</div>
+	<div class="pull-right" data-ng-show="((authentication.user) && (authentication.user._id == sample.user._id))">
+		<a class="btn btn-primary" href="/#!/samples/{{sample._id}}/edit">
+			<i class="glyphicon glyphicon-edit"></i>
+		</a>
+		<a class="btn btn-primary" data-ng-click="remove();">
+			<i class="glyphicon glyphicon-trash"></i>
+		</a>
+	</div>
+	<small>
+		<em class="text-muted">
+			Posted on
+			<span data-ng-bind="sample.created | date:'mediumDate'"></span>
+			by
+			<span data-ng-bind="sample.user.displayName"></span>
+		</em>
+	</small>
+</section>

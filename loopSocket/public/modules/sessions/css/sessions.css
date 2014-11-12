@@ -1,0 +1,43 @@
+.content {
+	margin-top: 50px;
+}
+.undecorated-link:hover {
+	text-decoration: none;
+}
+[ng\:cloak], [ng-cloak], [data-ng-cloak], [x-ng-cloak], .ng-cloak, .x-ng-cloak {
+	display: none !important;
+}
+.ng-invalid.ng-dirty{
+    border-color:#FA787E;
+}
+.ng-valid.ng-dirty{
+    border-color:#78FA89;
+}
+
+.instrument_label {
+	width:auto;
+	padding-right: 20px;
+	padding-left: 10px;
+
+}
+
+
+.instrument_set {
+	vertical-align: middle;
+}
+
+.sequencerTable {
+	vertical-align: center;
+}
+
+.sequencerTable tr:nth-child(odd) {
+	background-color: #FFFFFF;
+	vertical-align: middle;
+}
+.sequencerTable tr:nth-child(even) {
+	background-color: #D8D8D8;
+	vertical-align: middle;
+}
+.sequencer td {
+	
+}

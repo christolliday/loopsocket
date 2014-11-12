@@ -1,0 +1,30 @@
+[
+	{
+		name : "Hi-hat Semi Open",
+		audiofile : "hhat-paiste-302-14-semi-open-p.wav"
+	},
+	{
+		name : "Hi-hat Closed",
+		audiofile : "hi-hat-closed.wav"
+	},
+	{
+		name : "Low Kick",
+		audiofile : "mhak-kick-61-e.wav"
+	},
+	{
+		name : "High Kick",
+		audiofile : "sl-kick-02.wav"
+	},
+	{
+		name : "Mid Tom",
+		audiofile : "mid-tom.wav"
+	},
+	{
+		name : "Low Tom",
+		audiofile : "tom-low.wav"
+	},
+	{
+		name : "Snare",
+		audiofile : "tapesnare-15.wav"
+	}
+]
