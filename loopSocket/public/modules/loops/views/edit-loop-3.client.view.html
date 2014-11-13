@@ -26,7 +26,7 @@
     </div>
 </section>
 <section data-ng-controller="PlaybackController">
-    
+    <!--
     <div>
         <hr>
         <button ng-click="play()" btn-checkbox ng-model="playing">
@@ -45,6 +45,27 @@
           </tr>
         </table>
     </div>
-    -
+    -->
+    <div class = "sequencer">
+        <div class="sequencerMainControls">
+            <button class="btn btn-default" id="playBtn" ng-click="play()" btn-checkbox ng-model="playing"><span class="glyphicon glyphicon-play"></span></button>
 
+            <a href="#" class="btn btn-default" id="stopBtn" ng-click="toggle_stop()"><span class="glyphicon glyphicon-pause"></span> </a> 
+        </div>
+
+        <div class="sequencerDrumControls">
+            <table class="sequencerTable">
+              <tr>
+                <td><label class = "instrument_label">time</label></td>
+                <td class="btn btn-primary instrument_button" btn-checkbox ng-model="scope.time_model[$index]" ng-repeat="i in beats">{{i}}</td>
+              </tr>
+              <tr>
+                <td><label class = "instrument_label">HI-HAT</label></td>
+                <td><label class="btn btn-primary instrument_button" ng-model="scope.hi_hat[$index]" ng-click="sample_click($index)" btn-checkbox ng-repeat="i in beats">{{i}}</label></td>
+                <td><a href="#" class="btn btn-sm btn-default"><span class="glyphicon glyphicon-remove"></span> Remove</a></td>
+              </tr>
+            </table>
+            <a href="#" class="btn btn-sm btn-default"><span class="glyphicon glyphicon-plus"></span> Add Instrument</a>
+        </div>
+    <div>
 </section>
