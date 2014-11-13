@@ -1,0 +1,71 @@
+<section data-ng-controller="LoopsController" data-ng-init="findOne()">
+    <div class="page-header">
+        <div style="display: inline-block;">
+        <h1><label data-ng-bind="loop.name"></label></h1>
+        </div>
+    </div>
+    <div class="loopInfo">
+        <form class="form-horizontal" data-ng-submit="update()" novalidate>
+            <fieldset>
+                <div class="form-group">
+                    <label class="control-label" for="name">Name</label>
+                    <div class="controls">
+                        <input type="text" data-ng-model="loop.name" id="name" class="form-control" placeholder="Name" required>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <input type="submit" value="Update" class="btn btn-default">
+                    <a class="btn btn-default" data-ng-click="">Settings</a>
+                    <a class="btn btn-default" data-ng-click="remove();"><i class="glyphicon glyphicon-trash"></i></a>
+                </div>
+                <div data-ng-show="error" class="text-danger">
+                    <strong data-ng-bind="error"></strong>
+                </div>
+            </fieldset>
+        </form>
+    </div>
+</section>
+<section data-ng-controller="PlaybackController">
+    <!--
+    <div>
+        <hr>
+        <button ng-click="play()" btn-checkbox ng-model="playing">
+          Play
+        </button>
+        <pre>{{playing}}</pre>
+        <pre>{{beats}}</pre>
+        <pre>{{time_model}}</pre>
+        <pre>{{hi_hat}}</pre>
+        <table>
+          <tr>
+            <td class="btn btn-primary" btn-checkbox ng-model="scope.time_model[$index]" ng-repeat="i in beats">{{i}}</td>
+          </tr>
+          <tr>
+            <td><label class="btn btn-primary" ng-model="scope.hi_hat[$index]" ng-click="sample_click($index)" btn-checkbox ng-repeat="i in beats">{{i}}</label></td>
+          </tr>
+        </table>
+    </div>
+    -->
+    <div class = "sequencer">
+        <div class="sequencerMainControls">
+            <button class="btn btn-default" id="playBtn" ng-click="play()" btn-checkbox ng-model="playing"><span class="glyphicon glyphicon-play"></span></button>
+
+            <a href="#" class="btn btn-default" id="stopBtn" ng-click="toggle_stop()"><span class="glyphicon glyphicon-pause"></span> </a> 
+        </div>
+
+        <div class="sequencerDrumControls">
+            <table class="sequencerTable">
+              <tr>
+                <td><label class = "instrument_label">time</label></td>
+                <td class="btn btn-primary instrument_button" btn-checkbox ng-model="scope.time_model[$index]" ng-repeat="i in beats">{{i}}</td>
+              </tr>
+              <tr>
+                <td><label class = "instrument_label">HI-HAT</label></td>
+                <td><label class="btn btn-primary instrument_button" ng-model="scope.hi_hat[$index]" ng-click="sample_click($index)" btn-checkbox ng-repeat="i in beats">{{i}}</label></td>
+                <td><a href="#" class="btn btn-sm btn-default"><span class="glyphicon glyphicon-remove"></span> Remove</a></td>
+              </tr>
+            </table>
+            <a href="#" class="btn btn-sm btn-default"><span class="glyphicon glyphicon-plus"></span> Add Instrument</a>
+        </div>
+    <div>
+</section>
