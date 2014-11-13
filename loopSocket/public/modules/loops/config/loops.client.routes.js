@@ -15,11 +15,15 @@ angular.module('loops').config(['$stateProvider',
 		}).
 		state('editLoop', {
 			url: '/loops/:loopId',
-			templateUrl: 'modules/loops/views/edit-loop.client.view.html'
+			templateUrl: 'modules/loops/views/edit-loop-3.client.view.html'
 		}).
 		state('editLoop2', {
-			url: '/loops/:loopId/edit2',
+			url: '/loops/:loopId',
 			templateUrl: 'modules/loops/views/edit-loop-2.client.view.html'
+		}).
+		state('loopSettings', {
+			url: '/loops/:loopId/settings',
+			templateUrl: 'modules/loops/views/settings-loop.client.view.html'
 		});
 	}
 ]);
