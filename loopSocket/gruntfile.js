@@ -92,6 +92,19 @@ module.exports = function(grunt) {
 				}
 			}
 		},
+		mongoimport: {
+		 	options: {
+		 	db : 'loopsocket-dev',
+		    	collections : [
+		    	{
+		    		name : 'samples',
+				type : 'json', 
+           			jsonArray : true,
+				file : 'data/default_samples.json',
+			}
+			]
+		  }
+		},
 		'node-inspector': {
 			custom: {
 				options: {
