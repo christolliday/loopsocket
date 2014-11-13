@@ -37,10 +37,6 @@ angular.module('sessions').controller('PlaybackController', ['$scope',
 		function enable_beat() {
 
 		}
-		$scope.beats = [];
-		for(var i=0;i<8;i++) {
-			$scope.beats[i] = i+1;
-		}
 		$scope.hi_hat = [];
 		$scope.time_model = [];
 		$scope.playing = false;

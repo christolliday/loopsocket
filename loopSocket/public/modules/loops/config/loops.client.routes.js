@@ -19,7 +19,7 @@ angular.module('loops').config(['$stateProvider',
 		}).
 		state('editLoop2', {
 			url: '/loops/:loopId/edit2',
-			templateUrl: 'modules/loops/views/edit-loop2.client.view.html'
+			templateUrl: 'modules/loops/views/edit-loop-2.client.view.html'
 		});
 	}
 ]);
