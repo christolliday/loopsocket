@@ -13,13 +13,13 @@ angular.module('loops').config(['$stateProvider',
 			url: '/loops/create',
 			templateUrl: 'modules/loops/views/create-loop.client.view.html'
 		}).
-		state('viewLoop', {
-			url: '/loops/:loopId',
-			templateUrl: 'modules/loops/views/view-loop.client.view.html'
-		}).
 		state('editLoop', {
-			url: '/loops/:loopId/edit',
+			url: '/loops/:loopId',
 			templateUrl: 'modules/loops/views/edit-loop.client.view.html'
+		}).
+		state('editLoop2', {
+			url: '/loops/:loopId/edit2',
+			templateUrl: 'modules/loops/views/edit-loop2.client.view.html'
 		});
 	}
 ]);
