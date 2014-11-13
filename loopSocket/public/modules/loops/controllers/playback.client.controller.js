@@ -5,7 +5,7 @@ angular.module('loops').controller('PlaybackController', ['$scope',
 	function($scope) {
 
 		$scope.time = 0;
-		//var audio = new Audio('samples/hi-hat-closed.wav');
+		var audio = new Audio('samples/play/hi-hat-closed.wav');
 
 		// Create new Session
 		$scope.play = function() {

@@ -32,10 +32,10 @@
         <pre>{{hi_hat}}</pre>
         <table>
           <tr>
-            <td class="btn btn-primary" btn-checkbox ng-model="scope.time_model[$index]" ng-repeat="i in beats">{{i}}</td>
+            <td class="{atTime:time, notTime:time}" btn-checkbox ng-model="scope.time_model[$index]" ng-repeat="i in beats">{{i}}</td>
           </tr>
           <tr>
-            <td><label class="btn btn-primary" ng-model="scope.hi_hat[$index]" ng-click="sample_click($index)" btn-checkbox ng-repeat="i in beats">{{i}}</label></td>
+            <td class="btn btn-primary" ng-model="scope.hi_hat[$index]" ng-click="sample_click($index)" btn-checkbox ng-repeat="i in beats">{{i}}</td>
           </tr>
         </table>
     </div>
