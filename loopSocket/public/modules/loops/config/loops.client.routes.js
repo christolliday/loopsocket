@@ -17,6 +17,10 @@ angular.module('loops').config(['$stateProvider',
 			url: '/loops/:loopId',
 			templateUrl: 'modules/loops/views/edit-loop-3.client.view.html'
 		}).
+		state('socket', {
+			url: '/loops/:loopId/socket',
+			templateUrl: 'modules/loops/views/socket-loop.client.view.html'
+		}).
 		state('editLoop2', {
 			url: '/loops/:loopId',
 			templateUrl: 'modules/loops/views/edit-loop-2.client.view.html'
