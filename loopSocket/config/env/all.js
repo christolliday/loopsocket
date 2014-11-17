@@ -7,7 +7,7 @@ module.exports = {
 		keywords: 'MongoDB,Express,AngularJS,Node.js'
 	},
 	port: process.env.PORT || 3000,
-	baseUrl: '/project-checkpoint',
+	baseUrl: '',
 	templateEngine: 'swig',
 	sessionSecret: 'MEAN',
 	sessionCollection: 'sessions',
