@@ -37,6 +37,9 @@ angular.module('loops').controller('PlaybackController', ['$scope', '$document',
 
 		$scope.time = 0;
 		$scope.hi_hat = [];
+
+		$scope.instruments = {};
+
 		$scope.playing = false;
 		//var audio = new Audio('samples/play/hi-hat-closed.wav');
 		var timeout;
@@ -58,10 +61,17 @@ angular.module('loops').controller('PlaybackController', ['$scope', '$document',
 		}
 
 		function playback() {
-			if ($scope.hi_hat[$scope.time]) {
+			for(var instrument_name in $scope.instruments) {
+				var instrument = $scope.instruments[instrument_name];
+				if (instrument[$scope.time]) {
+					playSound(audioBuffer);
+				}
+
+			}
+			/*if ($scope.hi_hat[$scope.time]) {
 				//audio.play();
 				playSound(audioBuffer);
-			}
+			}*/
 		}
 
 		function update_clock() {
@@ -73,8 +83,12 @@ angular.module('loops').controller('PlaybackController', ['$scope', '$document',
 				timeout = setTimeout(update_clock, 500);
 			}
 		};
-		$scope.sample_click = function(index) {
-			$scope.hi_hat[index] = !$scope.hi_hat[index];
+		$scope.sample_click = function(index,instrument) {
+			if(!$scope.instruments[instrument]) {
+				$scope.instruments[instrument] = [];
+			}
+			$scope.instruments[instrument][index] = !$scope.instruments[instrument][index];
+			//$scope.hi_hat[index] = !$scope.hi_hat[index];
 		};
 		$scope.at_time = function(i) {
 			return $scope.time == (i - 1);

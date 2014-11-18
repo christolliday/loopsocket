@@ -29,12 +29,13 @@
         <pre>{{playing}}</pre>
         <pre>{{time}}</pre>
         <pre>{{hi_hat}}</pre>
+        <pre>{{instruments}}</pre>
         <table>
           <tr>
             <td ng-class="{atTime:at_time(i), btn:true}" ng-repeat="i in []|range:1:8">{{i}}</td>
           </tr>
           <tr>
-            <td class="btn btn-primary" ng-model="scope.hi_hat[$index]" ng-click="sample_click($index)" btn-checkbox ng-repeat="i in []|range:1:8">{{i}}</td>
+            <td class="btn btn-primary" ng-model="scope.hi_hat[$index]" ng-click="sample_click(i-1,'1')" btn-checkbox ng-repeat="i in []|range:1:8">{{i}}</td>
           </tr>
         </table>
     </div>
