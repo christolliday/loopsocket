@@ -48,9 +48,9 @@
     -->
     <div class = "sequencer">
         <div class="sequencerMainControls">
-            <button class="btn btn-default" id="playBtn" ng-click="play()" btn-checkbox ng-model="playing"><span class="glyphicon glyphicon-play"></span></button>
+            <button class="btn btn-default" id="playBtn" ng-click="play()" btn-checkbox ng-model="playing"><span id = "playBtnDisp" class="glyphicon glyphicon-play"></span></button>
 
-            <a href="#" class="btn btn-default" id="stopBtn" ng-click="toggle_stop()"><span class="glyphicon glyphicon-pause"></span> </a> 
+            <a href="#" class="customBtn btn-default" id="stopBtn" ng-click="toggle_stop()"><span class="glyphicon glyphicon-pause"></span> </a> 
         </div>
 
         <div class="sequencerDrumControls">
@@ -61,11 +61,16 @@
               </tr>
               <tr>
                 <td><label class = "instrument_label">HI-HAT</label></td>
-                <td><label class="btn btn-primary instrument_button" ng-model="scope.hi_hat[$index]" ng-click="sample_click($index)" btn-checkbox ng-repeat="i in beats">{{i}}</label></td>
-                <td><a href="#" class="btn btn-sm btn-default"><span class="glyphicon glyphicon-remove"></span> Remove</a></td>
+                <td><label class="customBtn customBtn-primary instrument_button" ng-model="scope.hi_hat[$index]" ng-click="sample_click($index)" btn-checkbox ng-repeat="i in beats"></label></td>
+                <td><a href="#" class="customBtn btn-sm btn-default"><span class="glyphicon glyphicon-remove"></span> Remove</a></td>
+              </tr>
+              <tr>
+                <td><label class = "instrument_label">HI-HAT</label></td>
+                <td><label class="customBtn customBtn-primary instrument_button" ng-model="scope.hi_hat[$index]" ng-click="sample_click($index)" btn-checkbox ng-repeat="i in beats"></label></td>
+                <td><a href="#" class="customBtn btn-sm btn-default"><span class="glyphicon glyphicon-remove"></span> Remove</a></td>
               </tr>
             </table>
-            <a href="#" class="btn btn-sm btn-default"><span class="glyphicon glyphicon-plus"></span> Add Instrument</a>
+            <a href="#" class="customBtn btn-sm btn-default"><span class="glyphicon glyphicon-plus"></span> Add Instrument</a>
         </div>
     <div>
 </section>

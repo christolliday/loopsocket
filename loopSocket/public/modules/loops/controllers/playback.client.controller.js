@@ -52,30 +52,5 @@ angular.module('loops').controller('PlaybackController', ['$scope',
 		for(var i=0;i<8;i++) {
 			$scope.timeModel[i] = false;
 		}
-
-		$scope.toggle_play = function() {
-			var playBtn = $scope.getElementById("playBtn");
-			var stopBtn = $scope.getElementById("stopBtn");
-			if (playBtn.style.display == 'none') {
-				playBtn.style.display = '';
-				stopBtn.style.display = 'none';
-			}
-			else {
-				playBtn.style.display = 'none';
-				stopBtn.style.display = '';
-			}
-		}
-		$scope.toggle_stop = function() {
-			var playBtn = $scope.getElementById("playBtn");
-			var stopBtn = $scope.getElementById("stopBtn");
-			if (stopBtn.style.display == 'none') {
-				stopBtn.style.display = '';
-				playBtn.style.display = 'none';
-			}
-			else {
-				stopBtn.style.display = 'none';
-				playBtn.style.display = '';
-			}
-		}
 	}
 ]);
