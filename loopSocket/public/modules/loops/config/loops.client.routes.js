@@ -22,7 +22,7 @@ angular.module('loops').config(['$stateProvider',
 			templateUrl: 'modules/loops/views/socket-loop.client.view.html'
 		}).
 		state('editLoop2', {
-			url: '/loops/:loopId',
+			url: '/loops/:loopId/edit2',
 			templateUrl: 'modules/loops/views/edit-loop-2.client.view.html'
 		}).
 		state('loopSettings', {
