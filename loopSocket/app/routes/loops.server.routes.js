@@ -2,7 +2,7 @@
 
 module.exports = function(app) {
 	var users = require('../../app/controllers/users');
-	var loops = require('../../app/controllers/loops')
+	var loops = require('../../app/controllers/loops');
 	var express = require('express');
 
 	var router = express.Router();
@@ -18,7 +18,7 @@ module.exports = function(app) {
 		.delete(users.requiresLogin, loops.hasAuthorization, loops.delete);
 
 	// Finish by binding the Loop middleware
-	app.param('loopId', loops.loopByID);
+	router.param('loopId', loops.loopByID);
 
 	return router;
 };

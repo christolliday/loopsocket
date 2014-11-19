@@ -58,6 +58,14 @@ angular.module('samples').controller('SamplesController', ['$scope', '$statePara
 			$scope.samples = Samples.query();
 		};
 
+		//test
+		/*$scope.findVar = function() {
+			//var samps = [];
+			var samps = Samples.query();
+			console.log(samps[0]);
+			return samps;
+		};*/
+
 		// Find existing Sample
 		$scope.findOne = function() {
 			$scope.sample = Samples.get({ 
@@ -65,10 +73,10 @@ angular.module('samples').controller('SamplesController', ['$scope', '$statePara
 			});
 		};
 
-		$scope.play = function(filename) {
-			console.log("play: " + filename);
+		$scope.play = function(sampleid) {
+			console.log('play: ' + sampleid);
 
-			var audio = new Audio('samples/play/'+filename);
+			var audio = new Audio('samples/'+sampleid);
 			audio.play();
 			var i;
 			for(i=1;i<=8;i++) {
