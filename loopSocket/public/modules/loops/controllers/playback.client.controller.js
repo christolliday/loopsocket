@@ -3,8 +3,8 @@
 
 
 // Sessions controller
-angular.module('loops').controller('PlaybackController', ['$scope', '$document',
-	function($scope, $document) {
+angular.module('loops').controller('PlaybackController', ['$scope', '$document', 'Samples',
+	function($scope, $document, Samples) {
 
 		//var socket = io.connect('http://localhost:3000');
 		var socket = io();
@@ -19,6 +19,7 @@ angular.module('loops').controller('PlaybackController', ['$scope', '$document',
 		function loadAudio(url) {
 			var request = new XMLHttpRequest();
 			request.open('GET', url, true);
+			request.setRequestHeader ("Accept", "audio/wav");
 			request.responseType = 'arraybuffer';
 
 			// Decode asynchronously
@@ -27,10 +28,9 @@ angular.module('loops').controller('PlaybackController', ['$scope', '$document',
 					audioBuffer = buffer;
 				}, function(error) {console.log(error);}
 				);
-			}
+			};
 			request.send();
 		}
-		var context = new AudioContext();
 
 		function playSound(buffer) {
 			var source = context.createBufferSource(); // creates a sound source
@@ -51,12 +51,21 @@ angular.module('loops').controller('PlaybackController', ['$scope', '$document',
 		var timeout;
 		var index = 16;
 
+		$scope.samples = Samples.query(function() {
+			$scope.selectedSample = $scope.samples[0];
+		});
+		$scope.changeSample = function() {
+			var url = 'samples/'+$scope.selectedSample._id;
+			loadAudio(url);
+		};
+
 		// Create new Session
 		$scope.play = function() {
 			if (!$scope.playing) {
 				$scope.playing = true;
-				console.log("play");
+				
 				socket.emit('serverListner', 'playClicked');
+
 				playback();
 				timeout = setTimeout(update_clock, 500);
 			} else {
@@ -72,12 +81,14 @@ angular.module('loops').controller('PlaybackController', ['$scope', '$document',
 		};
 
 		$scope.clear = function() {
+
 			for (var instrument in $scope.instruments) {
 				for (var index in $scope.instruments[instrument]) {
 					$scope.instruments[instrument][index] = false;
 				}
 			}
-		}
+		};
+
 
 		function time_tick() {
 			$scope.time = (($scope.time + 1) % index);
@@ -105,7 +116,7 @@ angular.module('loops').controller('PlaybackController', ['$scope', '$document',
 			if ($scope.playing) {
 				timeout = setTimeout(update_clock, 500);
 			}
-		};
+		}
 		$scope.sample_click = function(index,instrument) {
 			if(!$scope.instruments[instrument]) {
 				$scope.instruments[instrument] = [];
@@ -115,7 +126,7 @@ angular.module('loops').controller('PlaybackController', ['$scope', '$document',
 		};
 		$scope.at_time = function(i) {
 			return $scope.time == (i - 1);
-		}
+		};
 
 		$scope.pressed = function (index, instrument) {
 	
@@ -134,29 +145,3 @@ angular.module('loops').filter('range', function() {
 		return input;
 	};
 });
-
-// <script type = "text/javascript" src = "/lib/jQuery-Knob-Master/js/jquery.knob.js">
-// var circularSlider = $('#slider').CircularSlider({ 
-//     min : 0, 
-//     max: 359, 
-//     value : 10,
-//     labelSuffix: "°",
-//     slide : function(value) {
-//         ui.next().css({'background' : 'linear-gradient(' + value + 
-//             'deg, white, cornsilk, white)'});
-//     }
-// });	
-					
-
-// $(function() {
-// $( "#slider-range-min" ).slider({
-// range: "min",
-// value: 37,
-// min: 1,
-// max: 700,
-// slide: function( event, ui ) {
-// $( "#amount" ).val( "$" + ui.value );
-// }
-// });
-// $( "#amount" ).val( "$" + $( "#slider-range-min" ).slider( "value" ) );
-// });
