@@ -59,12 +59,20 @@ angular.module('samples').controller('SamplesController', ['$scope', '$statePara
 		};
 
 		//test
-		/*$scope.findVar = function() {
+		$scope.findVar = function() {
 			//var samps = [];
 			var samps = Samples.query();
-			console.log(samps[0]);
+			console.log(samps);
 			return samps;
-		};*/
+		};
+
+		$scope.defSamp = function(sname){
+			var samp = Samples.get({ 
+				sampleId: '54618dbc29e9de6dcb412bb8'
+			});
+			console.log(samp);
+			return samp.name;
+		}
 
 		// Find existing Sample
 		$scope.findOne = function() {
