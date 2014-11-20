@@ -124,7 +124,7 @@ angular.module('loops').controller('PlaybackController', ['$scope', '$document',
 			for (var i=0;i<$scope.instruments.length;i++) {
 				var instrument = $scope.instruments[i];
 				if (instrument.beats[$scope.time]) {
-					playInstrument(instrument);
+					$scope.playInstrument(instrument);
 				}
 			}
 			for(var instrument in $scope.instruments) {
