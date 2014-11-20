@@ -82,14 +82,9 @@ angular.module('samples').controller('SamplesController', ['$scope', '$statePara
 		};
 
 		$scope.play = function(sampleid) {
-			console.log('play: ' + sampleid);
-
 			var audio = new Audio('samples/'+sampleid);
 			audio.play();
-			var i;
-			for(i=1;i<=8;i++) {
-				$scope.timeModel[i] = true;
-			}
+			console.log(audio);
 		};
 	}
 ]);
