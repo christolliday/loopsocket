@@ -27,19 +27,33 @@
 }
 
 
-.instrument_button {
-	
-	padding: 10px 20px 10px;
+.td-instrument-button {
+	padding: 5px 20px 5px;
 	text-align: center;
 	vertical-align: middle;
-	margin: 2px;
+	margin: 3px;
+	min-height: 30px;
+	min-width: 40px;
+}
+.td-instrument-time {
+	padding: 5px 20px 5px;
+	text-align: center;
+	vertical-align: middle;
+	margin: 3px;
+	min-height: 20px;
+	min-width: 40px;
 }
 
 .sequencerTable {
 	vertical-align: center;
 	margin: 10px;
+
+
 }
 
+.sequenceTable tr {
+
+}
 .sequencerTable tr:nth-child(odd) {
 	background-color: #FFFFFF;
 	vertical-align: middle;
@@ -48,6 +62,7 @@
 	background-color: #D8D8D8;
 	vertical-align: middle;
 }
+
 .sequencer td {
 	/*padding: 0 2px 0;*/
 }
@@ -79,13 +94,32 @@
 	border-width: auto;
 }
 
-<<<<<<< HEAD
+.atTime {
+	background-color: #D80000;
+}
+.notAtTime {
+	background-color: #D80000;
+	opacity: 0.25;
+}
 
+
+
+
+
+/*<<<<<<< HEAD*/
+
+input[type="checkbox"]:focus {
+
+}
+.has-success.checkbox-inline label {
+  
+}
+
+/*********************************************************************************************************/
 /* CSS for controller buttons */
-.customBtn {
-	min-height: 30px;
-	min-width: 40px;
 
+
+.customBtn {
 
 	display: inline-block;
 	padding: 6px 12px;
@@ -96,13 +130,13 @@
 	text-align: center;
 	white-space: nowrap;
 	vertical-align: middle;
-	-ms-touch-action: manipulation;
-	  touch-action: manipulation;
+/*	-ms-touch-action: manipulation;
+	  touch-action: manipulation;*/
 	cursor: pointer;
-	-webkit-user-select: none;
+/*	-webkit-user-select: none;
 	 -moz-user-select: none;
 	  -ms-user-select: none;
-	      user-select: none;
+	      user-select: none;*/
 	background-image: none;
 	border: 1px solid transparent;
 	border-radius: 4px;
@@ -136,9 +170,9 @@
 fieldset[disabled] .customBtn {
   pointer-events: none;
   cursor: not-allowed;
-  filter: alpha(opacity=65);
+/*  filter: alpha(opacity=65);
   -webkit-box-shadow: none;
-          box-shadow: none;
+          box-shadow: none;*/
   opacity: .65;
 }
 
@@ -187,6 +221,4 @@ fieldset[disabled] .customBtn-primary.active {
   color: #428bca;
   background-color: #fff;
 }
-.atTime {
-	background-color: #D80000;
-}
+
