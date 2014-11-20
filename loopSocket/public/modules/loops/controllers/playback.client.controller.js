@@ -72,7 +72,11 @@ angular.module('loops').controller('PlaybackController', ['$scope', '$document',
 		};
 
 		$scope.clear = function() {
-
+			for (var instrument in $scope.instruments) {
+				for (var index in $scope.instruments[instrument]) {
+					$scope.instruments[instrument][index] = false;
+				}
+			}
 		}
 
 		function time_tick() {
