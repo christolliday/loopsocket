@@ -12,51 +12,65 @@ angular.module('loops').controller('PlaybackController', ['$scope', '$document',
     		console.log(data);
   		});
 
-		var audioBuffer = null;
+		var sampleBuffers = {};
 		window.AudioContext = window.AudioContext || window.webkitAudioContext;
 		var context = new AudioContext();
 
-		function loadAudio(url) {
-			var request = new XMLHttpRequest();
-			request.open('GET', url, true);
-			request.setRequestHeader ("Accept", "audio/wav");
-			request.responseType = 'arraybuffer';
+		function loadAudio(id) {
+			if(!sampleBuffers[id]) {
+				var url = 'samples/'+id;
+				var request = new XMLHttpRequest();
+				request.open('GET', url, true);
+				request.setRequestHeader ("Accept", "audio/wav");
+				request.responseType = 'arraybuffer';
 
-			// Decode asynchronously
-			request.onload = function() {
-				context.decodeAudioData(request.response, function(buffer) {
-					audioBuffer = buffer;
-				}, function(error) {console.log(error);}
-				);
-			};
-			request.send();
+				// Decode asynchronously
+				request.onload = function() {
+					context.decodeAudioData(request.response, function(buffer) {
+						sampleBuffers[id] = buffer;
+					}, function(error) {console.log(error);}
+					);
+				};
+				request.send();
+			}
 		}
 
 		function playSound(buffer) {
 			var source = context.createBufferSource(); // creates a sound source
-			source.buffer = audioBuffer; // tell the source which sound to play
+			source.buffer = buffer; // tell the source which sound to play
 			source.connect(context.destination); // connect the source to the context's destination (the speakers)
 			source.start(0); // play the source now
 		}
-		loadAudio('samples/play/hi-hat-closed.wav');
 
 
 		$scope.time = 0;
 		$scope.hi_hat = [];
 
-		$scope.instruments = {};
+		$scope.instruments = [];
+		for(var i=0;i<4;i++) {
+			$scope.instruments[i] = {sample:"",beats:[]};
+		}
 
 		$scope.playing = false;
-		//var audio = new Audio('samples/play/hi-hat-closed.wav');
 		var timeout;
 		var index = 16;
-
+		$scope.selectedSamples = [];
 		$scope.samples = Samples.query(function() {
-			$scope.selectedSample = $scope.samples[0];
+			$scope.selectedSamples[0] = $scope.samples[0];
+
+			for(var i=0;i<4;i++) {
+				$scope.instruments[i].sample = $scope.samples[i];//{sample:{name:$scope.samples[i].name,id:$scope.samples[i]._id}};
+				loadAudio($scope.instruments[i].sample._id);
+				//$scope.$apply();
+			}
 		});
-		$scope.changeSample = function() {
-			var url = 'samples/'+$scope.selectedSample._id;
-			loadAudio(url);
+		$scope.getInstrumentsPretty = function() {
+			return JSON.stringify($scope.instruments,null,2);
+		}
+
+		$scope.changeSample = function(sample,instrument) {
+			//instrument = {sample:{name:$scope.samples[i].name,id:$scope.samples[i]._id}};
+			loadAudio(instrument.sample._id);
 		};
 
 		// Create new Session
@@ -95,11 +109,16 @@ angular.module('loops').controller('PlaybackController', ['$scope', '$document',
 		}
 
 		function playback() {
-			for(var instrument_name in $scope.instruments) {
-				var instrument = $scope.instruments[instrument_name];
-				if (instrument[$scope.time]) {
-					playSound(audioBuffer);
+			for (var i=0;i<$scope.instruments.length;i++) {
+				var instrument = $scope.instruments[i];
+				if (instrument.beats[$scope.time]) {
+					var sampleBuffer = sampleBuffers[instrument.sample._id];
+					playSound(sampleBuffer);
 				}
+			}
+			for(var instrument in $scope.instruments) {
+				//var instrument = $scope.instruments[instrument_name];
+				
 
 			}
 			/*if ($scope.hi_hat[$scope.time]) {
@@ -117,20 +136,16 @@ angular.module('loops').controller('PlaybackController', ['$scope', '$document',
 				timeout = setTimeout(update_clock, 500);
 			}
 		}
-		$scope.sample_click = function(index,instrument) {
-			if(!$scope.instruments[instrument]) {
-				$scope.instruments[instrument] = [];
-			}
-			$scope.instruments[instrument][index] = !$scope.instruments[instrument][index];
-			//$scope.hi_hat[index] = !$scope.hi_hat[index];
+		$scope.sample_click = function(beat,instrument) {
+
+			instrument.beats[beat] = !instrument.beats[beat];
 		};
 		$scope.at_time = function(i) {
 			return $scope.time == (i - 1);
 		};
 
 		$scope.pressed = function (index, instrument) {
-	
-			return $scope.instruments[instrument][index];
+			return instrument.beats[index];
 		}
 		
 	}
