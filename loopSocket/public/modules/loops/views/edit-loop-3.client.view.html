@@ -1,83 +1,70 @@
 <section data-ng-controller="LoopsController" data-ng-init="findOne()">
     <div class="pg-header">
         <label class="loopName">{{loop.name}}</label>
-        <button class="btn btn-default menuBtn" data-ng-click="">Settings</button>
-        <button class="btn btn-default menuBtn" data-ng-click="remove();"><span class="glyphicon glyphicon-trash"></span></button>
+        <button class="btn menuBtn" data-ng-click="remove();"><span class="glyphicon glyphicon-trash"></span>
+        </button>
+        <button class="btn menuBtn" data-ng-click="">Settings</button>
     </div>
-    <!--
-    <div class="loopMenu">
-        
-        <form class="form-horizontal" data-ng-submit="update()" novalidate>
-            <fieldset>
-                <div class="form-group">
-                    <label class="control-label" for="name">Name</label>
-                    <div class="controls">
-                        <input type="text" data-ng-model="loop.name" id="name" class="form-control" placeholder="Name" required>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <input type="submit" value="Update" class="btn btn-default">
-                    <a class="btn btn-default" data-ng-click="">Settings</a>
-                    <a class="btn btn-default" data-ng-click="remove();"><i class="glyphicon glyphicon-trash"></i></a>
-
-                </div>
-                <div data-ng-show="error" class="text-danger">
-                    <strong data-ng-bind="error"></strong>
-                </div>
-            </fieldset>
-        </form>
-        
-        
-    </div>
-    -->
 </section>
 <section data-ng-controller="PlaybackController">
     <div class = "sequencer">
-        <div class="sequencerMainControls">
-            <button class="btn btn-default glyphicon" ng-click="play()" ng-model="playing"><span ng-class="{'glyphicon-play':!playing,'glyphicon-pause':playing}"></span></button>
-
-            <button class="btn btn-default glyphicon" ng-click="stop()"><span class="glyphicon-stop"></span> </button>
-            <!--
-            <button class="btn btn-default" ng-click="clear()">Clear</button>
-            -->
-
-        </div>
 
         <div class="sequencerDrumControls">
+
+            <div class="sequencerMainControls">
+                <button class="btn btn-sm glyphicon" ng-click="play()" ng-model="playing">
+                    <span ng-class="{'glyphicon-play':!playing,'glyphicon-pause':playing}"></span>
+                </button>
+
+                <button class="btn btn-sm glyphicon" ng-click="stop()"><span class="glyphicon-stop"></span> </button>
+
+                <button class="btn btn-sm " ng-click="clear()">Clear</button>
+
+                <label style="width: 30px;"></label>
+
+                <div class="btn-group bpm-ctrl">
+                    <button class="btn btn-sm glyphicon" ng-click="bpmChange(-5)"><span class="glyphicon-minus"></span> </button>
+                    <button class="btn btn-sm glyphicon" disabled>{{bpm}} BPM</button>
+                    <button class="btn btn-sm glyphicon" ng-click="bpmChange(5)"><span class="glyphicon-plus"></span> </button>
+                </div>
+            </div>
+
             <table class="sequencerTable">
               <tr>
-                <td><label class = "instrument_label"></label></td>
-                <!--
-                <td>
-                    <div class="circularSlider"></div>
+                <td class = "instrument_label"></td>
+
+                <td class = "timeBtn td-instrument-time" ng-class="{atTime:at_time(i), notAtTime:!at_time(i)}" ng-repeat="i in []|range:1:16"></td>
+            </tr>
+            <tr ng-repeat="i in instruments">
+                <td "instrument_label instrument-select">
+                    <div class="btn-group instrument-select" dropdown>
+                        <button type="button" class="btn btn-primary instrument-select" ng-click="playInstrument(i)">{{i.sample.name}}</button>
+                        <button type="button" class="btn btn-primary dropdown-toggle" dropdown-toggle>
+                            <span class="caret"></span>
+                            <span class="sr-only">Split button!</span>
+                        </button>
+                        <ul class="dropdown-menu" role="menu">
+                            <li ng-repeat="sample in samples" ><a ng-click="changeSample(sample,i)">{{sample.name}}</a></li>
+                        </ul>
+                    </div>
                 </td>
-                -->
-                <td class = "td-instrument-time" ng-class="{atTime:at_time(i), btn:true, notAtTime:!at_time(i)}" ng-repeat="i in []|range:1:16"></td><!-- 
-                <td class="btn btn-primary instrument_button" btn-checkbox ng-model="scope.time_model[$index]" ng-repeat="i in beats">{{i}}</td> -->
-              </tr>
-              <tr ng-repeat="i in []|range:1:4">
-                <td><label class = "instrument_label">HI-HAT {{i}}</label></td>
 
-                
 
-                <td class="btn btn-primary td-instrument-button" ng-model="scope.hi_hat[$index]" ng-click="sample_click(j-1,i)" btn-checkbox ng-repeat="j in []|range:1:16"></td>
-                
-                <td class = "instrument_label"><button class="btn btn-sm btn-default"><span class="glyphicon glyphicon-remove"></span></button></td>
+                <td class="customBtn td-instrument-button defaultBtn1" ng-click="sample_click(j-1,i)" ng-class="{defaultBtn1:beat_group(j,1)&&!pressed(j-1,i), defaultBtn2:beat_group(j,2)&&!pressed(j-1,i), activeBtn:pressed(j-1,i)}" ng-repeat="j in []|range:1:16"></td>
 
-              </tr>
-              <!--   <td><label class = "instrument_label">HI-HAT</label></td>
-                <td><label class="customBtn customBtn-primary instrument_button" ng-model="scope.hi_hat[$index]" ng-click="sample_click($index)" btn-checkbox ng-repeat="i in beats"></label></td>
-                <td><a href="#" class="customBtn btn-sm btn-default"><span class="glyphicon glyphicon-remove"></span> Remove</a></td>
-              </tr>
-              <tr>
-                <td><label class = "instrument_label">HI-HAT</label></td>
-                <td><label class="customBtn customBtn-primary instrument_button" ng-model="scope.hi_hat[$index]" ng-click="sample_click($index)" btn-checkbox ng-repeat="i in beats"></label></td>
-                <td><a href="#" class="customBtn btn-sm btn-default"><span class="glyphicon glyphicon-remove"></span> Remove</a></td>
-              </tr> -->
-            </table>
-            <a href="#" class="customBtn btn-sm btn-default"><span class="glyphicon glyphicon-plus"></span> Add Instrument</a>
-        </div>
 
-        <!-- <pre>{{instruments}}</pre> -->
+                <td class = "instrument_label">
+                    <button class="btn btn-sm btn-rmv"><span class="glyphicon glyphicon-remove"></span></button>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <a href="#" class="instrument_label customBtn btn-sm "><span class="glyphicon glyphicon-plus"></span> Add Instrument</a>
+                </td>
+            </tr>
+        </table>
+    </div>
+
+    <pre class="prettyprint">{{getInstrumentsPretty()}}</pre>
     <div>
-</section>
+    </section>
