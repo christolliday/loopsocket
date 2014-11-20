@@ -107,6 +107,10 @@ angular.module('loops').controller('PlaybackController', ['$scope', '$document',
 			return $scope.time == (i - 1);
 		}
 
+		$scope.pressed = function (index, instrument) {
+	
+			return $scope.instruments[instrument][index];
+		}
 		
 	}
 ]);

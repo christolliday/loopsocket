@@ -1,35 +1,10 @@
 <section data-ng-controller="LoopsController" data-ng-init="findOne()">
     <div class="pg-header">
         <label class="loopName">{{loop.name}}</label>
+        <button class="btn btn-default menuBtn" data-ng-click="remove();"><span class="glyphicon glyphicon-trash"></span>
+        </button>
         <button class="btn btn-default menuBtn" data-ng-click="">Settings</button>
-        <button class="btn btn-default menuBtn" data-ng-click="remove();"><span class="glyphicon glyphicon-trash"></span></button>
     </div>
-    <!--
-    <div class="loopMenu">
-        
-        <form class="form-horizontal" data-ng-submit="update()" novalidate>
-            <fieldset>
-                <div class="form-group">
-                    <label class="control-label" for="name">Name</label>
-                    <div class="controls">
-                        <input type="text" data-ng-model="loop.name" id="name" class="form-control" placeholder="Name" required>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <input type="submit" value="Update" class="btn btn-default">
-                    <a class="btn btn-default" data-ng-click="">Settings</a>
-                    <a class="btn btn-default" data-ng-click="remove();"><i class="glyphicon glyphicon-trash"></i></a>
-
-                </div>
-                <div data-ng-show="error" class="text-danger">
-                    <strong data-ng-bind="error"></strong>
-                </div>
-            </fieldset>
-        </form>
-        
-        
-    </div>
-    -->
 </section>
 <section data-ng-controller="PlaybackController">
     <div class = "sequencer">
@@ -37,9 +12,9 @@
             <button class="btn btn-default glyphicon" ng-click="play()" ng-model="playing"><span ng-class="{'glyphicon-play':!playing,'glyphicon-pause':playing}"></span></button>
 
             <button class="btn btn-default glyphicon" ng-click="stop()"><span class="glyphicon-stop"></span> </button>
-            <!--
+            
             <button class="btn btn-default" ng-click="clear()">Clear</button>
-            -->
+            
 
         </div>
 
@@ -52,16 +27,33 @@
                     <div class="circularSlider"></div>
                 </td>
                 -->
-                <td class = "td-instrument-time" ng-class="{atTime:at_time(i), btn:true, notAtTime:!at_time(i)}" ng-repeat="i in []|range:1:16"></td><!-- 
+                <td class = "timeBtn td-instrument-time" ng-class="{atTime:at_time(i), notAtTime:!at_time(i)}" ng-repeat="i in []|range:1:4"></td>
+
+                <td class = "timeBtn td-instrument-time" ng-class="{atTime:at_time(i), notAtTime:!at_time(i)}" ng-repeat="i in []|range:5:8"></td>
+
+                <td class = "timeBtn td-instrument-time" ng-class="{atTime:at_time(i), notAtTime:!at_time(i)}" ng-repeat="i in []|range:9:12"></td>
+
+                <td class = "timeBtn td-instrument-time" ng-class="{atTime:at_time(i), notAtTime:!at_time(i)}" ng-repeat="i in []|range:13:16"></td>
+
+                <!-- 
                 <td class="btn btn-primary instrument_button" btn-checkbox ng-model="scope.time_model[$index]" ng-repeat="i in beats">{{i}}</td> -->
               </tr>
               <tr ng-repeat="i in []|range:1:4">
                 <td><label class = "instrument_label">HI-HAT {{i}}</label></td>
 
+                <td class="customBtn td-instrument-button defaultBtn1" ng-click="sample_click(j-1,i)" ng-class="{defaultBtn1:!pressed(j-1,i), activeBtn:pressed(j-1,i)}" ng-repeat="j in []|range:1:4"></td>
+
+                <td class="customBtn td-instrument-button defaultBtn2" ng-click="sample_click(j-1,i)" ng-class="{defaultBtn2:!pressed(j-1,i), activeBtn:pressed(j-1,i)}" ng-repeat="j in []|range:5:8"></td>
+
+                <td class="customBtn td-instrument-button defaultBtn1" ng-click="sample_click(j-1,i)" ng-class="{defaultBtn1:!pressed(j-1,i), activeBtn:pressed(j-1,i)}" ng-repeat="j in []|range:9:12"></td>
+
+                <td class="customBtn td-instrument-button defaultBtn2" ng-click="sample_click(j-1,i)" ng-class="{defaultBtn2:!pressed(j-1,i), activeBtn:pressed(j-1,i)}" ng-repeat="j in []|range:13:16"></td>
                 
 
-                <td class="btn btn-primary td-instrument-button" ng-model="scope.hi_hat[$index]" ng-click="sample_click(j-1,i)" btn-checkbox ng-repeat="j in []|range:1:16"></td>
-                
+
+
+
+
                 <td class = "instrument_label"><button class="btn btn-sm btn-default"><span class="glyphicon glyphicon-remove"></span></button></td>
 
               </tr>
