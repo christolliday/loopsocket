@@ -2,18 +2,13 @@
 
 
 // Sessions controller
-<<<<<<< HEAD
-angular.module('loops').controller('PlaybackController', ['$scope', '$document', '$location',
-	function($scope, $document, $location) {
+angular.module('loops').controller('PlaybackController', ['$scope', '$document', 'Samples', '$location',
+	function($scope, $document, Samples, $location) {
 
 		var relpath = $location.path();
 		var sid = relpath.substring(7);
 		console.log(sid);
-=======
-angular.module('loops').controller('PlaybackController', ['$scope', '$document', 'Samples',
-	function($scope, $document, Samples) {
->>>>>>> 78f5d6366a6d2efd8820af96f852a8ef6002c356
-
+		
 		//var socket = io.connect('http://localhost:3000'); // port# not needed?!
 		var socket = io();
   		socket.on(String(sid), function (data) {
@@ -97,14 +92,9 @@ angular.module('loops').controller('PlaybackController', ['$scope', '$document',
 		$scope.play = function() {
 			if (!$scope.playing) {
 				$scope.playing = true;
-<<<<<<< HEAD
 				console.log("play");
 
 				socket.emit(String(sid), "PlayClicked in " + String(sid));
-=======
-				
-				socket.emit('serverListner', 'playClicked');
->>>>>>> 78f5d6366a6d2efd8820af96f852a8ef6002c356
 
 				playback();
 				timeout = setTimeout(update_clock, getBeatDuration());
