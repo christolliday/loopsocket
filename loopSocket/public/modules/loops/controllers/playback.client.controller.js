@@ -49,21 +49,34 @@ angular.module('loops').controller('PlaybackController', ['$scope', '$document',
 		$scope.playing = false;
 		//var audio = new Audio('samples/play/hi-hat-closed.wav');
 		var timeout;
+		var index = 16;
 
 		// Create new Session
 		$scope.play = function() {
 			if (!$scope.playing) {
+				$scope.playing = true;
 				console.log("play");
 				socket.emit('serverListner', 'playClicked');
 				playback();
 				timeout = setTimeout(update_clock, 500);
 			} else {
+				$scope.playing = false;
 				clearTimeout(timeout);
 			}
 		};
 
+		$scope.stop = function() {
+			clearTimeout(timeout);
+			$scope.time = 0;
+			$scope.playing = false;
+		};
+
+		$scope.clear = function() {
+
+		}
+
 		function time_tick() {
-			$scope.time = (($scope.time + 1) % 8);
+			$scope.time = (($scope.time + 1) % index);
 		}
 
 		function playback() {
@@ -99,6 +112,8 @@ angular.module('loops').controller('PlaybackController', ['$scope', '$document',
 		$scope.at_time = function(i) {
 			return $scope.time == (i - 1);
 		}
+
+		
 	}
 ]);
 
@@ -111,3 +126,29 @@ angular.module('loops').filter('range', function() {
 		return input;
 	};
 });
+
+// <script type = "text/javascript" src = "/lib/jQuery-Knob-Master/js/jquery.knob.js">
+// var circularSlider = $('#slider').CircularSlider({ 
+//     min : 0, 
+//     max: 359, 
+//     value : 10,
+//     labelSuffix: "°",
+//     slide : function(value) {
+//         ui.next().css({'background' : 'linear-gradient(' + value + 
+//             'deg, white, cornsilk, white)'});
+//     }
+// });	
+					
+
+// $(function() {
+// $( "#slider-range-min" ).slider({
+// range: "min",
+// value: 37,
+// min: 1,
+// max: 700,
+// slide: function( event, ui ) {
+// $( "#amount" ).val( "$" + ui.value );
+// }
+// });
+// $( "#amount" ).val( "$" + $( "#slider-range-min" ).slider( "value" ) );
+// });

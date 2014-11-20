@@ -40,3 +40,12 @@
         </table>
     </div>
 </section>
+<section data-ng-controller="SamplesController" data-ng-init="samples = findVar()">
+    <!--<select ng-model="samples.name" ng-options="s.name for s in samples">
+    </select><br/>-->
+    <p> Selected item is : {{selectedSample.name}} </p>
+    <select ng-init="selectedSample=defSamp()" ng-model="selectedSample" ng-options="samp.name for samp in samples">
+    </select>
+
+
+</section>

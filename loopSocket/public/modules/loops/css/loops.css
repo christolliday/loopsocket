@@ -14,7 +14,23 @@
 .ng-valid.ng-dirty{
     border-color:#78FA89;
 }
+.pg-header {
+	padding-top: 10px;
+	padding-bottom: 10px;
+  	margin: 30px 0 10px;
+  	vertical-align: middle;
 
+}
+
+.loopName {
+  	font-size: 2em;
+}
+.menuBtn {
+	float: right;
+	list-style: none;
+	margin: 0 3px 0;
+	vertical-align: middle;
+}
 
 .instrument_label {
 	width:auto;
@@ -27,12 +43,21 @@
 }
 
 
-.instrument_button {
-	
-	padding: 10px 20px 10px;
+.td-instrument-button {
+	padding: 5px 20px 5px;
 	text-align: center;
 	vertical-align: middle;
-	margin: 2px;
+	margin: 3px;
+	min-height: 30px;
+	min-width: 40px;
+}
+.td-instrument-time {
+	padding: 5px 20px 5px;
+	text-align: center;
+	vertical-align: middle;
+	margin: 3px;
+	min-height: 20px;
+	min-width: 40px;
 }
 
 .sequencerTable {
@@ -40,6 +65,9 @@
 	margin: 10px;
 }
 
+.sequenceTable tr {
+
+}
 .sequencerTable tr:nth-child(odd) {
 	background-color: #FFFFFF;
 	vertical-align: middle;
@@ -48,13 +76,16 @@
 	background-color: #D8D8D8;
 	vertical-align: middle;
 }
+
 .sequencer td {
 	/*padding: 0 2px 0;*/
 }
 
-.loopInfo {
-	padding-right: 15px;
-  	padding-left: 15px;
+.loopMenu {
+	padding: 0 10px 10px;
+  	display: inline-block;
+    margin-bottom: 0;
+    vertical-align: middle;
 }
 
 .sequencer {
@@ -79,13 +110,32 @@
 	border-width: auto;
 }
 
-<<<<<<< HEAD
+.atTime {
+	background-color: #D80000;
+}
+.notAtTime {
+	background-color: #D80000;
+	opacity: 0.25;
+}
 
+
+
+
+
+/*<<<<<<< HEAD*/
+
+input[type="checkbox"]:focus {
+
+}
+.has-success.checkbox-inline label {
+  
+}
+
+/*********************************************************************************************************/
 /* CSS for controller buttons */
-.customBtn {
-	min-height: 30px;
-	min-width: 40px;
 
+
+.customBtn {
 
 	display: inline-block;
 	padding: 6px 12px;
@@ -96,13 +146,13 @@
 	text-align: center;
 	white-space: nowrap;
 	vertical-align: middle;
-	-ms-touch-action: manipulation;
-	  touch-action: manipulation;
+/*	-ms-touch-action: manipulation;
+	  touch-action: manipulation;*/
 	cursor: pointer;
-	-webkit-user-select: none;
+/*	-webkit-user-select: none;
 	 -moz-user-select: none;
 	  -ms-user-select: none;
-	      user-select: none;
+	      user-select: none;*/
 	background-image: none;
 	border: 1px solid transparent;
 	border-radius: 4px;
@@ -136,9 +186,9 @@
 fieldset[disabled] .customBtn {
   pointer-events: none;
   cursor: not-allowed;
-  filter: alpha(opacity=65);
+/*  filter: alpha(opacity=65);
   -webkit-box-shadow: none;
-          box-shadow: none;
+          box-shadow: none;*/
   opacity: .65;
 }
 
@@ -187,6 +237,4 @@ fieldset[disabled] .customBtn-primary.active {
   color: #428bca;
   background-color: #fff;
 }
-.atTime {
-	background-color: #D80000;
-}
+

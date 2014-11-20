@@ -1,11 +1,12 @@
 <section data-ng-controller="SamplesController" data-ng-init="findOne()">
 	<div class="page-header">
 		<h1 data-ng-bind="sample.name"></h1>
-		<button ng-click="play(sample.audiofile)">
+		<button ng-click="play(sample._id)">
           Play
         </button>
 	</div>
-	<div class="pull-right" data-ng-show="((authentication.user) && (authentication.user._id == sample.user._id))">
+	<!--<div class="pull-right" data-ng-show="((authentication.user) && (authentication.user._id == sample.user._id))">-->
+	<div class="pull-right">
 		<a class="btn btn-primary" href="#!/samples/{{sample._id}}/edit">
 			<i class="glyphicon glyphicon-edit"></i>
 		</a>

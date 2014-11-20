@@ -30,7 +30,15 @@ exports.create = function(req, res) {
  * Show the current Sample
  */
 exports.read = function(req, res) {
-	res.jsonp(req.sample);
+	if(/audio\/wav/.test(req.get('accept'))) {
+		var filename = req.sample.audiofile;
+		if(filename === 'undefined') return res.status(404).send();
+		filename = ('./data/' + filename);
+		console.log('Load sample: ' + filename);
+		res.sendfile(filename);
+	} else {
+		res.jsonp(req.sample);
+	}
 };
 
 /**
@@ -91,7 +99,7 @@ exports.sampleByID = function(req, res, next, id) {
 	Sample.findById(id).populate('user', 'displayName').exec(function(err, sample) {
 		if (err) return next(err);
 		if (! sample) return next(new Error('Failed to load Sample ' + id));
-		req.sample = sample ;
+		req.sample = sample;
 		next();
 	});
 };

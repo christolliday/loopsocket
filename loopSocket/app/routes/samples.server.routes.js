@@ -21,14 +21,16 @@ module.exports = function(app) {
 
 	router.route('/samples/:sampleId')
 		.get(samples.read)
-		.put(users.requiresLogin, samples.hasAuthorization, samples.update)
-		.delete(users.requiresLogin, samples.hasAuthorization, samples.delete);
+		//.put(users.requiresLogin, samples.hasAuthorization, samples.update)
+		//.delete(users.requiresLogin, samples.hasAuthorization, samples.delete);
+		.put(users.requiresLogin, samples.update)
+		.delete(users.requiresLogin, samples.delete);
 
 	router.route('/samples/play/:sampleFile')
 		.get(load_sample);
 
 	// Finish by binding the Sample middleware
-	app.param('sampleId', samples.sampleByID);
+	router.param('sampleId', samples.sampleByID);
 
 	return router;
 };

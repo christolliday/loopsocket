@@ -42,7 +42,6 @@ angular.module('loops').controller('LoopsController', ['$scope', '$stateParams',
 		// Update existing Loop
 		$scope.update = function() {
 			var loop = $scope.loop ;
-
 			loop.$update(function() {
 				$location.path('loops/' + loop._id);
 			}, function(errorResponse) {
