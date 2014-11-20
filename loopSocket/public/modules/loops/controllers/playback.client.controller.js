@@ -42,7 +42,7 @@ angular.module('loops').controller('PlaybackController', ['$scope', '$document',
 			source.start(0); // play the source now
 		}
 
-
+		$scope.bpm = 100;
 		$scope.time = 0;
 		$scope.hi_hat = [];
 
@@ -70,8 +70,20 @@ angular.module('loops').controller('PlaybackController', ['$scope', '$document',
 
 		$scope.changeSample = function(sample,instrument) {
 			//instrument = {sample:{name:$scope.samples[i].name,id:$scope.samples[i]._id}};
+			instrument.sample = sample;
 			loadAudio(instrument.sample._id);
 		};
+		$scope.playInstrument = function(instrument) {
+			var sampleBuffer = sampleBuffers[instrument.sample._id];
+			playSound(sampleBuffer);
+		};
+		function getBeatDuration() {
+			return 60000/$scope.bpm;
+		}
+
+		$scope.bpmChange = function(diff) {
+			$scope.bpm += diff;
+		}
 
 		// Create new Session
 		$scope.play = function() {
@@ -81,7 +93,7 @@ angular.module('loops').controller('PlaybackController', ['$scope', '$document',
 				socket.emit('serverListner', 'playClicked');
 
 				playback();
-				timeout = setTimeout(update_clock, 500);
+				timeout = setTimeout(update_clock, getBeatDuration());
 			} else {
 				$scope.playing = false;
 				clearTimeout(timeout);
@@ -112,8 +124,7 @@ angular.module('loops').controller('PlaybackController', ['$scope', '$document',
 			for (var i=0;i<$scope.instruments.length;i++) {
 				var instrument = $scope.instruments[i];
 				if (instrument.beats[$scope.time]) {
-					var sampleBuffer = sampleBuffers[instrument.sample._id];
-					playSound(sampleBuffer);
+					playInstrument(instrument);
 				}
 			}
 			for(var instrument in $scope.instruments) {
@@ -133,7 +144,7 @@ angular.module('loops').controller('PlaybackController', ['$scope', '$document',
 			playback();
 			$scope.$apply();
 			if ($scope.playing) {
-				timeout = setTimeout(update_clock, 500);
+				timeout = setTimeout(update_clock, getBeatDuration());
 			}
 		}
 		$scope.sample_click = function(beat,instrument) {
@@ -144,8 +155,12 @@ angular.module('loops').controller('PlaybackController', ['$scope', '$document',
 			return $scope.time == (i - 1);
 		};
 
-		$scope.pressed = function (index, instrument) {
-			return instrument.beats[index];
+		$scope.pressed = function (beat, instrument) {
+			return instrument.beats[beat];
+		}
+
+		$scope.beat_group = function(beat,group) {
+			return Math.floor((beat-1)/4)%2===(group-1);
 		}
 		
 	}
