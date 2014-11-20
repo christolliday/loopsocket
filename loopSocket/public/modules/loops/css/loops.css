@@ -14,7 +14,23 @@
 .ng-valid.ng-dirty{
     border-color:#78FA89;
 }
+.pg-header {
+	padding-top: 10px;
+	padding-bottom: 10px;
+  	margin: 30px 0 10px;
+  	vertical-align: middle;
 
+}
+
+.loopName {
+  	font-size: 2em;
+}
+.menuBtn {
+	float: right;
+	list-style: none;
+	margin: 0 3px 0;
+	vertical-align: middle;
+}
 
 .instrument_label {
 	width:auto;
@@ -47,8 +63,6 @@
 .sequencerTable {
 	vertical-align: center;
 	margin: 10px;
-
-
 }
 
 .sequenceTable tr {
@@ -67,9 +81,11 @@
 	/*padding: 0 2px 0;*/
 }
 
-.loopInfo {
-	padding-right: 15px;
-  	padding-left: 15px;
+.loopMenu {
+	padding: 0 10px 10px;
+  	display: inline-block;
+    margin-bottom: 0;
+    vertical-align: middle;
 }
 
 .sequencer {
