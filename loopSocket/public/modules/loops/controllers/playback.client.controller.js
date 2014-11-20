@@ -1,16 +1,19 @@
 'use strict';
 
 
-
 // Sessions controller
-angular.module('loops').controller('PlaybackController', ['$scope', '$document',
-	function($scope, $document) {
+angular.module('loops').controller('PlaybackController', ['$scope', '$document', '$location',
+	function($scope, $document, $location) {
 
-		//var socket = io.connect('http://localhost:3000');
+		var relpath = $location.path();
+		var sid = relpath.substring(7);
+		console.log(sid);
+
+		//var socket = io.connect('http://localhost:3000'); // port# not needed?!
 		var socket = io();
-  		socket.on('loop.read', function (data) {
-    		console.log(data);
-  		});
+  		socket.on(String(sid), function (data) {
+			console.log(data);
+		});
 
 		var audioBuffer = null;
 		window.AudioContext = window.AudioContext || window.webkitAudioContext;
@@ -56,7 +59,9 @@ angular.module('loops').controller('PlaybackController', ['$scope', '$document',
 			if (!$scope.playing) {
 				$scope.playing = true;
 				console.log("play");
-				socket.emit('serverListner', 'playClicked');
+
+				socket.emit(String(sid), "PlayClicked in " + String(sid));
+
 				playback();
 				timeout = setTimeout(update_clock, 500);
 			} else {
