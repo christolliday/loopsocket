@@ -47,7 +47,8 @@ angular.module('loops').controller('PlaybackController', ['$scope', '$document',
 
 		$scope.bpm = 100;
 		$scope.time = 0;
-		$scope.hi_hat = [];
+		$scope.num_bars = 4;
+		$scope.beats_per_bar = 4;
 
 		$scope.instruments = [];
 		for(var i=0;i<4;i++) {
@@ -56,15 +57,13 @@ angular.module('loops').controller('PlaybackController', ['$scope', '$document',
 
 		$scope.playing = false;
 		var timeout;
-		var index = 16;
 		$scope.selectedSamples = [];
 		$scope.samples = Samples.query(function() {
 			$scope.selectedSamples[0] = $scope.samples[0];
 
 			for(var i=0;i<4;i++) {
-				$scope.instruments[i].sample = $scope.samples[i];//{sample:{name:$scope.samples[i].name,id:$scope.samples[i]._id}};
+				$scope.instruments[i].sample = $scope.samples[i];
 				loadAudio($scope.instruments[i].sample._id);
-				//$scope.$apply();
 			}
 		});
 		$scope.getInstrumentsPretty = function() {
@@ -72,13 +71,18 @@ angular.module('loops').controller('PlaybackController', ['$scope', '$document',
 		}
 
 		$scope.changeSample = function(sample,instrument) {
-			//instrument = {sample:{name:$scope.samples[i].name,id:$scope.samples[i]._id}};
 			instrument.sample = sample;
 			loadAudio(instrument.sample._id);
 		};
 		$scope.playInstrument = function(instrument) {
 			var sampleBuffer = sampleBuffers[instrument.sample._id];
 			playSound(sampleBuffer);
+		};
+		$scope.addInstrument = function() {
+			$scope.instruments.push({sample:$scope.samples[0],beats:[]});
+		};
+		$scope.removeInstrument = function(instrument) {
+			$scope.instruments.splice( $scope.instruments.indexOf(instrument), 1 );
 		};
 		function getBeatDuration() {
 			return 60000/$scope.bpm;
@@ -88,7 +92,6 @@ angular.module('loops').controller('PlaybackController', ['$scope', '$document',
 			$scope.bpm += diff;
 		}
 
-		// Create new Session
 		$scope.play = function() {
 			if (!$scope.playing) {
 				$scope.playing = true;
@@ -111,17 +114,16 @@ angular.module('loops').controller('PlaybackController', ['$scope', '$document',
 		};
 
 		$scope.clear = function() {
-
 			for (var instrument in $scope.instruments) {
-				for (var index in $scope.instruments[instrument]) {
-					$scope.instruments[instrument][index] = false;
-				}
+				$scope.instruments[instrument].beats = [];
 			}
 		};
-
+		$scope.total_beats = function() {
+			return $scope.num_bars*$scope.beats_per_bar;
+		}
 
 		function time_tick() {
-			$scope.time = (($scope.time + 1) % index);
+			$scope.time = (($scope.time + 1) % $scope.total_beats());
 		}
 
 		function playback() {
@@ -131,15 +133,6 @@ angular.module('loops').controller('PlaybackController', ['$scope', '$document',
 					$scope.playInstrument(instrument);
 				}
 			}
-			for(var instrument in $scope.instruments) {
-				//var instrument = $scope.instruments[instrument_name];
-				
-
-			}
-			/*if ($scope.hi_hat[$scope.time]) {
-				//audio.play();
-				playSound(audioBuffer);
-			}*/
 		}
 
 		function update_clock() {
@@ -152,7 +145,6 @@ angular.module('loops').controller('PlaybackController', ['$scope', '$document',
 			}
 		}
 		$scope.sample_click = function(beat,instrument) {
-
 			instrument.beats[beat] = !instrument.beats[beat];
 		};
 		$scope.at_time = function(i) {
@@ -164,7 +156,7 @@ angular.module('loops').controller('PlaybackController', ['$scope', '$document',
 		}
 
 		$scope.beat_group = function(beat,group) {
-			return Math.floor((beat-1)/4)%2===(group-1);
+			return Math.floor((beat-1)/$scope.beats_per_bar)%2===(group-1);
 		}
 		
 	}
