@@ -6,6 +6,12 @@
 angular.module('loops').controller('PlaybackController', ['$scope', '$document',
 	function($scope, $document) {
 
+		//var socket = io.connect('http://localhost:3000');
+		var socket = io();
+  		socket.on('loop.read', function (data) {
+    		console.log(data);
+  		});
+
 		var audioBuffer = null;
 		window.AudioContext = window.AudioContext || window.webkitAudioContext;
 		var context = new AudioContext();
@@ -48,7 +54,7 @@ angular.module('loops').controller('PlaybackController', ['$scope', '$document',
 		$scope.play = function() {
 			if (!$scope.playing) {
 				console.log("play");
-
+				socket.emit('serverListner', 'playClicked');
 				playback();
 				timeout = setTimeout(update_clock, 500);
 			} else {

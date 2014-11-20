@@ -30,6 +30,11 @@ exports.create = function(req, res) {
  * Show the current Loop
  */
 exports.read = function(req, res) {
+	// SocketIO stuff
+	var socketio = req.app.get('socketio');
+	//socketio.on('connection', function (socket) {
+		socketio.sockets.emit('loop.read', 'loop.read');
+	//});
 	res.jsonp(req.loop);
 };
 
@@ -47,6 +52,7 @@ exports.update = function(req, res) {
 				message: errorHandler.getErrorMessage(err)
 			});
 		} else {
+			console.log("Update");
 			res.jsonp(loop);
 		}
 	});

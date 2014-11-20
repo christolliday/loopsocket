@@ -4,6 +4,8 @@
  * Module dependencies.
  */
 var express = require('express'),
+	http = require('http'),
+    socketio = require('socket.io'),
 	morgan = require('morgan'),
 	bodyParser = require('body-parser'),
 	session = require('express-session'),
@@ -142,6 +144,16 @@ module.exports = function(db) {
 			error: 'Not Found'
 		});
 	});
-
+	//Attaching SocketIO
+	var server = http.createServer(app);
+	var io = socketio.listen(server);
+	io.on('connection', function(socket){
+		socket.on('serverListner', function (data)
+		{
+				console.log(data);
+		});
+	});
+	app.set('socketio', io);
+	app.set('server', server);
 	return app;
 };
