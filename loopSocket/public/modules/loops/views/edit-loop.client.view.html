@@ -1,58 +1,66 @@
 <section data-ng-controller="LoopsController" data-ng-init="findOne()">
-    <div class="pg-header">
+    <div class="loopHeader">
         <label class="loopName">{{loop.name}}</label>
-        <button class="btn menuBtn" data-ng-click="remove();"><span class="glyphicon glyphicon-trash"></span>
-        </button>
-        <button class="btn menuBtn" data-ng-click="">Settings</button>
+
+        <div class="loopControls">
+            <button class="btn menuBtn" data-ng-click="">Save</button>
+            <button class="btn menuBtn" data-ng-click="">Revert</button>
+
+            <button class="btn menuBtn" data-ng-click="remove();"><span class="glyphicon glyphicon-trash"></span>
+            </button>
+            <button class="btn menuBtn" data-ng-click="">Settings </button>
+        </div>
     </div>
 </section>
 <section data-ng-controller="PlaybackController">
     <div class = "sequencer">
 
-        <div class="sequencerDrumControls">
 
-            <div class="sequencerMainControls">
-                <button class="btn btn-sm glyphicon" ng-click="play()" ng-model="playing">
-                    <span ng-class="{'glyphicon-play':!playing,'glyphicon-pause':playing}"></span>
-                </button>
+        <div class="sequencerMainControls">
+            <button class="btn btn-sm glyphicon" ng-click="play()" ng-model="playing">
+                <span ng-class="{'glyphicon-play':!playing,'glyphicon-pause':playing}"></span>
+            </button>
 
-                <button class="btn btn-sm glyphicon" ng-click="stop()"><span class="glyphicon-stop"></span> </button>
+            <button class="btn btn-sm glyphicon" ng-click="stop()"><span class="glyphicon-stop"></span> </button>
 
-                <button class="btn btn-sm " ng-click="clear()">Clear</button>
+            <button class="btn btn-sm " ng-click="clear()">Clear</button>
 
-                <label style="width: 30px;"></label>
+            <label style="width: 30px;"></label>
 
-                <div class="btn-group">
-                    <button class="btn btn-sm glyphicon" ng-click="beats_per_bar=beats_per_bar-1"><span class="glyphicon-minus"></span> </button>
-                    <button class="btn btn-sm glyphicon" disabled>{{beats_per_bar}} beats per bar</button>
-                    <button class="btn btn-sm glyphicon" ng-click="beats_per_bar=beats_per_bar+1"><span class="glyphicon-plus"></span> </button>
-                </div>
-                <div class="btn-group">
-                    <button class="btn btn-sm glyphicon" ng-click="num_bars=num_bars-1"><span class="glyphicon-minus"></span> </button>
-                    <button class="btn btn-sm glyphicon" disabled>{{num_bars}} bars</button>
-                    <button class="btn btn-sm glyphicon" ng-click="num_bars=num_bars+1"><span class="glyphicon-plus"></span> </button>
-                </div>
-
-                <div class="btn-group bpm-ctrl">
-                    <button class="btn btn-sm glyphicon" ng-click="bpm=bpm/2"><span>/2</span></button>
-                    <button class="btn btn-sm glyphicon" ng-click="bpm=bpm-5"><span class="glyphicon-minus"></span> </button>
-                    <button class="btn btn-sm glyphicon" disabled>{{bpm}} BPM</button>
-                    <button class="btn btn-sm glyphicon" ng-click="bpm=bpm+5"><span class="glyphicon-plus"></span> </button>
-                    <button class="btn btn-sm glyphicon" ng-click="bpm=bpm*2"><span>*2</span> </button>
-                </div>
+            <div class="btn-group">
+                <button class="btn btn-sm glyphicon" ng-click="beats_per_bar=beats_per_bar-1"><span class="glyphicon-minus"></span> </button>
+                <button class="btn btn-sm glyphicon" disabled>{{beats_per_bar}} beats per bar</button>
+                <button class="btn btn-sm glyphicon" ng-click="beats_per_bar=beats_per_bar+1"><span class="glyphicon-plus"></span> </button>
+            </div>
+            <div class="btn-group">
+                <button class="btn btn-sm glyphicon" ng-click="num_bars=num_bars-1"><span class="glyphicon-minus"></span> </button>
+                <button class="btn btn-sm glyphicon" disabled>{{num_bars}} bars</button>
+                <button class="btn btn-sm glyphicon" ng-click="num_bars=num_bars+1"><span class="glyphicon-plus"></span> </button>
             </div>
 
-            <table class="sequencerTable">
-              <tr>
-                <td class = "instrument_label"></td>
+            <div class="btn-group bpm-ctrl">
+                <button class="btn btn-sm glyphicon" ng-click="bpm=bpm/2"><span>/2</span></button>
+                <button class="btn btn-sm glyphicon" ng-click="bpm=bpm-5"><span class="glyphicon-minus"></span> </button>
+                <button class="btn btn-sm glyphicon" disabled>{{bpm}} BPM</button>
+                <button class="btn btn-sm glyphicon" ng-click="bpm=bpm+5"><span class="glyphicon-plus"></span> </button>
+                <button class="btn btn-sm glyphicon" ng-click="bpm=bpm*2"><span>*2</span> </button>
+            </div>
+        </div>
 
-                <td class = "timeBtn td-instrument-time" ng-class="{atTime:at_time(i), notAtTime:!at_time(i)}" ng-repeat="i in []|range:1:total_beats()"></td>
+        <table class="sequencerTable">
+            <tr>
+                <td></td>
+
+                <td/>
+                <td ng-repeat="j in []|range:1:total_beats()" class = "timeBtn td-instrument-time" ng-class="{atTime:at_time(j), notAtTime:!at_time(j)}"/>
+
+                <td/>
             </tr>
             <tr ng-repeat="i in instruments">
-                <td "instrument_label instrument-select">
+                <td>
                     <div class="btn-group instrument-select" dropdown>
-                        <button type="button" class="btn btn-primary instrument-select" ng-click="playInstrument(i)">{{i.sample.name}}</button>
-                        <button type="button" class="btn btn-primary dropdown-toggle" dropdown-toggle>
+                        <button type="button" class="btn btn-primary instrumentDropdown" ng-click="playInstrument(i)">{{i.sample.name}}</button>
+                        <button type="button" class="btn btn-primary dropdown-toggle instrumentToggle" dropdown-toggle>
                             <span class="caret"></span>
                             <span class="sr-only">Split button!</span>
                         </button>
@@ -62,22 +70,26 @@
                     </div>
                 </td>
 
+                <td/>
 
-                <td class="customBtn td-instrument-button defaultBtn1" ng-click="sample_click(j-1,i)" ng-class="{defaultBtn1:beat_group(j,1)&&!pressed(j-1,i), defaultBtn2:beat_group(j,2)&&!pressed(j-1,i), activeBtn:pressed(j-1,i)}" ng-repeat="j in []|range:1:total_beats()"></td>
+                <td ng-repeat="j in []|range:1:total_beats()" class="customBtn td-instrument-button defaultBtn1" ng-click="sample_click(j-1,i)" 
+                ng-class="{inactiveBeat1:beat_group(j,1)&&!pressed(j-1,i), inactiveBeat2:beat_group(j,2)&&!pressed(j-1,i), 
+                inactiveBeatPlaying:!pressed(j-1,i)&&playing&&time==(j-1),
+                activeBeat:pressed(j-1,i),activeBeatPlaying:pressed(j-1,i)&&playing&&time==(j-1)}"/>
 
 
-                <td class = "instrument_label">
-                    <button class="btn btn-sm btn-rmv" ng-click="removeInstrument(i)"><span class="glyphicon glyphicon-remove"></span></button>
+                <td>
+                    <button class="btn btn-sm" ng-click="removeInstrument(i)"><span class="glyphicon glyphicon-remove"></span></button>
                 </td>
             </tr>
-            <tr>
+            <tr >
                 <td>
-                    <a href="#" class="instrument_label customBtn btn-sm " ng-click="addInstrument()"><span class="glyphicon glyphicon-plus"></span> Add Instrument</a>
+                    <button class=" instrument-select btn btn-primary " ng-click="addInstrument()" style="margin-top:20px"><span class="glyphicon glyphicon-plus"></span> Add Instrument</button>
                 </td>
+                <td/>
             </tr>
         </table>
-    </div>
 
-    <!-- <pre class="prettyprint">{{getInstrumentsPretty()}}</pre> -->
-    <div>
-    </section>
+        <!-- <pre class="prettyprint">{{getInstrumentsPretty()}}</pre> -->
+        <div>
+        </section>

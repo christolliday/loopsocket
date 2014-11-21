@@ -1,6 +1,6 @@
 <section data-ng-controller="HomeController">
 
-	<div>
+	<div data-ng-hide="authentication.user">
 		<h2>Welcome to loopSocket.</h2>
 		<p>loopSocket is a collaborative loop based sequencer/drum machine.</p>
 		<p>This is work in progress.</p>
@@ -16,9 +16,9 @@
 				to create a new session or view/edit existing sesssions.
 			</li>
 		</ul>
+		<br>JJTCU CMPT470
 	</div>
-	<div ng-controller="LoopsController" >
+	<div ng-controller="LoopsController" data-ng-hide="!authentication.user">
 		<div ng-include="'modules/loops/views/list-loops.client.view.html'"></div>
 	</div>
-	<br>JJTCU CMPT470
 </section>

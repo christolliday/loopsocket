@@ -1,49 +1,82 @@
-.content {
-	margin-top: 50px;
-}
-.undecorated-link:hover {
-	text-decoration: none;
-}
 
-[ng\:cloak], [ng-cloak], [data-ng-cloak], [x-ng-cloak], .ng-cloak, .x-ng-cloak {
-	display: none !important;
-}
-.ng-invalid.ng-dirty{
-    border-color:#FA787E;
-}
-.ng-valid.ng-dirty{
-    border-color:#78FA89;
-}
-.pg-header {
-	padding-top: 10px;
-	padding-bottom: 10px;
-  	margin: 30px 0 10px;
-  	vertical-align: middle;
 
+.loopHeader {
+	margin: 30px 0 10px;
+	display: flex;
+	justify-content: flex-end;
+	align-items: center;
 }
 
 .loopName {
-  	font-size: 3em;
+	font-size: 3em;
+	width:100%;
+}
+.loopControls {
+	text-align: right;
+	width:100%;
 }
 .menuBtn {
-	float: right;
-	list-style: none;
-	margin: 0 3px 0;
-	vertical-align: middle;
+	margin-left: 3px;
+	margin-right: 3px;
+	text-align: center;
 }
 
-.instrument_label {
-	width:auto;
-	text-align: center;
-	vertical-align: middle;
-	margin-left: 20px;
+/* main section */
+
+.sequencer {
+	padding-top: 20px;
+	padding-bottom: 20px;
+	border-radius: 5px;
+	border: 5px solid;
+	border-color: #EEE;
+	border-width: auto;
+}
+
+.sequencerMainControls {
+	margin: 0 20px 20px 20px;
+}
+
+.sequencerTable {
+	width: 100%;
+}
+
+.sequencerTable td, tr {
+	/*border: 2px solid black;*/
+}
+
+.sequencerTable tr:nth-child(odd) {
+	background-color: #FFF;
+}
+.sequencerTable tr:nth-child(even) {
+	background-color: #EEE;
+}
+.sequencerTable tr:last-child {
+	background-color: #FFF;
+}
+
+.sequencerTable td {
+}
+.sequencerTable td:nth-child(2) {
+    	width:auto;
+}
+.sequencerTable td:first-child {
+    	width:20%;
+	padding-left: 20px;
+}
+.sequencerTable td:last-child {
+    	width:50px;
+	padding-right: 20px;
 }
 
 .instrument-select {
-	width:80%;
+	width:170px;
 	text-align: center;
-	vertical-align: middle;
-	margin-left: 20px;
+}
+.instrumentDropdown {
+	width:85%;
+}
+.instrumentToggle{
+	width:15%;
 }
 
 .td-instrument-button {
@@ -63,85 +96,20 @@
 	min-width: 40px;
 }
 
-.sequencerTable {
-	vertical-align: center;
-	width: 100%;
-}
 
-.sequenceTable tr {
-
-}
-.sequencerTable tr:nth-child(odd) {
-	background-color: #FFFFFF;
-	vertical-align: middle;
-}
-.sequencerTable tr:nth-child(even) {
-	background-color: #EEEEEE;
-	vertical-align: middle;
-}
-.sequencerTable tr:last-child {
-	background-color: #FFFFFF;
-	vertical-align: middle;
-}
-
-.sequencer td {
-	/*padding: 0 2px 0;*/
-}
-
-.loopMenu {
-	padding: 0 10px 10px;
-  	display: inline-block;
-    margin-bottom: 0;
-    vertical-align: middle;
-}
-
-.sequencer {
-	padding: 10px 0 10px;
-	/*border-radius: 10px;
-	border: 2px solid;*/
-	margin-top: 10px;
-
-
-}
-
-.sequencerMainControls {
-	margin: 0 20px 20px 20px;
-
-	
-}
-
-.sequencerDrumControls {
-	padding-top: 20px;
-	padding-bottom: 20px;
-	border-radius: 5px;
-	border: 2px solid;
-	border-width: auto;
-}
 
 .atTime {
-	background-color: #D80000;
+	background-color: #E00;
 }
 .notAtTime {
-	background-color: #D80000;
+	background-color: #E00;
 	opacity: 0.25;
 }
-
-
-.testBtn1 {
-	background-color: #AAAAAA;
-}
-.testBtn2 {
-	background-color: #808080;
-}
-
 
 .bpm-ctrl {
 	float: right;
 }
 
-.btn-rmv {
-	margin-right: 20px
-}
 
 
 
@@ -157,13 +125,6 @@
 	text-align: center;
 	white-space: nowrap;
 	vertical-align: middle;
-/*	-ms-touch-action: manipulation;
-	  touch-action: manipulation;*/
-	/*cursor: pointer;   no pointer cursor either*/
-/*	-webkit-user-select: none;
-	 -moz-user-select: none;
-	  -ms-user-select: none;
-	      user-select: none;*/
 	background-image: none;
 	border: 1px solid transparent;
 	border-radius: 4px;
@@ -177,13 +138,7 @@
 	text-align: center;
 	white-space: nowrap;
 	vertical-align: middle;
-/*	-ms-touch-action: manipulation;
-	  touch-action: manipulation;*/
 	cursor: pointer;
-/*	-webkit-user-select: none;
-	 -moz-user-select: none;
-	  -ms-user-select: none;
-	      user-select: none;*/
 	background-image: none;
 	border: 1px solid transparent;
 	border-radius: 4px;
@@ -192,25 +147,33 @@
 .customBtn:hover,
 .customBtn:focus,
 .customBtn.focus {
-  background-color: #3071a9
+	background-color: #3071a9
 }
 .customBtn:active,
 .customBtn.active {
-  background-image: none;
-  outline: 0;
-  -webkit-box-shadow: inset 0 3px 5px rgba(0, 0, 0, .125);
-          box-shadow: inset 0 3px 5px rgba(0, 0, 0, .125);
+	background-image: none;
+	outline: 0;
+	-webkit-box-shadow: inset 0 3px 5px rgba(0, 0, 0, .125);
+	box-shadow: inset 0 3px 5px rgba(0, 0, 0, .125);
 }
 
 
-.defaultBtn1 {
-	background-color: #AAAAAA;
+.inactiveBeat1 {
+	background-color: #AAA;
 }
 
-.defaultBtn2 {
-	background-color: #808080;
+.inactiveBeat2 {
+	background-color: #888;
+}
+.inactiveBeatPlaying {
+	background-color: #666;
+	box-shadow: 0px 0px 5px 5px #DDD;
 }
 
-.activeBtn {
-	background-color: #3071a9;
+.activeBeat {
+	background-color: #37A;
+}
+
+.activeBeatPlaying {
+	background-color: #E33;
 }

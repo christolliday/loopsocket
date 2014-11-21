@@ -49,19 +49,16 @@ angular.module('loops').controller('PlaybackController', ['$scope', '$document',
 		$scope.time = 0;
 		$scope.num_bars = 4;
 		$scope.beats_per_bar = 4;
-
-		$scope.instruments = [];
-		for(var i=0;i<4;i++) {
-			$scope.instruments[i] = {sample:"",beats:[]};
-		}
-
 		$scope.playing = false;
 		var timeout;
-		$scope.selectedSamples = [];
-		$scope.samples = Samples.query(function() {
-			$scope.selectedSamples[0] = $scope.samples[0];
+		var default_num_samples = 7;
 
-			for(var i=0;i<4;i++) {
+		$scope.instruments = [];
+		for(var i=0;i<default_num_samples;i++) {
+			$scope.instruments[i] = {sample:"",beats:[]};
+		}
+		$scope.samples = Samples.query(function() {
+			for(var i=0;i<default_num_samples;i++) {
 				$scope.instruments[i].sample = $scope.samples[i];
 				loadAudio($scope.instruments[i].sample._id);
 			}
