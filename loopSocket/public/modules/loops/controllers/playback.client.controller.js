@@ -2,8 +2,8 @@
 
 
 // Sessions controller
-angular.module('loops').controller('PlaybackController', ['$scope', '$document', 'Samples', '$location',
-	function($scope, $document, Samples, $location) {
+angular.module('loops').controller('PlaybackController', ['$scope', '$document', 'Samples', '$location', 'InstrData',
+	function($scope, $document, Samples, $location, InstrData) {
 
 		var relpath = $location.path();
 		var sid = relpath.substring(7);
@@ -57,19 +57,23 @@ angular.module('loops').controller('PlaybackController', ['$scope', '$document',
 		for(var i=0;i<default_num_samples;i++) {
 			$scope.instruments[i] = {sample:"",beats:[]};
 		}
+
 		$scope.samples = Samples.query(function() {
 			for(var i=0;i<default_num_samples;i++) {
 				$scope.instruments[i].sample = $scope.samples[i];
 				loadAudio($scope.instruments[i].sample._id);
 			}
+			saveState();
 		});
+
 		$scope.getInstrumentsPretty = function() {
 			return JSON.stringify($scope.instruments,null,2);
-		}
+		};
 
 		$scope.changeSample = function(sample,instrument) {
 			instrument.sample = sample;
 			loadAudio(instrument.sample._id);
+			saveState();
 		};
 		$scope.playInstrument = function(instrument) {
 			var sampleBuffer = sampleBuffers[instrument.sample._id];
@@ -77,9 +81,11 @@ angular.module('loops').controller('PlaybackController', ['$scope', '$document',
 		};
 		$scope.addInstrument = function() {
 			$scope.instruments.push({sample:$scope.samples[0],beats:[]});
+			saveState();
 		};
 		$scope.removeInstrument = function(instrument) {
 			$scope.instruments.splice( $scope.instruments.indexOf(instrument), 1 );
+			saveState();
 		};
 		function getBeatDuration() {
 			return 60000/$scope.bpm;
@@ -87,12 +93,13 @@ angular.module('loops').controller('PlaybackController', ['$scope', '$document',
 
 		$scope.bpmChange = function(diff) {
 			$scope.bpm += diff;
-		}
+			saveState();
+		};
 
 		$scope.play = function() {
 			if (!$scope.playing) {
 				$scope.playing = true;
-				console.log("play");
+				console.log('play');
 
 				socket.emit(String(sid), "PlayClicked in " + String(sid));
 
@@ -114,10 +121,12 @@ angular.module('loops').controller('PlaybackController', ['$scope', '$document',
 			for (var instrument in $scope.instruments) {
 				$scope.instruments[instrument].beats = [];
 			}
+			saveState();
 		};
 		$scope.total_beats = function() {
+			saveState();
 			return $scope.num_bars*$scope.beats_per_bar;
-		}
+		};
 
 		function time_tick() {
 			$scope.time = (($scope.time + 1) % $scope.total_beats());
@@ -143,6 +152,7 @@ angular.module('loops').controller('PlaybackController', ['$scope', '$document',
 		}
 		$scope.sample_click = function(beat,instrument) {
 			instrument.beats[beat] = !instrument.beats[beat];
+			saveState();
 		};
 		$scope.at_time = function(i) {
 			return $scope.time == (i - 1);
@@ -150,12 +160,44 @@ angular.module('loops').controller('PlaybackController', ['$scope', '$document',
 
 		$scope.pressed = function (beat, instrument) {
 			return instrument.beats[beat];
-		}
+		};
 
 		$scope.beat_group = function(beat,group) {
 			return Math.floor((beat-1)/$scope.beats_per_bar)%2===(group-1);
+		};
+
+		function saveState() { //save state of loop
+			var instrumentList = [];
+			var beatList = [];
+			for(var i=0;i<$scope.instruments.length;i++) {
+				var instrument = $scope.instruments[i];
+				instrumentList.push(instrument.sample);
+				beatList.push(instrument.beats);
+			}
+			InstrData.addInstr(instrumentList, beatList, $scope.bpm, $scope.beats_per_bar, $scope.num_bars);
 		}
-		
+
+		$scope.revertState = function() {
+			var revState = InstrData.getRev();
+			if(revState == null){
+				alert('Nothing Saved yet.');
+			} else {
+				console.log(revState);
+
+				$scope.instruments = [];
+				for (var i =0;i<revState.instrument.length;i++){
+					$scope.instruments[i] = {sample: "", beats: []};
+				}
+				for(var i = 0;i<revState.instrument.length;i++){
+					$scope.instruments[i].sample = revState.instrument[i];
+					loadAudio($scope.instruments[i].sample._id);
+					$scope.instruments[i].beats = revState.beats[i];
+				}
+				$scope.bpm = revState.bpm;
+				$scope.beats_per_bar = revState.bpb;
+				$scope.num_bars = revState.numbars;
+			}
+		};
 	}
 ]);
 

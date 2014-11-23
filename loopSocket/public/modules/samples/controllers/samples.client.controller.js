@@ -72,7 +72,7 @@ angular.module('samples').controller('SamplesController', ['$scope', '$statePara
 			});
 			console.log(samp);
 			return samp.name;
-		}
+		};
 
 		// Find existing Sample
 		$scope.findOne = function() {
