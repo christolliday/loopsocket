@@ -8,6 +8,7 @@ var mongoose = require('mongoose'),
 	Loop = mongoose.model('Loop'),
 	_ = require('lodash');
 
+
 /**
  * Create a Loop
  */
@@ -98,8 +99,33 @@ exports.loopByID = function(req, res, next, id) { Loop.findById(id).populate('us
  * Loop authorization middleware
  */
 exports.hasAuthorization = function(req, res, next) {
-	if (req.loop.user.id !== req.user.id) {
-		return res.status(403).send('User is not authorized');
+	var length = req.loop.member.length;
+	if (req.loop.user.id == req.user.id) {
+		next();
 	}
-	next();
+	else{
+		if (req.loop.member[0] == 'Public'){
+			next();
+		}
+		else{
+			for(var i=0; i<length; i++){
+				if(req.user._id == req.loop.member[i]){
+					return next();
+				}
+			}
+
+		}
+	}
+};
+
+exports.getMember = function(req, res){
+	Loop.find().exec(function(err, docs) {
+		if (err) {
+			return res.status(400).send({
+				message: errorHandler.getErrorMessage(err)
+			});
+		} else {
+			res.jsonp(docs);
+		}
+	});
 };

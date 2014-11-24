@@ -14,6 +14,9 @@ module.exports = function(app) {
 		.put(users.requiresLogin, loops.hasAuthorization, loops.update)
 		.delete(users.requiresLogin, loops.hasAuthorization, loops.delete);
 
+	app.route('/members')
+		.get(loops.getMember);
+
 	// Finish by binding the Loop middleware
 	app.param('loopId', loops.loopByID);
 };

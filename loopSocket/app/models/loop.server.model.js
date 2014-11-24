@@ -23,6 +23,10 @@ var LoopSchema = new Schema({
 	user: {
 		type: Schema.ObjectId,
 		ref: 'User'
+	},
+	member: {
+		type: Array,
+		default: ['Private']
 	}
 });
 
