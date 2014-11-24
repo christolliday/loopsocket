@@ -14,8 +14,16 @@
 			        <h4 class="list-group-item-heading" data-ng-bind="loop.name"></h4>
             </div>
          </a>
+			<small class="list-group-item-text">
+				Posted on
+				<span data-ng-bind="loop.created | date:'medium'"></span>
+				by
+				<span data-ng-bind="loop.user.username"></span>
+			</small>
+			<h4 class="list-group-item-heading" data-ng-bind="loop.name"></h4>
+        </a>
     </div>
     <div class="alert alert-warning text-center" data-ng-hide="!loops.$resolved || loops.length">
-    	No Loops yet, why don't you <a href="/#!/loops/create">create one</a>?
+    	No Loops yet, why don't you <a href="#!/loops/create">create one</a>?
     </div>
 </section>

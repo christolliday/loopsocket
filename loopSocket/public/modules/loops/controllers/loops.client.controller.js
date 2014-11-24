@@ -1,8 +1,13 @@
 'use strict';
 
 // Loops controller
+<<<<<<< HEAD
 angular.module('loops').controller('LoopsController', ['$scope', '$stateParams', '$location', 'Authentication', 'Loops', '$http',
 	function($scope, $stateParams, $location, Authentication, Loops, $http ) {
+=======
+angular.module('loops').controller('LoopsController', ['$scope', '$stateParams', '$location', 'Authentication', 'Loops', 'InstrData',
+	function($scope, $stateParams, $location, Authentication, Loops, InstrData) {
+>>>>>>> 2756b204617da33da56be08ad2aa321a56fc94ec
 		$scope.authentication = Authentication;
 
 
@@ -57,7 +62,6 @@ angular.module('loops').controller('LoopsController', ['$scope', '$stateParams',
 		// Update existing Loop
 		$scope.update = function() {
 			var loop = $scope.loop ;
-
 			loop.$update(function() {
 				$location.path('loops/' + loop._id);
 			}, function(errorResponse) {
@@ -76,6 +80,7 @@ angular.module('loops').controller('LoopsController', ['$scope', '$stateParams',
 				loopId: $stateParams.loopId
 			});
 		};
+
 		$scope.addPerson = function(index){
 			var loop = $scope.loop;
 			var length = $scope.loop.member.length;
@@ -113,6 +118,26 @@ angular.module('loops').controller('LoopsController', ['$scope', '$stateParams',
 		$scope.makePrivate = function(){
 			var loop = $scope.loop;
 			loop.member[0] = 'Private';
+
+		// Update connected users
+		$scope.updateConUsers = function() {
+			var loop = $scope.loop;
+		};
+
+		$scope.updateState = function() {
+			var loop = $scope.loop ;
+			var loopState = InstrData.getInstr();
+
+			console.log(JSON.stringify($scope.loop_container,null,2));
+
+			loop.state = {
+				instrument: loopState.instrument,
+				beats: loopState.arr,
+				bpm: loopState.bpm,
+				bpb: loopState.bpb,
+				numbars: loopState.numbars
+			};
+
 			loop.$update(function() {
 				$location.path('loops/' + loop._id);
 			}, function(errorResponse) {
@@ -157,5 +182,17 @@ angular.module('loops').controller('LoopsController', ['$scope', '$stateParams',
 				}
 			}
 		};
+			sendState();
+		};
+
+		function sendState() {
+			var revState = Loops.get({
+				loopId: $stateParams.loopId
+			});
+
+			revState.$promise.then(function(data) {
+				InstrData.setRev(data.state);
+			});
+		}
 	}
 ]);

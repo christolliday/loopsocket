@@ -4,6 +4,10 @@
  * Module dependencies.
  */
 var express = require('express'),
+	http = require('http'),
+	socketio = require('socket.io'),
+	//mongoose = require('mongoose'),
+	//Loop = mongoose.model('Loop'),
 	morgan = require('morgan'),
 	bodyParser = require('body-parser'),
 	session = require('express-session'),
@@ -35,6 +39,9 @@ module.exports = function(db) {
 	app.locals.keywords = config.app.keywords;
 	app.locals.jsFiles = config.getJavaScriptAssets();
 	app.locals.cssFiles = config.getCSSAssets();
+	app.locals.baseUrl = config.baseUrl;
+
+	console.log(config.baseUrl);
 
 	// Passing the request url to environment locals
 	app.use(function(req, res, next) {
@@ -110,11 +117,12 @@ module.exports = function(db) {
 	app.disable('x-powered-by');
 
 	// Setting the app router and static folder
-	app.use(express.static(path.resolve('./public')));
+	app.use(config.baseUrl,express.static(path.resolve('./public')));
 
 	// Globbing routing files
 	config.getGlobbedFiles('./app/routes/**/*.js').forEach(function(routePath) {
-		require(path.resolve(routePath))(app);
+		var router = require(path.resolve(routePath))(app);
+		app.use(config.baseUrl,router);
 	});
 
 	// Assume 'not found' in the error msgs is a 404. this is somewhat silly, but valid, you can do whatever you like, set properties, use instanceof etc.
@@ -139,5 +147,21 @@ module.exports = function(db) {
 		});
 	});
 
+	//Attaching SocketIO
+	var server = http.createServer(app);
+	var io = socketio.listen(server);
+
+	io.on('connection', function(socket){
+		socket.on('toServer', function (data){
+			//console.log(data);
+			io.emit('toAllClients', data);
+		});
+		socket.on('toServer_initNewClient', function(sid){
+			socket.broadcast.emit('toAllClients_initNewClient', sid);
+		});
+	});
+
+	app.set('socketio', io); // For external use
+	app.set('server', server); // For external use
 	return app;
 };

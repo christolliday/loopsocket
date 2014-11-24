@@ -1,7 +1,11 @@
 'use strict';
 
 module.exports = function(app) {
+	var express = require('express');
+	var router = express.Router();
 	// Root routing
 	var core = require('../../app/controllers/core');
-	app.route('/').get(core.index);
+	router.route('/').get(core.index);
+
+	return router;
 };

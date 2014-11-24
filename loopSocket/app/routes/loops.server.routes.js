@@ -3,13 +3,16 @@
 module.exports = function(app) {
 	var users = require('../../app/controllers/users');
 	var loops = require('../../app/controllers/loops');
+	var express = require('express');
+
+	var router = express.Router();
 
 	// Loops Routes
-	app.route('/loops')
+	router.route('/loops')
 		.get(loops.list)
 		.post(users.requiresLogin, loops.create);
 
-	app.route('/loops/:loopId')
+	router.route('/loops/:loopId')
 		.get(loops.read)
 		.put(users.requiresLogin, loops.hasAuthorization, loops.update)
 		.delete(users.requiresLogin, loops.hasAuthorization, loops.delete);
@@ -18,5 +21,7 @@ module.exports = function(app) {
 		.get(loops.getMember);
 
 	// Finish by binding the Loop middleware
-	app.param('loopId', loops.loopByID);
+	router.param('loopId', loops.loopByID);
+
+	return router;
 };

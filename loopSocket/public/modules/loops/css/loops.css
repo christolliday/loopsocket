@@ -1,80 +1,175 @@
-.content {
-	margin-top: 50px;
-}
-.undecorated-link:hover {
-	text-decoration: none;
-}
-
-[ng\:cloak], [ng-cloak], [data-ng-cloak], [x-ng-cloak], .ng-cloak, .x-ng-cloak {
-	display: none !important;
-}
-.ng-invalid.ng-dirty{
-    border-color:#FA787E;
-}
-.ng-valid.ng-dirty{
-    border-color:#78FA89;
-}
 
 
-.instrument_label {
-	width:auto;
-	padding-right: 20px;
-	padding-left: 20px;
+.loopHeader {
+	margin: 30px 0 10px;
+	display: flex;
+	justify-content: flex-end;
+	align-items: center;
+}
+
+.loopName {
+	font-size: 3em;
+	width:100%;
+}
+.loopControls {
+	text-align: right;
+	width:100%;
+}
+.menuBtn {
+	margin-left: 3px;
+	margin-right: 3px;
 	text-align: center;
-	vertical-align: middle;
-	margin: 2px;
-
 }
 
-
-.instrument_button {
-	padding-right: 20px;
-	padding-left: 20px;
-	text-align: center;
-	vertical-align: middle;
-	margin: 2px;
-}
-
-.sequencerTable {
-	vertical-align: center;
-	margin: 10px;
-}
-
-.sequencerTable tr:nth-child(odd) {
-	background-color: #FFFFFF;
-	vertical-align: middle;
-}
-.sequencerTable tr:nth-child(even) {
-	background-color: #D8D8D8;
-	vertical-align: middle;
-}
-.sequencer td {
-	/*padding: 0 2px 0;*/
-}
-
-.loopInfo {
-	padding-right: 15px;
-  	padding-left: 15px;
-}
+/* main section */
 
 .sequencer {
-	padding: 10px 40px 10px;
-	/*border-radius: 10px;
-	border: 2px solid;*/
-	margin-top: 10px;
-	border-top: 2px solid #888;
-
-
+	padding-top: 20px;
+	padding-bottom: 20px;
+	border-radius: 5px;
+	border: 5px solid;
+	border-color: #EEE;
+	border-width: auto;
 }
 
 .sequencerMainControls {
-	padding: 10px 0 10px;
-	
+	margin: 0 20px 20px 20px;
 }
 
-.sequencerDrumControls {
-	padding: 10px;
-	border-radius: 10px;
-	border: 2px solid;
-	border-width: auto;
+.sequencerTable {
+	width: 100%;
+}
+
+/*.sequencerTable td, tr {
+	border: 2px solid black;
+}*/
+
+.sequencerTable tr:nth-child(odd) {
+	background-color: #FFF;
+}
+.sequencerTable tr:nth-child(even) {
+	background-color: #EEE;
+}
+.sequencerTable tr:last-child {
+	background-color: #FFF;
+}
+
+.sequencerTable td {
+}
+.sequencerTable td:nth-child(2) {
+    	width:auto;
+}
+.sequencerTable td:first-child {
+    	width:20%;
+	padding-left: 20px;
+}
+.sequencerTable td:last-child {
+    	width:50px;
+	padding-right: 20px;
+}
+
+.instrument-select {
+	width:170px;
+	text-align: center;
+}
+.instrumentDropdown {
+	width:85%;
+}
+.instrumentToggle{
+	width:15%;
+}
+
+.td-instrument-button {
+	padding: 5px 20px 5px;
+	text-align: center;
+	vertical-align: middle;
+	margin: 3px;
+	min-height: 30px;
+	min-width: 40px;
+}
+.td-instrument-time {
+	padding: 5px 20px 5px;
+	text-align: center;
+	vertical-align: middle;
+	margin: 3px;
+	min-height: 20px;
+	min-width: 40px;
+}
+
+
+
+.atTime {
+	background-color: #E00;
+}
+.notAtTime {
+	background-color: #E00;
+	opacity: 0.25;
+}
+
+.bpm-ctrl {
+	float: right;
+}
+
+
+/* controller buttons */
+
+/* exactly the same as customBtn, but without hover */
+.timeBtn  {
+	display: inline-block;
+	font-size: 14px;
+	font-weight: normal;
+	line-height: 1.42857143;
+	text-align: center;
+	white-space: nowrap;
+	vertical-align: middle;
+	background-image: none;
+	border: 1px solid transparent;
+	border-radius: 4px;
+}
+
+.customBtn {
+	display: inline-block;
+	font-size: 14px;
+	font-weight: normal;
+	line-height: 1.42857143;
+	text-align: center;
+	white-space: nowrap;
+	vertical-align: middle;
+	cursor: pointer;
+	background-image: none;
+	border: 1px solid transparent;
+	border-radius: 4px;
+}
+
+.customBtn:hover,
+.customBtn:focus,
+.customBtn.focus {
+	background-color: #3071a9
+}
+.customBtn:active,
+.customBtn.active {
+	background-image: none;
+	outline: 0;
+	-webkit-box-shadow: inset 0 3px 5px rgba(0, 0, 0, .125);
+	box-shadow: inset 0 3px 5px rgba(0, 0, 0, .125);
+}
+
+.inactiveBeat1 {
+	background-color: #AAA;
+}
+
+.inactiveBeat2 {
+	background-color: #888;
+}
+.inactiveBeatPlaying {
+	background-color: #666;
+	box-shadow: 0px 0px 5px 5px #DDD;
+}
+
+.activeBeat {
+	background-color: #37A;
+}
+
+.activeBeatPlaying {
+	background-color: #E33;
 }

@@ -20,7 +20,7 @@ var SampleSchema = new Schema({
 		type: String,
 		default:'',
 		required: 'Please fill audio file name',
-		trime: true
+		trim: true
 	},
 	created: {
 		type: Date,
