@@ -99,7 +99,7 @@ angular.module('loops').controller('PlaybackController', ['$scope', '$document',
 			syncState();
 		};
 		$scope.removeInstrument = function(instrument) {
-			$scope.instruments.splice( $scope.loop.instruments.indexOf(instrument), 1 );
+			$scope.loop.instruments.splice( $scope.loop.instruments.indexOf(instrument), 1 );
 			saveState();
 			syncState();
 		};
