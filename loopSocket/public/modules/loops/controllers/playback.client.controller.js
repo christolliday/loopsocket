@@ -14,21 +14,8 @@ angular.module('loops').controller('PlaybackController', ['$scope', '$document',
 		socket.on('toAllClients', function (data) {
 			console.log(data);
 			if (data.sid == sid){
-				console.log("Data for me!");
-				if (data.iList !== undefined && data.bList !== undefined){
-
-					$scope.instruments = [];
-					
-					for (var i =0;i<data.iList.length;i++){
-						$scope.instruments[i] = {sample: "", beats: []};
-					}
-
-					for(var i = 0;i<data.iList.length;i++){
-						$scope.instruments[i].sample = data.iList[i];
-						loadAudio($scope.instruments[i].sample._id);
-						$scope.instruments[i].beats = data.bList[i];
-						}
-				}
+				console.log("Data for me! "+JSON.stringify(data,null,2));
+				$scope.loop = data.loop;
 			}
 		});
 
@@ -62,29 +49,31 @@ angular.module('loops').controller('PlaybackController', ['$scope', '$document',
 			source.start(0); // play the source now
 		}
 
-		$scope.bpm = 100;
-		$scope.time = 0;
-		$scope.num_bars = 4;
-		$scope.beats_per_bar = 4;
-		$scope.playing = false;
+		$scope.loop = {};
+		function initLoop() {
+			$scope.loop.bpm = 100;
+			$scope.loop.time = 0;
+			$scope.loop.num_bars = 4;
+			$scope.loop.beats_per_bar = 4;
+			$scope.loop.playing = false;
+			$scope.loop.instruments = [];
+			for(var i=0;i<default_num_samples;i++) {
+				$scope.loop.instruments[i] = {beats:[]};
+				$scope.loop.instruments[i].sample = $scope.samples[i];
+				loadAudio($scope.loop.instruments[i].sample._id);
+			}
+		}
+
 		var timeout;
 		var default_num_samples = 7;
 
-		$scope.instruments = [];
-		for(var i=0;i<default_num_samples;i++) {
-			$scope.instruments[i] = {sample:"",beats:[]};
-		}
-
 		$scope.samples = Samples.query(function() {
-			for(var i=0;i<default_num_samples;i++) {
-				$scope.instruments[i].sample = $scope.samples[i];
-				loadAudio($scope.instruments[i].sample._id);
-			}
+			initLoop();
 			saveState();
 		});
 
 		$scope.getInstrumentsPretty = function() {
-			return JSON.stringify($scope.instruments,null,2);
+			return JSON.stringify($scope.loop,null,2);
 		};
 
 		$scope.changeSample = function(sample,instrument) {
@@ -98,62 +87,61 @@ angular.module('loops').controller('PlaybackController', ['$scope', '$document',
 			playSound(sampleBuffer);
 		};
 		$scope.addInstrument = function() {
-			$scope.instruments.push({sample:$scope.samples[0],beats:[]});
+			$scope.loop.instruments.push({sample:$scope.samples[0],beats:[]});
 			saveState();
 			syncState();
 		};
 		$scope.removeInstrument = function(instrument) {
-			$scope.instruments.splice( $scope.instruments.indexOf(instrument), 1 );
+			$scope.instruments.splice( $scope.loop.instruments.indexOf(instrument), 1 );
 			saveState();
 			syncState();
 		};
 		function getBeatDuration() {
-			return 60000/$scope.bpm;
+			return 60000/$scope.loop.bpm;
 		}
 
 		$scope.bpmChange = function(diff) {
-			$scope.bpm += diff;
+			$scope.loop.bpm += diff;
 			saveState();
 		};
 
 		$scope.play = function() {
-			if (!$scope.playing) {
-				$scope.playing = true;
+			if (!$scope.loop.playing) {
+				$scope.loop.playing = true;
 				console.log('play');
 				playback();
 				timeout = setTimeout(update_clock, getBeatDuration());
 			} else {
-				$scope.playing = false;
+				$scope.loop.playing = false;
 				clearTimeout(timeout);
 			}
 		};
 
 		$scope.stop = function() {
 			clearTimeout(timeout);
-			$scope.time = 0;
-			$scope.playing = false;
+			$scope.loop.time = 0;
+			$scope.loop.playing = false;
 		};
 
 		$scope.clear = function() {
-			for (var instrument in $scope.instruments) {
-				$scope.instruments[instrument].beats = [];
+			for (var instrument in $scope.loop.instruments) {
+				$scope.loop.instruments[instrument].beats = [];
 			}
 			saveState();
 			syncState();
 		};
 		$scope.total_beats = function() {
-			saveState();
-			return $scope.num_bars*$scope.beats_per_bar;
+			return $scope.loop.num_bars*$scope.loop.beats_per_bar;
 		};
 
 		function time_tick() {
-			$scope.time = (($scope.time + 1) % $scope.total_beats());
+			$scope.loop.time = (($scope.loop.time + 1) % $scope.total_beats());
 		}
 
 		function playback() {
-			for (var i=0;i<$scope.instruments.length;i++) {
-				var instrument = $scope.instruments[i];
-				if (instrument.beats[$scope.time]) {
+			for (var i=0;i<$scope.loop.instruments.length;i++) {
+				var instrument = $scope.loop.instruments[i];
+				if (instrument.beats[$scope.loop.time]) {
 					$scope.playInstrument(instrument);
 				}
 			}
@@ -164,7 +152,7 @@ angular.module('loops').controller('PlaybackController', ['$scope', '$document',
 			time_tick();
 			playback();
 			$scope.$apply();
-			if ($scope.playing) {
+			if ($scope.loop.playing) {
 				timeout = setTimeout(update_clock, getBeatDuration());
 			}
 		}
@@ -174,7 +162,7 @@ angular.module('loops').controller('PlaybackController', ['$scope', '$document',
 			syncState();
 		};
 		$scope.at_time = function(i) {
-			return $scope.time == (i - 1);
+			return $scope.loop.time == (i - 1);
 		};
 
 		$scope.pressed = function (beat, instrument) {
@@ -182,30 +170,22 @@ angular.module('loops').controller('PlaybackController', ['$scope', '$document',
 		};
 
 		$scope.beat_group = function(beat,group) {
-			return Math.floor((beat-1)/$scope.beats_per_bar)%2===(group-1);
+			return Math.floor((beat-1)/$scope.loop.beats_per_bar)%2===(group-1);
 		};
 
 		function saveState() { //save state of loop
 			var instrumentList = [];
 			var beatList = [];
-			for(var i=0;i<$scope.instruments.length;i++) {
-				var instrument = $scope.instruments[i];
+			for(var i=0;i<$scope.loop.instruments.length;i++) {
+				var instrument = $scope.loop.instruments[i];
 				instrumentList.push(instrument.sample);
 				beatList.push(instrument.beats);
 			}
-			InstrData.addInstr(instrumentList, beatList, $scope.bpm, $scope.beats_per_bar, $scope.num_bars);
+			InstrData.addInstr(instrumentList, beatList, $scope.loop.bpm, $scope.loop.beats_per_bar, $scope.loop.num_bars);
 		}
 
 		function syncState(){	
-			var instrumentList = [];
-			var beatList = [];
-			for(var i=0;i<$scope.instruments.length;i++) {
-				var instrument = $scope.instruments[i];
-				instrumentList.push(instrument.sample);
-				beatList.push(instrument.beats);
-			}
-			// Add instrumentList and beatList as well!!!
-			var state = {'sid' : sid, 'iList' : instrumentList, 'bList' : beatList};//'bpm' : $scope.bpm, 'bpb' : $scope.beats_per_bar, 'num_bars' : $scope.num_bars};
+			var state = {'sid' : sid, 'loop' : $scope.loop};
 			socket.emit('toServer', state);
 		}
 
@@ -216,18 +196,18 @@ angular.module('loops').controller('PlaybackController', ['$scope', '$document',
 			} else {
 				console.log(revState);
 
-				$scope.instruments = [];
+				$scope.loop.instruments = [];
 				for (var i =0;i<revState.instrument.length;i++){
-					$scope.instruments[i] = {sample: "", beats: []};
+					$scope.loop.instruments[i] = {sample: "", beats: []};
 				}
 				for(var i = 0;i<revState.instrument.length;i++){
-					$scope.instruments[i].sample = revState.instrument[i];
-					loadAudio($scope.instruments[i].sample._id);
-					$scope.instruments[i].beats = revState.beats[i];
+					$scope.loop.instruments[i].sample = revState.instrument[i];
+					loadAudio($scope.loop.instruments[i].sample._id);
+					$scope.loop.instruments[i].beats = revState.beats[i];
 				}
-				$scope.bpm = revState.bpm;
-				$scope.beats_per_bar = revState.bpb;
-				$scope.num_bars = revState.numbars;
+				$scope.loop.bpm = revState.bpm;
+				$scope.loop.beats_per_bar = revState.bpb;
+				$scope.loop.num_bars = revState.numbars;
 			}
 		};
 	}

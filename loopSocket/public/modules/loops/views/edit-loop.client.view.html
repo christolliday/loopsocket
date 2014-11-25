@@ -27,22 +27,22 @@
             <label style="width: 30px;"></label>
 
             <div class="btn-group">
-                <button class="btn btn-sm glyphicon" ng-click="beats_per_bar=beats_per_bar-1"><span class="glyphicon-minus"></span> </button>
-                <button class="btn btn-sm glyphicon" disabled>{{beats_per_bar}} beats per bar</button>
-                <button class="btn btn-sm glyphicon" ng-click="beats_per_bar=beats_per_bar+1"><span class="glyphicon-plus"></span> </button>
+                <button class="btn btn-sm glyphicon" ng-click="loop.beats_per_bar=loop.beats_per_bar-1"><span class="glyphicon-minus"></span> </button>
+                <button class="btn btn-sm glyphicon" disabled>{{loop.beats_per_bar}} beats per bar</button>
+                <button class="btn btn-sm glyphicon" ng-click="loop.beats_per_bar=loop.beats_per_bar+1"><span class="glyphicon-plus"></span> </button>
             </div>
             <div class="btn-group">
-                <button class="btn btn-sm glyphicon" ng-click="num_bars=num_bars-1"><span class="glyphicon-minus"></span> </button>
-                <button class="btn btn-sm glyphicon" disabled>{{num_bars}} bars</button>
-                <button class="btn btn-sm glyphicon" ng-click="num_bars=num_bars+1"><span class="glyphicon-plus"></span> </button>
+                <button class="btn btn-sm glyphicon" ng-click="loop.num_bars=loop.num_bars-1"><span class="glyphicon-minus"></span> </button>
+                <button class="btn btn-sm glyphicon" disabled>{{loop.num_bars}} bars</button>
+                <button class="btn btn-sm glyphicon" ng-click="loop.num_bars=loop.num_bars+1"><span class="glyphicon-plus"></span> </button>
             </div>
 
             <div class="btn-group bpm-ctrl">
-                <button class="btn btn-sm glyphicon" ng-click="bpm=bpm/2"><span>/2</span></button>
-                <button class="btn btn-sm glyphicon" ng-click="bpm=bpm-5"><span class="glyphicon-minus"></span> </button>
-                <button class="btn btn-sm glyphicon" disabled>{{bpm}} BPM</button>
-                <button class="btn btn-sm glyphicon" ng-click="bpm=bpm+5"><span class="glyphicon-plus"></span> </button>
-                <button class="btn btn-sm glyphicon" ng-click="bpm=bpm*2"><span>*2</span> </button>
+                <button class="btn btn-sm glyphicon" ng-click="loop.bpm=loop.bpm/2"><span>/2</span></button>
+                <button class="btn btn-sm glyphicon" ng-click="loop.bpm=loop.bpm-5"><span class="glyphicon-minus"></span> </button>
+                <button class="btn btn-sm glyphicon" disabled>{{loop.bpm}} BPM</button>
+                <button class="btn btn-sm glyphicon" ng-click="loop.bpm=loop.bpm+5"><span class="glyphicon-plus"></span> </button>
+                <button class="btn btn-sm glyphicon" ng-click="loop.bpm=loop.bpm*2"><span>*2</span> </button>
             </div>
         </div>
 
@@ -55,7 +55,7 @@
 
                 <td/>
             </tr>
-            <tr ng-repeat="i in instruments">
+            <tr ng-repeat="i in loop.instruments">
                 <td>
                     <div class="btn-group instrument-select" dropdown>
                         <button type="button" class="btn btn-primary instrumentDropdown" ng-click="playInstrument(i)">{{i.sample.name}}</button>
