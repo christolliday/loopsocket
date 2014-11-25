@@ -17,10 +17,6 @@ angular.module('loops').config(['$stateProvider',
 			url: '/loops/:loopId',
 			templateUrl: 'modules/loops/views/edit-loop.client.view.html'
 		}).
-		state('socket', {
-			url: '/loops/:loopId/socket',
-			templateUrl: 'modules/loops/views/socket-loop.client.view.html'
-		}).
 		state('loopSettings', {
 			url: '/loops/:loopId/settings',
 			templateUrl: 'modules/loops/views/settings-loop.client.view.html'

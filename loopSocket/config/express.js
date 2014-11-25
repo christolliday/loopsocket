@@ -6,6 +6,8 @@
 var express = require('express'),
 	http = require('http'),
 	socketio = require('socket.io'),
+	//mongoose = require('mongoose'),
+	//Loop = mongoose.model('Loop'),
 	morgan = require('morgan'),
 	bodyParser = require('body-parser'),
 	session = require('express-session'),
@@ -148,27 +150,15 @@ module.exports = function(db) {
 	//Attaching SocketIO
 	var server = http.createServer(app);
 	var io = socketio.listen(server);
-	var mongoose = require('mongoose'),
-	//errorHandler = require('errors module here!'),
-	Loop = mongoose.model('Loop'),
-	_ = require('lodash');
 
-	Loop.find(function(err, found){
-		var sids = [];
-		for (var i=0; i<found.length; i++){
-			sids[i] = (found[i]._id).toString();
-			console.log(sids[i]);
-		}
-		io.on('connection', function(socket){
-			for (var j = 0; j < sids.length; j++){
-					socket.on(sids[j], function (data){
-							console.log(data);
-					});
-			}
+	io.on('connection', function(socket){
+		socket.on('toServer', function (data){
+			//console.log(data);
+			io.emit('toAllClients', data);
 		});
 	});
 
-	app.set('socketio', io);
-	app.set('server', server);
+	app.set('socketio', io); // For external use
+	app.set('server', server); // For external use
 	return app;
 };
