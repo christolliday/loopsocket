@@ -156,6 +156,9 @@ module.exports = function(db) {
 			//console.log(data);
 			io.emit('toAllClients', data);
 		});
+		socket.on('toServer_initNewClient', function(sid){
+			socket.broadcast.emit('toAllClients_initNewClient', sid);
+		});
 	});
 
 	app.set('socketio', io); // For external use

@@ -2,19 +2,25 @@
 
 
 // Sessions controller
-angular.module('loops').controller('PlaybackController', ['$scope', '$document', 'Samples', '$location', 'InstrData',
-	function($scope, $document, Samples, $location, InstrData) {
+angular.module('loops').controller('PlaybackController', ['$scope', '$document', 'Samples', '$location', 'InstrData', '$interval',
+	function($scope, $document, Samples, $location, InstrData, $interval) {
 
 		var relpath = $location.path();
 		var sid = relpath.substring(7);
 		//console.log(sid);
-		
+
 		//var socket = io.connect('http://localhost:3000'); // port# not needed?!
 		var socket = io();
+
+		socket.emit('toServer_initNewClient', sid);
+		socket.on('toAllClients_initNewClient', function(sidFromServer) {
+			if (sidFromServer === sid)
+				syncState();
+		});
 		socket.on('toAllClients', function (data) {
 			console.log(data);
 			if (data.sid == sid){
-				console.log("Data for me! "+JSON.stringify(data,null,2));
+				//console.log("Data for me! "+JSON.stringify(data,null,2));
 				$scope.loop = data.loop;
 				$scope.$apply();
 			}
