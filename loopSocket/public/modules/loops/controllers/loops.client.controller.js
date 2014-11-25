@@ -76,7 +76,7 @@ angular.module('loops').controller('LoopsController', ['$scope', '$stateParams',
 				bpm: loopState.bpm,
 				bpb: loopState.bpb,
 				numbars: loopState.numbars
-			}
+			};
 
 			loop.$update(function() {
 				$location.path('loops/' + loop._id);

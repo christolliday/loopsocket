@@ -10,7 +10,7 @@ angular.module('loops').controller('PlaybackController', ['$scope', '$document',
 		//console.log(sid);
 
 		//var socket = io.connect('http://localhost:3000'); // port# not needed?!
-		var socket = io();
+		var socket = io(); // jshint ignore:line
 
 		socket.emit('toServer_initNewClient', sid);
 		socket.on('toAllClients_initNewClient', function(sidFromServer) {
@@ -19,7 +19,7 @@ angular.module('loops').controller('PlaybackController', ['$scope', '$document',
 		});
 		socket.on('toAllClients', function (data) {
 			console.log(data);
-			if (data.sid == sid){
+			if (data.sid === sid){
 				//console.log("Data for me! "+JSON.stringify(data,null,2));
 				$scope.loop = data.loop;
 				$scope.$apply();
@@ -28,14 +28,14 @@ angular.module('loops').controller('PlaybackController', ['$scope', '$document',
 
 		var sampleBuffers = {};
 		window.AudioContext = window.AudioContext || window.webkitAudioContext;
-		var context = new AudioContext();
+		var context = new AudioContext(); // jshint ignore:line
 
 		function loadAudio(id) {
 			if(!sampleBuffers[id]) {
 				var url = 'samples/'+id;
 				var request = new XMLHttpRequest();
 				request.open('GET', url, true);
-				request.setRequestHeader ("Accept", "audio/wav");
+				request.setRequestHeader ('Accept', 'audio/wav');
 				request.responseType = 'arraybuffer';
 
 				// Decode asynchronously
@@ -169,7 +169,7 @@ angular.module('loops').controller('PlaybackController', ['$scope', '$document',
 			syncState();
 		};
 		$scope.at_time = function(i) {
-			return $scope.loop.time == (i - 1);
+			return $scope.loop.time === (i - 1);
 		};
 
 		$scope.pressed = function (beat, instrument) {
@@ -198,16 +198,16 @@ angular.module('loops').controller('PlaybackController', ['$scope', '$document',
 
 		$scope.revertState = function() {
 			var revState = InstrData.getRev();
-			if(revState == null){
+			if(revState === null){
 				alert('Nothing Saved yet.');
 			} else {
 				console.log(revState);
 
 				$scope.loop.instruments = [];
 				for (var i =0;i<revState.instrument.length;i++){
-					$scope.loop.instruments[i] = {sample: "", beats: []};
+					$scope.loop.instruments[i] = {sample: '', beats: []};
 				}
-				for(var i = 0;i<revState.instrument.length;i++){
+				for(var i = 0;i<revState.instrument.length;i++){ // jshint ignore:line
 					$scope.loop.instruments[i].sample = revState.instrument[i];
 					loadAudio($scope.loop.instruments[i].sample._id);
 					$scope.loop.instruments[i].beats = revState.beats[i];
