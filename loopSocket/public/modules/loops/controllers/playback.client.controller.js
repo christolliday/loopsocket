@@ -16,6 +16,7 @@ angular.module('loops').controller('PlaybackController', ['$scope', '$document',
 			if (data.sid == sid){
 				console.log("Data for me! "+JSON.stringify(data,null,2));
 				$scope.loop = data.loop;
+				$scope.$apply();
 			}
 		});
 
