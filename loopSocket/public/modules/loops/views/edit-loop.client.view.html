@@ -14,12 +14,12 @@
     </div>
 
     <section data-ng-controller="PlaybackController">
-        <button class="btn menuBtn" data-ng-click="revertState()">Revert</button>
-        <div class = "sequencer">
-            <div class="sequencerMainControls">
-                <button class="btn btn-sm glyphicon" ng-click="play()" ng-model="loop.playing">
-                    <span ng-class="{'glyphicon-play':!loop.playing,'glyphicon-pause':loop.playing}"></span>
-                </button>
+    <button class="btn menuBtn" data-ng-click="revertState()">Revert</button>
+    <div class = "sequencer">
+        <div class="sequencerMainControls">
+            <button class="btn btn-sm glyphicon" ng-click="play()">
+                <span ng-class="{'glyphicon-play':!isOnPlay(),'glyphicon-pause':isOnPlay}"></span>
+            </button>
 
             <button class="btn btn-sm glyphicon" ng-click="stop()"><span class="glyphicon-stop"></span> </button>
 
@@ -27,24 +27,25 @@
 
             <label style="width: 30px;"></label>
 
-        <div class="btn-group" ng-click="bpbChange()">
-            <button class="btn btn-sm glyphicon" ng-click="decrBeatsPerBar()"><span class="glyphicon-minus"></span> </button>
-            <button class="btn btn-sm glyphicon" disabled>{{loop_state.beats_per_bar}} beats per bar</button>
-            <button class="btn btn-sm glyphicon" ng-click="incrBeatsPerBar()"><span class="glyphicon-plus"></span> </button>
-        </div>
+            <div class="btn-group" ng-click="bpbChange()">
+                <button class="btn btn-sm glyphicon" ng-click="decrBeatsPerBar()"><span class="glyphicon-minus"></span> </button>
+                <button class="btn btn-sm glyphicon" disabled>{{loop_state.beats_per_bar}} beats per bar</button>
+                <button class="btn btn-sm glyphicon" ng-click="incrBeatsPerBar()"><span class="glyphicon-plus"></span> </button>
+            </div>
 
-        <div class="btn-group" ng-click="barsChange()">
-            <button class="btn btn-sm glyphicon" ng-click="decrNumBar()"><span class="glyphicon-minus"></span> </button>
-            <button class="btn btn-sm glyphicon" disabled>{{loop_state.num_bars}} bars</button>
-            <button class="btn btn-sm glyphicon" ng-click="incrNumBar()"><span class="glyphicon-plus"></span> </button>
-        </div>
+            <div class="btn-group" ng-click="barsChange()">
+                <button class="btn btn-sm glyphicon" ng-click="decrNumBar()"><span class="glyphicon-minus"></span> </button>
+                <button class="btn btn-sm glyphicon" disabled>{{loop_state.num_bars}} bars</button>
+                <button class="btn btn-sm glyphicon" ng-click="incrNumBar()"><span class="glyphicon-plus"></span> </button>
+            </div>
 
-        <div class="btn-group bpm-ctrl">
-            <button class="btn btn-sm glyphicon" ng-click="halfBPM()"><span>/2</span></button>
-            <button class="btn btn-sm glyphicon" ng-click="decrBPM()"><span class="glyphicon-minus"></span> </button>
-            <button class="btn btn-sm glyphicon" disabled>{{loop.bpm}} BPM</button>
-            <button class="btn btn-sm glyphicon" ng-click="incrBPM()"><span class="glyphicon-plus"></span> </button>
-            <button class="btn btn-sm glyphicon" ng-click="doubleBPM()"><span>*2</span> </button>
+            <div class="btn-group bpm-ctrl">
+                <button class="btn btn-sm glyphicon" ng-click="halfBPM()"><span>/2</span></button>
+                <button class="btn btn-sm glyphicon" ng-click="decrBPM()"><span class="glyphicon-minus"></span> </button>
+                <button class="btn btn-sm glyphicon" disabled>{{loop_state.bpm}} BPM</button>
+                <button class="btn btn-sm glyphicon" ng-click="incrBPM()"><span class="glyphicon-plus"></span> </button>
+                <button class="btn btn-sm glyphicon" ng-click="doubleBPM()"><span>*2</span> </button>
+            </div>
         </div>
 
         <table class="sequencerTable">
@@ -91,6 +92,6 @@
         </table>
 
         <pre class="prettyprint">{{getInstrumentsPretty()}}</pre>
-        <div>
-        </section>
+    </div>
     </section>
+</section>
