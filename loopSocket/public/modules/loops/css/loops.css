@@ -75,8 +75,6 @@
 }
 .sequencerTable td:last-child {
 	width:50px;
-	padding-right: 20px;
-
 }
 
 .instrument-select {
@@ -91,10 +89,13 @@
 	width:15%;
 }
 
-.bpm-ctrl {
+.bpmCtrl {
 	float: right;
 }
 
+.removeSampleBtn {
+	float: right;
+}
 
 .controlBtn {
 	top: 1px;

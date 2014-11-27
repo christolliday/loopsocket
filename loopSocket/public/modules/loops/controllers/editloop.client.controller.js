@@ -19,19 +19,18 @@ angular.module('loops').controller('EditLoopController', ['$scope', '$stateParam
 			});
 			
 
-			console.log("here1");
+			console.log('here1');
 			
 		};
 
 		$scope.showControls = function() {
-			if($scope.loop.$resolved) {
-				if($scope.authentication.user && ($scope.authentication.user._id == $scope.loop.user._id)) {
-					return true;
-				} else {
-					for (var i=0; i<$scope.loop.member.length; i++){
-						if ($scope.authentication.user._id === $scope.loop.member[i]) {
-							return true;
-						}
+			if(!$scope.loop.$resolved) return false;
+			if($scope.authentication.user && ($scope.authentication.user._id === $scope.loop.user._id)) {
+				return true;
+			} else {
+				for (var i=0; i<$scope.loop.member.length; i++){
+					if ($scope.authentication.user._id === $scope.loop.member[i]) {
+						return true;
 					}
 					return false;
 				}

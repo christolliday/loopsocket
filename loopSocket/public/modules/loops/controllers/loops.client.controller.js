@@ -71,8 +71,9 @@ angular.module('loops').controller('LoopsController', ['$scope', '$stateParams',
 		// checks if loop is public so it can be displayed in list-loops
 		$scope.isPublic = function(loop){
 			var isCollaborator = false;
-			for(var i=0; i<loop.member.length; i++){
-				if (loop.member[i] === $scope.authentication.user._id){
+			var members = loop.permissions.members;
+			for(var i=0; i<members.length; i++){
+				if (members[i] === $scope.authentication.user._id){
 					isCollaborator = true;
 				}
 			}
@@ -80,7 +81,7 @@ angular.module('loops').controller('LoopsController', ['$scope', '$stateParams',
 				return false;
 			}
 			else {
-				if ((loop.permission_mode === 'Public') && (isCollaborator === false)){
+				if ((loop.permissions.mode === 'Public') && (isCollaborator === false)){
 					return true;
 				}
 				else{
@@ -95,8 +96,9 @@ angular.module('loops').controller('LoopsController', ['$scope', '$stateParams',
 				return true;
 			}
 			else{
-				for(var i=0; i<loop.member.length; i++){
-					if (loop.member[i] === $scope.authentication.user._id){
+				var members = loop.permissions.members;
+				for(var i=0; i<members.length; i++){
+					if (members[i] === $scope.authentication.user._id){
 						return true;
 					}
 				}

@@ -162,25 +162,29 @@ module.exports = function(db) {
 		});
 		socket.on('disconn', function (data) {
 			//console.log("Disconnected " + data.userName + " from " + data.sid);
-			var index = activeUsers.indexOf(data.userName);
-			if (index !== '-1')
-				activeUsers.splice(index, 1);
-			console.log(activeUsers);
-			//io.emit('activeUsers', activeUsers);
-			// Remove client from loop
+			var sid = data.sid;
+			var userName = data.userName;
+			for (var i = 0; i < activeUsers.length; i++){
+				if (activeUsers[i].sid === sid && activeUsers[i].userName === userName)
+					activeUsers.splice(i, 1);
+			}
+			//console.log(activeUsers);
+			io.emit('activeUsers', activeUsers);
 		});
 		socket.on('conn', function (data) {
 			//console.log("Connected " + data.userName + " to " + data.sid);
 			var sid = data.sid;
 			var userName = data.userName;
-			var temp = {};
-			temp[sid] = userName;
-			var index = activeUsers.indexOf(data.userName);
-			//if (index === '-1')
-				activeUsers.push(temp);
-			console.log(activeUsers);
-			//io.emit('activeUsers', activeUsers);
-			// Add client to loop
+			var temp = {'sid': sid, 'userName' : userName};
+			var push = 'true';
+			for (var i = 0; i < activeUsers.length; i++){
+				if (activeUsers[i].sid === sid && activeUsers[i].userName === userName)
+					push = 'false';
+			}; 
+			if (push === 'true')
+				activeUsers.push(temp); // TO-DO: DO NOT PUSH IF ALREADY THERE (MIGHT OCCUR ON REFRESH)
+			//console.log(activeUsers);
+			io.emit('activeUsers', activeUsers);
 		});
 	});
 

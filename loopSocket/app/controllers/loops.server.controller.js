@@ -88,7 +88,7 @@ exports.list = function(req, res) { Loop.find().sort('-created').populate('user'
  * Loop middleware
  */
 exports.loopByID = function(req, res, next, id) { 
-	Loop.findById(id).populate('user', 'displayName').exec(function(err, loop) {
+	Loop.findById(id).populate('user', 'username').exec(function(err, loop) {
 		if (err) return next(err);
 		if (! loop) return next(new Error('Failed to load Loop ' + id));
 		req.loop = loop;
