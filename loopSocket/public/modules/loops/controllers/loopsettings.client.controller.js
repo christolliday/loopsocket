@@ -15,6 +15,37 @@ angular.module('loops').controller('LoopSettingsController', ['$scope', '$stateP
 			return $scope.users;
 		};
 
+		// gets users that are not in the loop
+		$scope.getNonmembers = function(){
+			var otherUsers = [];
+			var length = $scope.users.length;
+			var looplength = $scope.loop.permissions.members.length;
+			for (var i=0; i<length; i++){
+				if ($scope.users[i]._id !== $scope.loop.user._id){
+					if (looplength === 0){
+						otherUsers.push($scope.users[i]);
+					}
+					else{
+						for (var j=0; j<looplength; j++){
+							if($scope.users[i]._id === $scope.loop.permissions.members[j]._id){
+								break;
+							}
+							else{
+								if (($scope.users[i]._id !== $scope.loop.permissions.members[j]._id) && (j===(looplength-1))){
+									otherUsers.push($scope.users[i]);
+								}
+							}
+						}
+					}
+				}
+			}
+			return otherUsers;
+		};
+
+		$scope.test = function(user){
+			console.log($scope.loop.permissions.members);
+		};
+
 		$scope.getMembers = function(index) {
 			return $scope.loop.permissions.members;
 		}

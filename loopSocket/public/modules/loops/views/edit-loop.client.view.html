@@ -69,8 +69,8 @@
                 
             </table>
 
-            <input type="text" ng-model="addUser" typeahead-min-length='1' typeahead="user.username for user in getUsers() | filter:{username: $viewValue} | limitTo:5" class="form-control">
-
+            <input type="text" ng-model="addUser" typeahead-min-length='1' typeahead="user as user.username for user in getNonmembers() | filter:{username: $viewValue} | limitTo:5" class="form-control">
+            <button data-ng-click="test(addUser)"> test </button>
             <!-- don't delete yet, used for testing things -John
             <div ng-show="isPrivate()" data-ng-repeat="user in getUsers()">
                 <div ng-show="isMember(user)">
