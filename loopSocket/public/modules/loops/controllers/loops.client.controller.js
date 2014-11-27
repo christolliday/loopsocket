@@ -2,24 +2,11 @@
 
 // Loops controller
 angular.module('loops').controller('LoopsController', ['$scope', '$stateParams', '$location', 'Authentication', 'Loops', '$http',
-	function($scope, $stateParams, $location, Authentication, Loops, $http ) {
+	function($scope, $stateParams, $location, Authentication, Loops, InstrData, $http ) {
 		$scope.authentication = Authentication;
 
 
-		var userInfo;
-
-		$scope.information = {};
-		$http.get('../../users')
-		.success(function(data){
-			$scope.information = data;
-			userInfo = data;
-		});
-
-		$scope.listMembers = {};
-		$http.get('/members')
-		.success(function(data){
-			$scope.listMembers = data;
-		});
+		
 		// Create new Loop
 		$scope.create = function() {
 			// Create new Loop object

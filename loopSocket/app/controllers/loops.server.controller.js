@@ -101,16 +101,16 @@ exports.loopByID = function(req, res, next, id) {
  */
 exports.hasAuthorization = function(req, res, next) {
 	var length = req.loop.member.length;
-	if (req.loop.user.id == req.user.id) {
+	if (req.loop.user.id === req.user.id) {
 		next();
 	}
 	else{
-		if (req.loop.member[0] == 'Public'){
+		if (req.loop.member[0] === 'Public'){
 			next();
 		}
 		else{
 			for(var i=0; i<length; i++){
-				if(req.user._id == req.loop.member[i]){
+				if(req.user._id === req.loop.member[i]){
 					return next();
 				}
 			}
