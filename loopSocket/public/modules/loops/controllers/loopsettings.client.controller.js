@@ -17,10 +17,6 @@ angular.module('loops').controller('LoopSettingsController', ['$scope', '$stateP
 			userInfo = data;
 		});
 
-		$scope.listMembers = {};
-		$http.get('/members').success(function(data){
-			$scope.listMembers = data;
-		});
 
 		$scope.addPerson = function(index){
 			var loop = $scope.loop;
@@ -86,22 +82,6 @@ angular.module('loops').controller('LoopSettingsController', ['$scope', '$stateP
 				return true;
 			}
 
-		};
-
-		$scope.checkList = function(index){
-			var list = $scope.listMembers[index];
-			var length = $scope.listMembers[index].member.length;
-			if ($scope.listMembers[index].permission_mode === 'Public'){
-				return false;
-			}
-			else{
-				if ($scope.listMembers[index].user._id === $scope.user._id){
-					return false;
-				}
-				else{
-					return true;
-				}
-			}
 		};
 	}
 ]);

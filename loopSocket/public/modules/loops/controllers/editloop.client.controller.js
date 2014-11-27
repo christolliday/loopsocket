@@ -24,15 +24,17 @@ angular.module('loops').controller('EditLoopController', ['$scope', '$stateParam
 		};
 
 		$scope.showControls = function() {
-			if($scope.authentication.user && ($scope.authentication.user._id == $scope.loop.user._id)) {
-				return true;
-			} else {
-				for (var i=0; i<$scope.loop.member.length; i++){
-					if ($scope.authentication.user._id === $scope.loop.member[i]) {
-						return true;
+			if($scope.loop.$resolved) {
+				if($scope.authentication.user && ($scope.authentication.user._id == $scope.loop.user._id)) {
+					return true;
+				} else {
+					for (var i=0; i<$scope.loop.member.length; i++){
+						if ($scope.authentication.user._id === $scope.loop.member[i]) {
+							return true;
+						}
 					}
+					return false;
 				}
-				return false;
 			}
 		};
 
@@ -76,14 +78,14 @@ angular.module('loops').controller('EditLoopController', ['$scope', '$stateParam
 
 		$scope.isSettingsVisible = function() {
 			return $scope.show_settings;
-		}
+		};
 
 		$scope.showSettings = function() {
 			$scope.show_settings = true;
-		}
+		};
 
 		$scope.hideSettings = function() {
 			$scope.show_settings = false;
-		}
+		};
 	}
 ]);
