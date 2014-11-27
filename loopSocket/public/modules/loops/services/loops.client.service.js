@@ -31,7 +31,7 @@ angular.module('loops').factory('InstrData', function(){
 	var setRev = function(list){
 		revertList = list;
 		console.log('set');
-	}
+	};
 
 	var getRev = function(){
 		return revertList;

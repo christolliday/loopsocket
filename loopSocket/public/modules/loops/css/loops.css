@@ -40,9 +40,9 @@
 	width: 100%;
 }
 
-.sequencerTable td, tr {
-	/*border: 2px solid black;*/
-}
+/*.sequencerTable td, tr {
+	border: 2px solid black;
+}*/
 
 .sequencerTable tr:nth-child(odd) {
 	background-color: #FFF;
@@ -111,10 +111,7 @@
 }
 
 
-
-
-/*********************************************************************************************************/
-/* CSS for controller buttons */
+/* controller buttons */
 
 /* exactly the same as customBtn, but without hover */
 .timeBtn  {
@@ -156,7 +153,6 @@
 	-webkit-box-shadow: inset 0 3px 5px rgba(0, 0, 0, .125);
 	box-shadow: inset 0 3px 5px rgba(0, 0, 0, .125);
 }
-
 
 .inactiveBeat1 {
 	background-color: #AAA;

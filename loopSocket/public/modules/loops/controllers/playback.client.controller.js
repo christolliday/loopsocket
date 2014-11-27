@@ -2,33 +2,40 @@
 
 
 // Sessions controller
-angular.module('loops').controller('PlaybackController', ['$scope', '$document', 'Samples', '$location', 'InstrData',
-	function($scope, $document, Samples, $location, InstrData) {
+angular.module('loops').controller('PlaybackController', ['$scope', '$document', 'Samples', '$location', 'InstrData', '$interval',
+	function($scope, $document, Samples, $location, InstrData, $interval) {
 
 		var relpath = $location.path();
 		var sid = relpath.substring(7);
 		//console.log(sid);
-		
+
 		//var socket = io.connect('http://localhost:3000'); // port# not needed?!
-		var socket = io();
+		var socket = io(); // jshint ignore:line
+
+		socket.emit('toServer_initNewClient', sid);
+		socket.on('toAllClients_initNewClient', function(sidFromServer) {
+			if (sidFromServer === sid)
+				syncState();
+		});
 		socket.on('toAllClients', function (data) {
 			console.log(data);
-			if (data.sid == sid){
-				console.log("Data for me! "+JSON.stringify(data,null,2));
+			if (data.sid === sid){
+				//console.log("Data for me! "+JSON.stringify(data,null,2));
 				$scope.loop = data.loop;
+				$scope.$apply();
 			}
 		});
 
 		var sampleBuffers = {};
 		window.AudioContext = window.AudioContext || window.webkitAudioContext;
-		var context = new AudioContext();
+		var context = new AudioContext(); // jshint ignore:line
 
 		function loadAudio(id) {
 			if(!sampleBuffers[id]) {
 				var url = 'samples/'+id;
 				var request = new XMLHttpRequest();
 				request.open('GET', url, true);
-				request.setRequestHeader ("Accept", "audio/wav");
+				request.setRequestHeader ('Accept', 'audio/wav');
 				request.responseType = 'arraybuffer';
 
 				// Decode asynchronously
@@ -92,7 +99,7 @@ angular.module('loops').controller('PlaybackController', ['$scope', '$document',
 			syncState();
 		};
 		$scope.removeInstrument = function(instrument) {
-			$scope.instruments.splice( $scope.loop.instruments.indexOf(instrument), 1 );
+			$scope.loop.instruments.splice( $scope.loop.instruments.indexOf(instrument), 1 );
 			saveState();
 			syncState();
 		};
@@ -101,9 +108,22 @@ angular.module('loops').controller('PlaybackController', ['$scope', '$document',
 		}
 
 		$scope.bpmChange = function(diff) {
-			$scope.loop.bpm += diff;
+			//$scope.loop.bpm += diff;
 			saveState();
+			syncState();
 		};
+
+		$scope.bpbChange = function()
+		{
+			saveState();
+			syncState();
+		}
+
+		$scope.barsChange = function()
+		{
+			saveState();
+			syncState();
+		}
 
 		$scope.play = function() {
 			if (!$scope.loop.playing) {
@@ -162,7 +182,7 @@ angular.module('loops').controller('PlaybackController', ['$scope', '$document',
 			syncState();
 		};
 		$scope.at_time = function(i) {
-			return $scope.loop.time == (i - 1);
+			return $scope.loop.time === (i - 1);
 		};
 
 		$scope.pressed = function (beat, instrument) {
@@ -191,16 +211,16 @@ angular.module('loops').controller('PlaybackController', ['$scope', '$document',
 
 		$scope.revertState = function() {
 			var revState = InstrData.getRev();
-			if(revState == null){
+			if(revState === null){
 				alert('Nothing Saved yet.');
 			} else {
 				console.log(revState);
 
 				$scope.loop.instruments = [];
 				for (var i =0;i<revState.instrument.length;i++){
-					$scope.loop.instruments[i] = {sample: "", beats: []};
+					$scope.loop.instruments[i] = {sample: '', beats: []};
 				}
-				for(var i = 0;i<revState.instrument.length;i++){
+				for(var i = 0;i<revState.instrument.length;i++){ // jshint ignore:line
 					$scope.loop.instruments[i].sample = revState.instrument[i];
 					loadAudio($scope.loop.instruments[i].sample._id);
 					$scope.loop.instruments[i].beats = revState.beats[i];
@@ -210,6 +230,28 @@ angular.module('loops').controller('PlaybackController', ['$scope', '$document',
 				$scope.loop.num_bars = revState.numbars;
 			}
 		};
+
+		$scope.incrNumBar = function() {
+			if ($scope.loop.num_bars < 10) { //max number of bars
+				$scope.loop.num_bars = $scope.loop.num_bars + 1;
+			}
+		}
+		$scope.decrNumBar = function () {
+			if ($scope.loop.num_bars > 1) {
+				$scope.loop.num_bars = $scope.loop.num_bars - 1;
+			}
+		}
+
+		$scope.incrBeatsPerBar = function() {
+			if ($scope.loop.beats_per_bar < 10) { //max number of beats per bar
+				$scope.loop.beats_per_bar = $scope.loop.beats_per_bar + 1;
+			}
+		}
+		$scope.decrBeatsPerBar = function () {
+			if ($scope.loop.beats_per_bar > 1) {
+				$scope.loop.beats_per_bar = $scope.loop.beats_per_bar - 1;
+			}
+		}
 	}
 ]);
 
