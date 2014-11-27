@@ -45,5 +45,15 @@ module.exports = {
 			'public/lib/angular-mocks/angular-mocks.js',
 			'public/modules/*/tests/*.js'
 		]
+	},
+	mailer: {
+		from: 'noreply@loopsocket.com',
+		options: {
+			service: 'Gmail',
+			auth: {
+				user: 'loopsocket@gmail.com',
+				pass: 'loopSocket470'
+			}
+		}
 	}
 };

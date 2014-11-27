@@ -1,9 +1,28 @@
 'use strict';
 
 // Loops controller
-angular.module('loops').controller('EditLoopController', ['$scope', '$stateParams', '$location', 'Authentication', 'Loops',
-	function($scope, $stateParams, $location, Authentication, Loops) {
+angular.module('loops').controller('EditLoopController', ['$scope', '$stateParams', '$location', 'Authentication', 'Loops', 'LoopSync', '$interval',
+	function($scope, $stateParams, $location, Authentication, Loops, LoopSync, $interval) {
 		$scope.authentication = Authentication;
+
+		var loopsync = new LoopSync(0,0);
+
+		var userName = $scope.authentication.user.username;
+		loopsync.connect(userName);
+		$scope.$on("$destroy", function(){
+			loopsync.disconnect(userName);
+    	});
+    	loopsync.activeUsersSocket();
+    	//console.log(loopsync.connectedUsers);
+    	/*$scope.$on("$stateChangeStart", function(){
+			loopsync.disconnect(userName);
+    	});*/
+		
+		//$interval(console.log(loopsync.getActiveUsers()), 500);
+		$scope.activeUsers = function() {
+			//$scope.activeUsers = loopsync.getActiveUsers();
+			return loopsync.getActiveUsers();
+		};
 
 		//$scope.loop = {};
 		$scope.findOne = function(){
