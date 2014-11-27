@@ -1,13 +1,8 @@
 'use strict';
 
 // Loops controller
-<<<<<<< HEAD
 angular.module('loops').controller('LoopsController', ['$scope', '$stateParams', '$location', 'Authentication', 'Loops', '$http',
 	function($scope, $stateParams, $location, Authentication, Loops, $http ) {
-=======
-angular.module('loops').controller('LoopsController', ['$scope', '$stateParams', '$location', 'Authentication', 'Loops', 'InstrData',
-	function($scope, $stateParams, $location, Authentication, Loops, InstrData) {
->>>>>>> 2756b204617da33da56be08ad2aa321a56fc94ec
 		$scope.authentication = Authentication;
 
 
