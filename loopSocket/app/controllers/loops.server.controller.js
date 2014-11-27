@@ -72,7 +72,7 @@ exports.delete = function(req, res) {
 /**
  * List of Loops
  */
-exports.list = function(req, res) { Loop.find().sort('-created').populate('user', 'displayName').exec(function(err, loops) {
+exports.list = function(req, res) { Loop.find().sort('-created').populate('user', 'username').exec(function(err, loops) {
 		if (err) {
 			return res.status(400).send({
 				message: errorHandler.getErrorMessage(err)
