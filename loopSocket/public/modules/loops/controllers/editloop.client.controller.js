@@ -5,24 +5,25 @@ angular.module('loops').controller('EditLoopController', ['$scope', '$stateParam
 	function($scope, $stateParams, $location, Authentication, Loops, LoopSync, $interval) {
 		$scope.authentication = Authentication;
 
+		var loadState = Loops.get({
+			loopId: $stateParams.loopId
+		});
+		loadState.$promise.then(function(data) {
+			$scope.$broadcast('loadpage', data);
+		});
+
 		var loopsync = new LoopSync(0,0);
+
+		loopsync.activeUsersSocket(function(activeUsers){
+    		$scope.activeUsers = activeUsers;
+    		$scope.$apply();
+    	});
 
 		var userName = $scope.authentication.user.username;
 		loopsync.connect(userName);
 		$scope.$on("$destroy", function(){
 			loopsync.disconnect(userName);
     	});
-    	loopsync.activeUsersSocket();
-    	//console.log(loopsync.connectedUsers);
-    	/*$scope.$on("$stateChangeStart", function(){
-			loopsync.disconnect(userName);
-    	});*/
-		
-		//$interval(console.log(loopsync.getActiveUsers()), 500);
-		$scope.activeUsers = function() {
-			//$scope.activeUsers = loopsync.getActiveUsers();
-			return loopsync.getActiveUsers();
-		};
 
 		//$scope.loop = {};
 		$scope.findOne = function(){
@@ -36,10 +37,9 @@ angular.module('loops').controller('EditLoopController', ['$scope', '$stateParam
 			$scope.loop.$remove(function() {
 				$location.path('loops');
 			});
-			
 
 			console.log('here1');
-			
+
 		};
 
 		$scope.showControls = function() {
@@ -73,8 +73,6 @@ angular.module('loops').controller('EditLoopController', ['$scope', '$stateParam
 
 		$scope.updateState = function() {
 			var loop = $scope.loop;
-			console.log('server');
-			console.log(loop);
 
 			loop.$update(function() {
 				$location.path('loops/' + loop._id);

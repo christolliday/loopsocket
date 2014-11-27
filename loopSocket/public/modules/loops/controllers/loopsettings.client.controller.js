@@ -47,22 +47,31 @@ angular.module('loops').controller('LoopSettingsController', ['$scope', '$stateP
 		};
 
 		$scope.getMembers = function(index) {
-			return $scope.loop.permissions.members;
+			if($scope.loop.$resolved){
+				return $scope.loop.permissions.members;
+			}
 		}
 
 		$scope.addMember = function(user){
+			console.log(user);
 			$scope.loop.permissions.members.push(user);
 			updateLoop();
+			$scope.newMember = '';
 		};
 
 		$scope.deleteMember = function(user){
 			var members = $scope.loop.permissions.members;
 			for (var i=0; i<members.length; i++){
-				//if (user._id === members[i]._id){
 				if (user === members[i]._id){
 					members.splice(i, 1);
 					updateLoop();
-					console.log(members);
+					
+					//redirect
+					if (user == $scope.authentication.user._id){
+						$location.path('loops/');
+					}
+
+
 				}
 			}
 		};
@@ -110,6 +119,14 @@ angular.module('loops').controller('LoopSettingsController', ['$scope', '$stateP
 
 		$scope.updateLoopName = function() {
 			updateLoop();
+	
+		}
+
+		$scope.isCreatedByMe = function() {
+			if($scope.loop.user._id	== $scope.authentication.user._id) {
+				return true;
+			}
+			return false;
 		}
 	}
 ]);
