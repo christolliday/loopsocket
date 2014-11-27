@@ -16,8 +16,8 @@
     <button class="btn menuBtn" data-ng-click="revertState()">Revert</button>
     <div class = "sequencer">
         <div class="sequencerMainControls">
-            <button class="btn btn-sm glyphicon" ng-click="play()" ng-model="playing">
-                <span ng-class="{'glyphicon-play':!playing,'glyphicon-pause':playing}"></span>
+            <button class="btn btn-sm glyphicon" ng-click="play()" ng-model="loop.playing">
+                <span ng-class="{'glyphicon-play':!loop.playing,'glyphicon-pause':loop.playing}"></span>
             </button>
 
             <button class="btn btn-sm glyphicon" ng-click="stop()"><span class="glyphicon-stop"></span> </button>
@@ -38,12 +38,11 @@
             </div>
 
             <div class="btn-group bpm-ctrl">
-                <!--<button class="btn btn-sm glyphicon" ng-click="loop.bpm=loop.bpm/2"><span>/2</span></button>-->
-                <button class="btn btn-sm glyphicon" ng-click="loop.bpm=(loop.bpm/2) - ((loop.bpm/2)%5)"><span>/2</span></button>
-                <button class="btn btn-sm glyphicon" ng-click="loop.bpm=loop.bpm-5"><span class="glyphicon-minus"></span> </button>
+                <button class="btn btn-sm glyphicon" ng-click="halfBPM()"><span>/2</span></button>
+                <button class="btn btn-sm glyphicon" ng-click="decrBPM()"><span class="glyphicon-minus"></span> </button>
                 <button class="btn btn-sm glyphicon" disabled>{{loop.bpm}} BPM</button>
-                <button class="btn btn-sm glyphicon" ng-click="loop.bpm=loop.bpm+5"><span class="glyphicon-plus"></span> </button>
-                <button class="btn btn-sm glyphicon" ng-click="loop.bpm=loop.bpm*2"><span>*2</span> </button>
+                <button class="btn btn-sm glyphicon" ng-click="incrBPM()"><span class="glyphicon-plus"></span> </button>
+                <button class="btn btn-sm glyphicon" ng-click="doubleBPM()"><span>*2</span> </button>
             </div>
         </div>
 
