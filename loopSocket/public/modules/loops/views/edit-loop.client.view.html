@@ -9,7 +9,27 @@
 
             <button class="btn menuBtn" data-ng-click="remove();"><span class="glyphicon glyphicon-trash"></span>
             </button>
-            <button class="btn menuBtn" data-ng-click="">Settings </button>
+            <button class="btn menuBtn" data-ng-click="showSettings = !showSettings">Settings </button>
+            <div ng-show="showSettings"class="settings">
+                    <h1>Settings</h1>
+                        <div ng-show="isPublic()">
+                            <span> This loop is currently private. </span>
+                            <a class="btn btn-default" data-ng-click="makePublic()">Make Public</a>
+                        </div>
+                        <div ng-show="isPrivate()">
+                            <span> This loop is currently public to everyone </span>
+                            <a class="btn btn-default" data-ng-click="makePrivate()">Make Private</a>
+                        </div>
+                        <div data-ng-repeat="User in information"> 
+                            <div ng-hide="checkPerson($index)">
+                                <span> {{information[$index].firstName}} has access to this loop. </span>
+                            </div>
+                            <div ng-show="checkPerson($index)">
+                                <span ng-hide="show" data-ng-bind="information[$index].firstName"></span>
+                                <a class="btn btn-default" data-ng-click="addPerson($index); show=true" ng-hide="show">Add</a>
+                            </div>
+                        </div>
+                    </div>
         </div>
     </div>
 
