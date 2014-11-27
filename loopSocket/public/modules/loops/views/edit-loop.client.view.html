@@ -6,10 +6,9 @@
         <div class="loopControls">
             <button class="btn menuBtn" data-ng-click="updateState()">Save</button>
             <button class="btn menuBtn" data-ng-click="getState()">Revert</button>
-            <button class="btn menuBtn" data-ng-click="">Settings </button>
+            <button class="btn menuBtn" data-ng-click="showSettings = !showSettings">Settings </button>
             <button class="btn menuBtn" data-ng-click="remove();"><span class="glyphicon glyphicon-trash"></span>
             </button>
-            <button class="btn menuBtn" data-ng-click="showSettings = !showSettings">Settings </button>
             <div ng-show="showSettings"class="settings">
                     <h1>Settings</h1>
                         <div ng-show="isPublic()">

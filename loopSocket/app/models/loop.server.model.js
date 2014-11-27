@@ -33,9 +33,14 @@ var LoopSchema = new Schema({
 		type: Schema.ObjectId,
 		ref: 'User'
 	},
+
+	permission_mode: {
+		type: String,
+		default: 'Private'
+	},
 	member: {
 		type: Array,
-		default: ['Private']
+		default: []
 	},
 	/*connected: [ConnectUsers],*/
 	state: {

@@ -100,7 +100,7 @@ angular.module('loops').controller('EditLoopController', ['$scope', '$stateParam
 		};
 		$scope.makePublic = function(){
 			var loop = $scope.loop;
-			loop.member[0] = 'Public';
+			loop.permission_mode = 'Public';
 			loop.$update(function() {
 				$location.path('loops/' + loop._id);
 			}, function(errorResponse) {
@@ -109,12 +109,12 @@ angular.module('loops').controller('EditLoopController', ['$scope', '$stateParam
 		};
 		$scope.makePrivate = function(){
 			var loop = $scope.loop;
-			loop.member[0] = 'Private';
+			loop.permission_mode = 'Private';
 		};
 
 		$scope.isPublic = function(){
 			var loop = $scope.loop;
-			if (loop.member[0] === 'Public'){
+			if (loop.permission_mode === 'Public'){
 				return false;
 			}
 			else{
@@ -124,7 +124,7 @@ angular.module('loops').controller('EditLoopController', ['$scope', '$stateParam
 		};
 		$scope.isPrivate = function(){
 			var loop = $scope.loop;
-			if (loop.member[0] === 'Private'){
+			if (loop.permission_mode === 'Private'){
 				return false;
 			}
 			else{
@@ -136,13 +136,11 @@ angular.module('loops').controller('EditLoopController', ['$scope', '$stateParam
 		$scope.checkList = function(index){
 			var list = $scope.listMembers[index];
 			var length = $scope.listMembers[index].member.length;
-			if ($scope.listMembers[index].member[0] == 'Public'){
-				console.log('1');
+			if ($scope.listMembers[index].permission_mode == 'Public'){
 				return false;
 			}
 			else{
 				if ($scope.listMembers[index].user._id == $scope.user._id){
-					console.log('2');
 					return false;
 				}
 				else{
