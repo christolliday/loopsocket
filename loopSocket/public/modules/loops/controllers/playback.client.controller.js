@@ -229,53 +229,57 @@ angular.module('loops').controller('PlaybackController', ['$scope', '$document',
 			}
 		};
 
+		$scope.isPlaying = function() {
+			return $scope.loop_state.playing;
+		}
+
 		$scope.incrNumBar = function() {
-			if ($scope.loop.num_bars < 9) { //max number of bars
-				$scope.loop.num_bars = $scope.loop.num_bars + 1;
+			if ($scope.loop_state.num_bars < 9) { //max number of bars
+				$scope.loop_state.num_bars = $scope.loop_state.num_bars + 1;
 			}
 		}
 		$scope.decrNumBar = function () {
-			if ($scope.loop.num_bars > 1) {
-				$scope.loop.num_bars = $scope.loop.num_bars - 1;
+			if ($scope.loop_state.num_bars > 1) {
+				$scope.loop_state.num_bars = $scope.loop_state.num_bars - 1;
 			}
 		}
 
 		$scope.incrBeatsPerBar = function() {
-			if ($scope.loop.beats_per_bar < 9) { //max number of beats per bar
-				$scope.loop.beats_per_bar = $scope.loop.beats_per_bar + 1;
+			if ($scope.loop_state.beats_per_bar < 9) { //max number of beats per bar
+				$scope.loop_state.beats_per_bar = $scope.loop_state.beats_per_bar + 1;
 			}
 		}
 		$scope.decrBeatsPerBar = function () {
-			if ($scope.loop.beats_per_bar > 1) {
-				$scope.loop.beats_per_bar = $scope.loop.beats_per_bar - 1;
+			if ($scope.loop_state.beats_per_bar > 1) {
+				$scope.loop_state.beats_per_bar = $scope.loop_state.beats_per_bar - 1;
 			}
 		}
 
 		$scope.incrBPM = function() {
-			if ($scope.loop.bpm < 995) {
-				$scope.loop.bpm = $scope.loop.bpm + 5;
+			if ($scope.loop_state.bpm < 995) {
+				$scope.loop_state.bpm = $scope.loop_state.bpm + 5;
 			}
 		}
 		$scope.decrBPM = function () {
-			if ($scope.loop.bpm > 10) {
-				$scope.loop.bpm = $scope.loop.bpm - 5;
+			if ($scope.loop_state.bpm > 10) {
+				$scope.loop_state.bpm = $scope.loop_state.bpm - 5;
 			}
 		}
 
 		$scope.doubleBPM = function() {
-			if (($scope.loop.bpm * 2 )< 999) { //max BPM is 995
-				$scope.loop.bpm = $scope.loop.bpm * 2;
+			if (($scope.loop_state.bpm * 2 )< 999) { //max BPM is 995
+				$scope.loop_state.bpm = $scope.loop_state.bpm * 2;
 			}
 			else {
-				$scope.loop.bpm = 995;
+				$scope.loop_state.bpm = 995;
 			}
 		}
 		$scope.halfBPM = function () { //min BPM is 5
-			if (($scope.loop.bpm/2) - (($scope.loop.bpm/2)%5) > 10) {
-				$scope.loop.bpm = ($scope.loop.bpm/2) - (($scope.loop.bpm/2)%5);
+			if (($scope.loop_state.bpm/2) - (($scope.loop_state.bpm/2)%5) > 10) {
+				$scope.loop_state.bpm = ($scope.loop_state.bpm/2) - (($scope.loop_state.bpm/2)%5);
 			}
 			else {
-				$scope.loop.bpm = 10;
+				$scope.loop_state.bpm = 10;
 			}
 		}
 	}
