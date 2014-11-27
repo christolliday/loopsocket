@@ -21,10 +21,8 @@ angular.module('loops').controller('PlaybackController', ['$scope', '$document',
 			console.log(data);
 			if (data.sid == sid){
 				console.log("Data for me!");
-				//JSON.stringify(data,null,2));
-
-				console.log("got state:\n"+JSON.stringify($scope.loop_state,null,2));
 				$scope.loop_state = data.loop;
+				$scope.$apply();
 			}
 		});
 
@@ -69,7 +67,8 @@ angular.module('loops').controller('PlaybackController', ['$scope', '$document',
 			$scope.loop_state.instruments = [];
 			for(var i=0;i<default_num_samples;i++) {
 				$scope.loop_state.instruments[i] = {beats:[]};
-				$scope.loop_state.instruments[i].sample = $scope.samples[i];
+				var sample = $scope.samples[i];
+				$scope.loop_state.instruments[i].sample = {"_id":sample._id,"name":sample.name};
 				loadAudio($scope.loop_state.instruments[i].sample._id);
 			}
 		}
@@ -148,7 +147,6 @@ angular.module('loops').controller('PlaybackController', ['$scope', '$document',
 		}
 
 		function update_clock() {
-
 			time_tick();
 			playback();
 			$scope.$apply();
@@ -158,8 +156,6 @@ angular.module('loops').controller('PlaybackController', ['$scope', '$document',
 		}
 		$scope.sample_click = function(beat,instrument) {
 			instrument.beats[beat] = !instrument.beats[beat];
-
-			console.log("sample_click:\n"+JSON.stringify($scope.loop_state,null,2));
 			stateChanged();
 		};
 		$scope.at_time = function(i) {
@@ -191,7 +187,6 @@ angular.module('loops').controller('PlaybackController', ['$scope', '$document',
 
 		function syncState(){	
 			var state = {'sid' : sid, 'loop' : $scope.loop_state};
-			console.log("syncState:\n"+JSON.stringify($scope.loop_state,null,2));
 			socket.emit('toServer', state);
 		}
 
