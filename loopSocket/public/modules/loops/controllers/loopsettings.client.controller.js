@@ -11,27 +11,8 @@ angular.module('loops').controller('LoopSettingsController', ['$scope', '$stateP
 
 		$scope.users = Users.query();
 
-<<<<<<< HEAD
-		$scope.information = {};
-		$http.get('../../users').success(function(data){
-			$scope.information = data;
-			userInfo = data;
-		});
-
-
-		$scope.addPerson = function(index){
-			var loop = $scope.loop;
-			var length = $scope.loop.member.length;
-			loop.member[length] = userInfo[index]._id;
-			loop.$update(function() {
-				$location.path('loops/' + loop._id);
-			}, function(errorResponse) {
-				$scope.error = errorResponse.data.message;
-			});
-=======
 		$scope.getUsers = function(index){
 			return $scope.users;
->>>>>>> 0969514c4eebf294e1dfadf71f6ace9d76c2ef69
 		};
 
 		$scope.addMember = function(user){
