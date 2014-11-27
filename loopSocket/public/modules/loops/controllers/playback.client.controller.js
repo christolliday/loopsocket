@@ -229,7 +229,7 @@ angular.module('loops').controller('PlaybackController', ['$scope', '$document',
 			}
 		};
 
-		$scope.isOnPlay = function() {
+		$scope.isPlaying = function() {
 			return $scope.loop_state.playing;
 		}
 

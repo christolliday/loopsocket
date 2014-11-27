@@ -18,7 +18,7 @@
     <div class = "sequencer">
         <div class="sequencerMainControls">
             <button class="btn btn-sm glyphicon" ng-click="play()">
-                <span ng-class="{'glyphicon-play':!isOnPlay(),'glyphicon-pause':isOnPlay}"></span>
+                <span ng-class="{'glyphicon-play':!isPlaying(),'glyphicon-pause':isPlaying()}"></span>
             </button>
 
             <button class="btn btn-sm glyphicon" ng-click="stop()"><span class="glyphicon-stop"></span> </button>
