@@ -108,9 +108,22 @@ angular.module('loops').controller('PlaybackController', ['$scope', '$document',
 		}
 
 		$scope.bpmChange = function(diff) {
-			$scope.loop.bpm += diff;
+			//$scope.loop.bpm += diff;
 			saveState();
+			syncState();
 		};
+
+		$scope.bpbChange = function()
+		{
+			saveState();
+			syncState();
+		}
+
+		$scope.barsChange = function()
+		{
+			saveState();
+			syncState();
+		}
 
 		$scope.play = function() {
 			if (!$scope.loop.playing) {
