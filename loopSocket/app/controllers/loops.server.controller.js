@@ -105,7 +105,7 @@ exports.hasAuthorization = function(req, res, next) {
 		next();
 	}
 	else{
-		if (req.loop.member[0] === 'Public'){
+		if (req.loop.permission_mode === 'Public'){
 			next();
 		}
 		else{

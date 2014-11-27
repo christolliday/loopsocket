@@ -10,7 +10,7 @@ angular.module('loops').controller('LoopSettingsController', ['$scope', '$stateP
 				loopId: $stateParams.loopId
 			});
 		};
-		
+
 		var userInfo;
 
 		$scope.information = {};
@@ -38,18 +38,20 @@ angular.module('loops').controller('LoopSettingsController', ['$scope', '$stateP
 		};
 		$scope.checkPerson = function(index){
 			var loop = $scope.loop;
-			var length = $scope.loop.member.length;
-			for (var i=0; i<length; i++){
-				if (userInfo[index]._id === $scope.loop.member[i]){
+			$scope.loop.$promise.then(function(something){
+				var length = $scope.loop.member.length;
+				for (var i=0; i<length; i++){
+					if (userInfo[index]._id === $scope.loop.member[i]){
+						return false;
+					}
+				}
+				if ($scope.loop.user._id === userInfo[index]._id){
 					return false;
 				}
-			}
-			if ($scope.loop.user._id === userInfo[index]._id){
-				return false;
-			}
-			else{
-				return true;
-			}
+				else{
+					return true;
+				}
+			});
 		};
 		$scope.makePublic = function(){
 			var loop = $scope.loop;
@@ -63,6 +65,11 @@ angular.module('loops').controller('LoopSettingsController', ['$scope', '$stateP
 		$scope.makePrivate = function(){
 			var loop = $scope.loop;
 			loop.permission_mode = 'Private';
+			loop.$update(function() {
+				$location.path('loops/' + loop._id);
+			}, function(errorResponse) {
+				$scope.error = errorResponse.data.message;
+			});
 		};
 
 		$scope.isPublic = function(){
