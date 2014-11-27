@@ -230,6 +230,28 @@ angular.module('loops').controller('PlaybackController', ['$scope', '$document',
 				$scope.loop.num_bars = revState.numbars;
 			}
 		};
+
+		$scope.incrNumBar = function() {
+			if ($scope.loop.num_bars < 10) { //max number of bars
+				$scope.loop.num_bars = $scope.loop.num_bars + 1;
+			}
+		}
+		$scope.decrNumBar = function () {
+			if ($scope.loop.num_bars > 1) {
+				$scope.loop.num_bars = $scope.loop.num_bars - 1;
+			}
+		}
+
+		$scope.incrBeatsPerBar = function() {
+			if ($scope.loop.beats_per_bar < 10) { //max number of beats per bar
+				$scope.loop.beats_per_bar = $scope.loop.beats_per_bar + 1;
+			}
+		}
+		$scope.decrBeatsPerBar = function () {
+			if ($scope.loop.beats_per_bar > 1) {
+				$scope.loop.beats_per_bar = $scope.loop.beats_per_bar - 1;
+			}
+		}
 	}
 ]);
 
