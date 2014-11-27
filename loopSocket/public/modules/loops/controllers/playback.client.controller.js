@@ -87,7 +87,7 @@ angular.module('loops').controller('PlaybackController', ['$scope', '$document',
 		$scope.changeSample = function(sample,instrument) {
 			instrument.sample = sample;
 			loadAudio(instrument.sample._id);
-			stateChanged();
+			stateChange();
 		};
 		$scope.playInstrument = function(instrument) {
 			var sampleBuffer = sampleBuffers[instrument.sample._id];
@@ -95,11 +95,11 @@ angular.module('loops').controller('PlaybackController', ['$scope', '$document',
 		};
 		$scope.addInstrument = function() {
 			$scope.loop_state.instruments.push({sample:$scope.samples[0],beats:[]});
-			stateChanged();
+			stateChange();
 		};
 		$scope.removeInstrument = function(instrument) {
 			$scope.loop_state.instruments.splice( $scope.loop_state.instruments.indexOf(instrument), 1 );
-			stateChanged();
+			stateChange();
 		};
 		function getBeatDuration() {
 			return 60000/$scope.loop_state.bpm;
@@ -127,7 +127,7 @@ angular.module('loops').controller('PlaybackController', ['$scope', '$document',
 			for (var instrument in $scope.loop_state.instruments) {
 				$scope.loop_state.instruments[instrument].beats = [];
 			}
-			stateChanged();
+			stateChange();
 		};
 		$scope.total_beats = function() {
 			return $scope.loop_state.num_bars*$scope.loop_state.beats_per_bar;
@@ -156,7 +156,7 @@ angular.module('loops').controller('PlaybackController', ['$scope', '$document',
 		}
 		$scope.sample_click = function(beat,instrument) {
 			instrument.beats[beat] = !instrument.beats[beat];
-			stateChanged();
+			stateChange();
 		};
 		$scope.at_time = function(i) {
 			return $scope.loop_state.time == (i - 1);
@@ -170,7 +170,7 @@ angular.module('loops').controller('PlaybackController', ['$scope', '$document',
 			return Math.floor((beat-1)/$scope.loop_state.beats_per_bar)%2===(group-1);
 		};
 
-		function stateChanged() {
+		function stateChange() {
 			saveState();
 			syncState();
 		}
