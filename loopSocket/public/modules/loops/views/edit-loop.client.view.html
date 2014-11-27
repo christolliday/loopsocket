@@ -46,6 +46,7 @@
             <div ng-show="isPrivate()" data-ng-repeat="user in getUsers()">
                 <div ng-show="isMember(user)">
                     <span> {{user.username}} has access to this loop. </span>
+                    <a class="btn btn-default" data-ng-click="deleteMember(user)"> Delete </a>
                 </div>
                 <div ng-hide="isMember(user)">
                     <span ng-hide="show" data-ng-bind="user.username"></span>
