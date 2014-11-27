@@ -6,15 +6,21 @@
         <div class="loopControls">
             <button class="btn menuBtn" data-ng-click="updateState()">Save</button>
             <button class="btn menuBtn" data-ng-click="getState()">Revert</button>
-
+            <button class="btn menuBtn" data-ng-click="">Settings </button>
             <button class="btn menuBtn" data-ng-click="remove();"><span class="glyphicon glyphicon-trash"></span>
             </button>
-            <button class="btn menuBtn" data-ng-click="">Settings </button>
+            
         </div>
+
+
+    </div>
+    <div class="loopUsers">
+        <label>Active User(s): </label>
+        <label>{{loop.user.username}}</label>
     </div>
 
     <section data-ng-controller="PlaybackController">
-    <button class="btn menuBtn" data-ng-click="revertState()">Revert</button>
+    <!--<button class="btn menuBtn" data-ng-click="revertState()">Revert</button>-->
     <div class = "sequencer">
         <div class="sequencerMainControls">
             <button class="btn btn-sm glyphicon" ng-click="play()">

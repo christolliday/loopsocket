@@ -12,10 +12,18 @@
 	width:100%;
 }
 
+.loopUsers {
+	margin-left: 20px;
+	margin-bottom: 20px;
+}
+
 .loopControls {
 	text-align: right;
 	width:100%;
 }
+
+.loopUsers
+
 .menuBtn {
 	margin-left: 3px;
 	margin-right: 3px;
