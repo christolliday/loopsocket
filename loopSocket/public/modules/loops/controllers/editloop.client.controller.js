@@ -14,18 +14,9 @@ angular.module('loops').controller('EditLoopController', ['$scope', '$stateParam
 
 		// Remove existing Loop
 		$scope.remove = function() {
-			if ( $scope.loop ) { $scope.loop.$remove();
-
-				for (var i in $scope.loops ) {
-					if ($scope.loops [i] === $scope.loop ) {
-						$scope.loops.splice(i, 1);
-					}
-				}
-			} else {
-				$scope.loop.$remove(function() {
-					$location.path('loops');
-				});
-			}
+			$scope.loop.$remove(function() {
+				$location.path('loops');
+			});
 		};
 
 		// Update existing Loop

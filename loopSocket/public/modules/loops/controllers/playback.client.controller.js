@@ -117,6 +117,7 @@ angular.module('loops').controller('PlaybackController', ['$scope', '$document',
 			}
 			stateChanged();
 		};
+
 		$scope.total_beats = function() {
 			return $scope.loop_state.num_bars*$scope.loop_state.beats_per_bar;
 		};
@@ -168,12 +169,25 @@ angular.module('loops').controller('PlaybackController', ['$scope', '$document',
 
 
 		$scope.$on('revert', function(event, args) {
-			$scope.loop_state = args.state;
-			console.log('revert');
-			console.log(args.state);
-			$scope.loop_state.playing = false;
-			$scope.loop_state.time = 0;
-			clearTimeout(timeout);
+			if(args.state.instruments.length == 0){
+				console.log("empty");
+				//clear it instead?
+				for (var instrument in $scope.loop_state.instruments) {
+					$scope.loop_state.instruments[instrument].beats = [];
+				}
+				$scope.loop_state.bpm = 100;
+				$scope.loop_state.beats_per_bar = 4;
+				$scope.loop_state.num_bars = 4;
+				stateChanged();
+			} else {
+				$scope.loop_state = args.state;
+				console.log('revert');
+				console.log(args.state);
+				$scope.loop_state.playing = false;
+				$scope.loop_state.time = 0;
+				clearTimeout(timeout);
+				stateChanged();
+			}
 		});
 
 		$scope.isPlaying = function() {
