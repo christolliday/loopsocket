@@ -2,29 +2,18 @@
 
 
 // Sessions controller
-angular.module('loops').controller('PlaybackController', ['$scope', '$document', 'Samples', '$location', 'InstrData', '$interval',
-	function($scope, $document, Samples, $location, InstrData, $interval) {
+angular.module('loops').controller('PlaybackController', ['$scope', '$document', 'Samples', 
+	'InstrData', '$interval', 'LoopSync',
+	function($scope, $document, Samples, InstrData, $interval, LoopSync) {
 
-		var relpath = $location.path();
-		var sid = relpath.substring(7);
-		//console.log(sid);
-
-		//var socket = io.connect('http://localhost:3000'); // port# not needed?!
-		var socket = io(); // jshint ignore:line
-
-		socket.emit('toServer_initNewClient', sid);
-		socket.on('toAllClients_initNewClient', function(sidFromServer) {
-			if (sidFromServer === sid)
-				syncState();
-		});
-		socket.on('toAllClients', function (data) {
-			console.log(data);
-			if (data.sid === sid){
-				console.log('Data for me!');
-				$scope.loop_state = data.loop;
-				$scope.$apply();
-			}
-		});
+		var getState = function() {
+			return $scope.loop_state;
+		};
+		var receiveState = function(data) {
+			$scope.loop_state = data.loop;
+			$scope.$apply();
+		};
+		var loopsync = new LoopSync(receiveState,getState);
 
 		var sampleBuffers = {};
 		window.AudioContext = window.AudioContext || window.webkitAudioContext;
@@ -87,7 +76,7 @@ angular.module('loops').controller('PlaybackController', ['$scope', '$document',
 		$scope.changeSample = function(sample,instrument) {
 			instrument.sample = sample;
 			loadAudio(instrument.sample._id);
-			stateChange();
+			stateChanged();
 		};
 		$scope.playInstrument = function(instrument) {
 			var sampleBuffer = sampleBuffers[instrument.sample._id];
@@ -95,11 +84,11 @@ angular.module('loops').controller('PlaybackController', ['$scope', '$document',
 		};
 		$scope.addInstrument = function() {
 			$scope.loop_state.instruments.push({sample:$scope.samples[0],beats:[]});
-			stateChange();
+			stateChanged();
 		};
 		$scope.removeInstrument = function(instrument) {
 			$scope.loop_state.instruments.splice( $scope.loop_state.instruments.indexOf(instrument), 1 );
-			stateChange();
+			stateChanged();
 		};
 		function getBeatDuration() {
 			return 60000/$scope.loop_state.bpm;
@@ -127,7 +116,7 @@ angular.module('loops').controller('PlaybackController', ['$scope', '$document',
 			for (var instrument in $scope.loop_state.instruments) {
 				$scope.loop_state.instruments[instrument].beats = [];
 			}
-			stateChange();
+			stateChanged();
 		};
 		$scope.total_beats = function() {
 			return $scope.loop_state.num_bars*$scope.loop_state.beats_per_bar;
@@ -156,7 +145,7 @@ angular.module('loops').controller('PlaybackController', ['$scope', '$document',
 		}
 		$scope.sample_click = function(beat,instrument) {
 			instrument.beats[beat] = !instrument.beats[beat];
-			stateChange();
+			stateChanged();
 		};
 		$scope.at_time = function(i) {
 			return $scope.loop_state.time === (i - 1);
@@ -170,9 +159,9 @@ angular.module('loops').controller('PlaybackController', ['$scope', '$document',
 			return Math.floor((beat-1)/$scope.loop_state.beats_per_bar)%2===(group-1);
 		};
 
-		function stateChange() {
+		function stateChanged() {
 			saveState();
-			syncState();
+			loopsync.sendState();
 		}
 		function saveState() { //save state of loop
 			var instrumentList = [];
@@ -183,11 +172,6 @@ angular.module('loops').controller('PlaybackController', ['$scope', '$document',
 				beatList.push(instrument.beats);
 			}
 			InstrData.addInstr(instrumentList, beatList, $scope.loop_state.bpm, $scope.loop_state.beats_per_bar, $scope.loop_state.num_bars);
-		}
-
-		function syncState(){	
-			var state = {'sid' : sid, 'loop' : $scope.loop_state};
-			socket.emit('toServer', state);
 		}
 
 		$scope.revertState = function() {
