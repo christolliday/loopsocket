@@ -1,14 +1,16 @@
 'use strict';
 
 // Loops controller
-angular.module('loops').controller('EditLoopController', ['$scope', '$stateParams', '$location', 'Authentication', 'Loops', 'InstrData',
-	function($scope, $stateParams, $location, Authentication, Loops, InstrData) {
+angular.module('loops').controller('EditLoopController', ['$scope', '$stateParams', '$location', 'Authentication', 'Loops',
+	function($scope, $stateParams, $location, Authentication, Loops) {
 		$scope.authentication = Authentication;
 
 		//$scope.loop = {};
-		$scope.loop = Loops.get({ 
+		$scope.findOne = function(){
+			$scope.loop = Loops.get({
 				loopId: $stateParams.loopId
 			});
+		};
 
 		// Remove existing Loop
 		$scope.remove = function() {
@@ -42,36 +44,26 @@ angular.module('loops').controller('EditLoopController', ['$scope', '$stateParam
 		};
 
 		$scope.updateState = function() {
-			var loop = $scope.loop ;
-			var loopState = InstrData.getInstr();
-
-			console.log(JSON.stringify($scope.loop_container,null,2));
-
-			loop.state = {
-				instrument: loopState.instrument,
-				beats: loopState.arr,
-				bpm: loopState.bpm,
-				bpb: loopState.bpb,
-				numbars: loopState.numbars
-			};
+			var loop = $scope.loop;
+			console.log('server');
+			console.log(loop);
 
 			loop.$update(function() {
 				$location.path('loops/' + loop._id);
 			}, function(errorResponse) {
 				$scope.error = errorResponse.data.message;
 			});
-			sendState();
 		};
 
-		function sendState() {
+		$scope.revertState = function() {
 			var revState = Loops.get({
 				loopId: $stateParams.loopId
 			});
-
 			revState.$promise.then(function(data) {
-				InstrData.setRev(data.state);
+				console.log('revertState');
+				$scope.$broadcast('revert', data);
 			});
-		}
+		};
 
 		$scope.show_settings = false;
 	}

@@ -58,7 +58,7 @@ angular.module('loops').controller('LoopsController', ['$scope', '$stateParams',
 
 		// Find existing Loop
 		$scope.findOne = function() {
-			$scope.loop = Loops.get({ 
+			$scope.loop = Loops.get({
 				loopId: $stateParams.loopId
 			});
 		};

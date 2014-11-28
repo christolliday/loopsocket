@@ -44,11 +44,10 @@ var LoopSchema = new Schema({
 	},
 	/*connected: [ConnectUsers],*/
 	state: {
-		instrument: { type: Array},
-		beats: {type: Array},
+		instruments: { type: Array},
 		bpm: {type: Number},
-		bpb: {type: Number},
-		numbars: { type: Number}
+		beats_per_bar: {type: Number},
+		num_bars: { type: Number}
 	}
 });
 

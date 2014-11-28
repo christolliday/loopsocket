@@ -2,9 +2,8 @@
 
 
 // Sessions controller
-angular.module('loops').controller('PlaybackController', ['$scope', '$document', 'Samples', 
-	'InstrData', '$interval', 'LoopSync',
-	function($scope, $document, Samples, InstrData, $interval, LoopSync) {
+angular.module('loops').controller('PlaybackController', ['$scope', '$document', 'Samples', '$interval', 'LoopSync',
+	function($scope, $document, Samples, $interval, LoopSync) {
 
 		var getState = function() {
 			return $scope.loop_state;
@@ -160,41 +159,22 @@ angular.module('loops').controller('PlaybackController', ['$scope', '$document',
 		};
 
 		function stateChanged() {
-			saveState();
 			loopsync.sendState();
 		}
-		function saveState() { //save state of loop
-			var instrumentList = [];
-			var beatList = [];
-			for(var i=0;i<$scope.loop_state.instruments.length;i++) {
-				var instrument = $scope.loop_state.instruments[i];
-				instrumentList.push(instrument.sample);
-				beatList.push(instrument.beats);
-			}
-			InstrData.addInstr(instrumentList, beatList, $scope.loop_state.bpm, $scope.loop_state.beats_per_bar, $scope.loop_state.num_bars);
-		}
 
-		$scope.revertState = function() {
-			var revState = InstrData.getRev();
-			if(revState === null){
-				alert('Nothing Saved yet.');
-			} else {
-				console.log(revState);
-
-				$scope.loop_state.instruments = [];
-				/*for (var i =0;i<revState.instrument.length;i++){
-					$scope.loop_state.instruments[i] = {sample: '', beats: []};
-				}
-				for(var i = 0;i<revState.instrument.length;i++){
-					$scope.loop_state.instruments[i].sample = revState.instrument[i];
-					loadAudio($scope.loop_state.instruments[i].sample._id);
-					$scope.loop_state.instruments[i].beats = revState.beats[i];
-				}*/
-				$scope.loop_state.bpm = revState.bpm;
-				$scope.loop_state.beats_per_bar = revState.bpb;
-				$scope.loop_state.num_bars = revState.numbars;
-			}
+		$scope.trackState = function(loop) {
+			loop.state = $scope.loop_state;
 		};
+
+
+		$scope.$on('revert', function(event, args) {
+			$scope.loop_state = args.state;
+			console.log('revert');
+			console.log(args.state);
+			$scope.loop_state.playing = false;
+			$scope.loop_state.time = 0;
+			clearTimeout(timeout);
+		});
 
 		$scope.isPlaying = function() {
 			return $scope.loop_state.playing;
