@@ -72,6 +72,9 @@ angular.module('loops').controller('PlaybackController', ['$scope', '$document',
 			return JSON.stringify($scope.loop_state,null,2);
 		};
 
+		$scope.getSamples = function() {
+			return $scope.samples;
+		}
 		$scope.changeSample = function(sample,instrument) {
 			instrument.sample = sample;
 			loadAudio(instrument.sample._id);
@@ -92,6 +95,9 @@ angular.module('loops').controller('PlaybackController', ['$scope', '$document',
 		function getBeatDuration() {
 			return 60000/$scope.loop_state.bpm;
 		}
+
+
+
 
 		$scope.play = function() {
 			if (!$scope.loop_state.playing) {
@@ -161,24 +167,11 @@ angular.module('loops').controller('PlaybackController', ['$scope', '$document',
 
 		function stateChanged() {
 			loopsync.sendState();
-			$scope.$parent.loop.state = $scope.loop_state;
 		}
 
-		$scope.$on('revert', function(event, args) {
-			if(args.state.instruments.length == 0){
-				console.log("empty");
-				//init
-				initLoop();
-			} else {
-				$scope.loop_state = args.state;
-				console.log('revert');
-				console.log(args.state);
-				$scope.loop_state.time = 0;
-				$scope.loop_state.playing = false;
-			}
-			clearTimeout(timeout);
-			stateChanged();
-		});
+		$scope.trackState = function(loop) {
+			loop.state = $scope.loop_state;
+		};
 
 
 		$scope.$on('revert', function(event, args) {
@@ -202,6 +195,10 @@ angular.module('loops').controller('PlaybackController', ['$scope', '$document',
 			clearTimeout(timeout);
 			stateChanged();
 		});
+
+		$scope.getInstruments() {
+			return $scope.loop_state.instruments;
+		}
 
 		$scope.getTime = function() {
 			return $scope.loop_state.time;

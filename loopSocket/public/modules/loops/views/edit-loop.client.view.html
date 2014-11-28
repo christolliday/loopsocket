@@ -85,7 +85,7 @@
 
                     <td/>
                 </tr>
-                <tr ng-repeat="i in loop_state.instruments">
+                <tr ng-repeat="i in getInstruments()">
                     <td>
                         <div class="btn-group instrument-select" dropdown>
                             <button type="button" class="btn btn-primary instrumentDropdown" ng-click="playInstrument(i)">{{i.sample.name}}</button>
