@@ -161,11 +161,24 @@ angular.module('loops').controller('PlaybackController', ['$scope', '$document',
 
 		function stateChanged() {
 			loopsync.sendState();
+			$scope.$parent.loop.state = $scope.loop_state;
 		}
 
-		$scope.trackState = function(loop) {
-			loop.state = $scope.loop_state;
-		};
+		$scope.$on('revert', function(event, args) {
+			if(args.state.instruments.length == 0){
+				console.log("empty");
+				//init
+				initLoop();
+			} else {
+				$scope.loop_state = args.state;
+				console.log('revert');
+				console.log(args.state);
+				$scope.loop_state.time = 0;
+				$scope.loop_state.playing = false;
+			}
+			clearTimeout(timeout);
+			stateChanged();
+		});
 
 
 		$scope.$on('revert', function(event, args) {

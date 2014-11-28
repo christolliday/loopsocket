@@ -51,7 +51,6 @@ angular.module('loops').controller('EditLoopController', ['$scope', '$stateParam
 				loopId: $stateParams.loopId
 			});
 			revState.$promise.then(function(data) {
-				console.log('revertState');
 				$scope.$broadcast('revert', data);
 			});
 		};

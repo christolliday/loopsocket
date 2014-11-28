@@ -67,37 +67,5 @@ angular.module('loops').controller('LoopsController', ['$scope', '$stateParams',
 		$scope.updateConUsers = function() {
 			var loop = $scope.loop;
 		};
-
-		$scope.updateState = function() {
-			var loop = $scope.loop ;
-			var loopState = InstrData.getInstr();
-
-			console.log(JSON.stringify($scope.loop_container,null,2));
-
-			loop.state = {
-				instrument: loopState.instrument,
-				beats: loopState.arr,
-				bpm: loopState.bpm,
-				bpb: loopState.bpb,
-				numbars: loopState.numbars
-			};
-
-			loop.$update(function() {
-				$location.path('loops/' + loop._id);
-			}, function(errorResponse) {
-				$scope.error = errorResponse.data.message;
-			});
-			sendState();
-		};
-
-		function sendState() {
-			var revState = Loops.get({
-				loopId: $stateParams.loopId
-			});
-
-			revState.$promise.then(function(data) {
-				InstrData.setRev(data.state);
-			});
-		}
 	}
 ]);
