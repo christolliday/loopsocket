@@ -13,6 +13,7 @@ module.exports = function(app) {
 
 	// Setting up the users profile api
 	router.route('/users/me').get(users.me);
+	router.route('/users').get(users.list);
 	router.route('/users').put(users.update);
 	router.route('/users/accounts').delete(users.removeOAuthProvider);
 
