@@ -89,80 +89,10 @@
 	width:15%;
 }
 
-.td-instrument-button {
-	padding: 5px 20px 5px;
-	text-align: center;
-	vertical-align: middle;
-	margin: 3px;
-	min-height: 30px;
-	min-width: 40px;
-}
-.td-instrument-time {
-	padding: 5px 20px 5px;
-	text-align: center;
-	vertical-align: middle;
-	margin: 3px;
-	min-height: 20px;
-	min-width: 40px;
-}
-
-
-
-.atTime {
-	background-color: #E00;
-}
-.notAtTime {
-	background-color: #E00;
-	opacity: 0.25;
-}
-
 .bpm-ctrl {
 	float: right;
 }
 
-
-/* controller buttons */
-
-/* exactly the same as customBtn, but without hover */
-.timeBtn  {
-	display: inline-block;
-	font-size: 14px;
-	font-weight: normal;
-	line-height: 1.42857143;
-	text-align: center;
-	white-space: nowrap;
-	vertical-align: middle;
-	background-image: none;
-	border: 1px solid transparent;
-	border-radius: 4px;
-}
-
-.customBtn {
-	display: inline-block;
-	font-size: 14px;
-	font-weight: normal;
-	line-height: 1.42857143;
-	text-align: center;
-	white-space: nowrap;
-	vertical-align: middle;
-	cursor: pointer;
-	background-image: none;
-	border: 1px solid transparent;
-	border-radius: 4px;
-}
-
-.customBtn:hover,
-.customBtn:focus,
-.customBtn.focus {
-	background-color: #3071a9
-}
-.customBtn:active,
-.customBtn.active {
-	background-image: none;
-	outline: 0;
-	-webkit-box-shadow: inset 0 3px 5px rgba(0, 0, 0, .125);
-	box-shadow: inset 0 3px 5px rgba(0, 0, 0, .125);
-}
 
 .controlBtn {
 	background-color: #CCCCCC;
@@ -171,6 +101,44 @@
 .controlBtn:hover {
 	background-color: #AAAAAA;
 	border-color:#999999
+}
+
+/* main sequencer buttons (beats and time) */
+
+.sequencerBtn {
+	display: inline-block;
+	border: 1px solid transparent;
+	border-radius: 4px;
+	margin: 3px;
+	width: 40px;
+}
+
+.sequencerTimeBtn {
+	min-height: 20px;
+}
+.timeActive {
+	background-color: #E00;
+}
+.timeInactive {
+	background-color: #E00;
+	opacity: 0.25;
+}
+
+.sequencerBeatBtn {
+	min-height: 30px;
+}
+
+.sequencerBeatBtn:hover,
+.sequencerBeatBtn:focus,
+.sequencerBeatBtn.focus {
+	background-color: #3071a9
+}
+.sequencerBeatBtn:active,
+.sequencerBeatBtn.active {
+	background-image: none;
+	outline: 0;
+	-webkit-box-shadow: inset 0 3px 5px rgba(0, 0, 0, .125);
+	box-shadow: inset 0 3px 5px rgba(0, 0, 0, .125);
 }
 
 .inactiveBeat1 {

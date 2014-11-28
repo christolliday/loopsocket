@@ -26,7 +26,7 @@ angular.module('loops').controller('LoopSettingsController', ['$scope', '$stateP
 
 		$scope.addPerson = function(index){
 			var loop = $scope.loop;
-			var length = $scope.loop.member.length;
+			var length = $scope.loop.members.length;
 			loop.member[length] = userInfo[index]._id;
 			loop.$update(function() {
 				$location.path('loops/' + loop._id);
@@ -36,9 +36,9 @@ angular.module('loops').controller('LoopSettingsController', ['$scope', '$stateP
 		};
 		$scope.checkPerson = function(index){
 			var loop = $scope.loop;
-			var length = $scope.loop.member.length;
+			var length = $scope.loop.members.length;
 			for (var i=0; i<length; i++){
-				if (userInfo[index]._id === $scope.loop.member[i]){
+				if (userInfo[index]._id === $scope.loop.members[i]){
 					return false;
 				}
 			}

@@ -148,7 +148,7 @@ angular.module('loops').controller('PlaybackController', ['$scope', '$document',
 			stateChanged();
 		};
 		$scope.at_time = function(i) {
-			return $scope.loop_state.time === (i - 1);
+			return $scope.loop_state.time == (i - 1);
 		};
 
 		$scope.pressed = function (beat, instrument) {
