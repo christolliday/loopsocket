@@ -148,7 +148,7 @@ angular.module('loops').controller('PlaybackController', ['$scope', '$document',
 			stateChanged();
 		};
 		$scope.at_time = function(i) {
-			return $scope.loop_state.time == (i - 1);
+			return $scope.loop_state.time === (i - 1);
 		};
 
 		$scope.pressed = function (beat, instrument) {
@@ -169,8 +169,8 @@ angular.module('loops').controller('PlaybackController', ['$scope', '$document',
 
 
 		$scope.$on('revert', function(event, args) {
-			if(args.state.instruments.length == 0){
-				console.log("empty");
+			if(args.state.instruments.length === 0){
+				console.log('empty');
 				//clear it instead?
 				for (var instrument in $scope.loop_state.instruments) {
 					$scope.loop_state.instruments[instrument].beats = [];
@@ -190,6 +190,9 @@ angular.module('loops').controller('PlaybackController', ['$scope', '$document',
 			stateChanged();
 		});
 
+		$scope.getTime = function() {
+			return $scope.loop_state.time;
+		}
 		$scope.isPlaying = function() {
 			return $scope.loop_state.playing;
 		};

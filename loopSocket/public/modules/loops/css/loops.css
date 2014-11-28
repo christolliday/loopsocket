@@ -97,6 +97,7 @@
 .controlBtn {
 	background-color: #CCCCCC;
 	border-color:#BBBBBB;
+	min-width: 40px;
 }
 .controlBtn:hover {
 	background-color: #AAAAAA;
