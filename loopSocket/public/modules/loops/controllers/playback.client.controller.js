@@ -183,11 +183,11 @@ angular.module('loops').controller('PlaybackController', ['$scope', '$document',
 				$scope.loop_state = args.state;
 				console.log('revert');
 				console.log(args.state);
-				$scope.loop_state.playing = false;
-				$scope.loop_state.time = 0;
-				clearTimeout(timeout);
-				stateChanged();
 			}
+			$scope.loop_state.playing = false;
+			$scope.loop_state.time = 0;
+			clearTimeout(timeout);
+			stateChanged();
 		});
 
 		$scope.isPlaying = function() {
