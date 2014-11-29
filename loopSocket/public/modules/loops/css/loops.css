@@ -26,12 +26,19 @@
 
 }
 
+.settingsHeader {
+	font-size: 1.5em;
+	margin-bottom: 30px;
+}
+
 
 /* main section */
 
 .sequencer {
 	padding-top: 20px;
 	padding-bottom: 20px;
+	padding-left:20px;
+	padding-right: 20px;
 	border-radius: 5px;
 	border: 5px solid;
 	border-color: #BBB;
@@ -39,19 +46,13 @@
 }
 
 .sequencerMainControls {
-	margin: 0 20px 20px 20px;
+	margin-bottom: 20px;
 
 }
 
 .sequencerTable {
 	width: 100%;
-	margin: 0 20px 20px 0;
-	/*margin-left: 20px;*/
 }
-
-/*.sequencerTable td, tr {
-	border: 2px solid black;
-}*/
 
 .sequencerTable tr:nth-child(odd) {
 	background-color: #FFF;
@@ -70,7 +71,7 @@
 }
 .sequencerTable td:first-child {
     width:20%;
-	padding-left: 20px;
+	/*padding-left: 20px;*/
 }
 .sequencerTable td:last-child {
 	width:50px;
