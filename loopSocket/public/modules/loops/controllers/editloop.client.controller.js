@@ -56,5 +56,17 @@ angular.module('loops').controller('EditLoopController', ['$scope', '$stateParam
 		};
 
 		$scope.show_settings = false;
+
+		$scope.isSettingsVisible = function() {
+			return $scope.show_settings;
+		}
+
+		$scope.showSettings = function() {
+			$scope.show_settings = true;
+		}
+
+		$scope.hideSettings = function() {
+			$scope.show_settings = false;
+		}
 	}
 ]);

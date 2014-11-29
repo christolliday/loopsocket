@@ -4,14 +4,21 @@
         <label class="loopName">{{loop.name}}</label>
 
         <div class="loopControls">
+            <button class="btn controlBtn" ng-click="hideSettings()" ng-show="isSettingsVisible()">Back to Edit</button>
             <button class="btn controlBtn" ng-click="updateState()">Save</button>
             <button class="btn controlBtn" ng-click="revertState()">Revert</button>
+            
+            <button class="btn controlBtn" ng-click="remove()"><span class="glyphicon glyphicon-trash"></span>
+            </button>
+
+            <button class="btn controlBtn" ng-click="showSettings()">Settings</button>
+
+            <!--
             <button class="btn controlBtn" ng-click="show_settings=!show_settings">
                 <span ng-show="show_settings">Edit</span>
                 <span ng-show="!show_settings">Settings</span>
             </button>
-            <button class="btn controlBtn" ng-click="remove();"><span class="glyphicon glyphicon-trash"></span>
-            </button>
+            -->
         </div>
     </div>
 
@@ -21,7 +28,7 @@
     </div>
 
     <section data-ng-controller="LoopSettingsController" data-ng-init="findOne()">
-        <div ng-show="show_settings" class="sequencer">
+        <div ng-show="isSettingsVisible()" class="sequencer">
             <h1>Loop Settings</h1>
             <div ng-show="isPublic()">
                 <span> This loop is currently private. </span>
