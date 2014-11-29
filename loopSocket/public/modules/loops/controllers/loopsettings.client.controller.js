@@ -5,24 +5,20 @@ angular.module('loops').controller('LoopSettingsController', ['$scope', '$stateP
 	function($scope, $stateParams, $location, Authentication, Loops, $http) {
 		$scope.authentication = Authentication;
 
-		$scope.findOne = function(){
-			$scope.loop = Loops.get({
+		$scope.loop = Loops.get({
 				loopId: $stateParams.loopId
 			});
-		};
 
 		var userInfo;
 
 		$scope.information = {};
-		$http.get('../../users')
-		.success(function(data){
+		$http.get('../../users').success(function(data){
 			$scope.information = data;
 			userInfo = data;
 		});
 
 		$scope.listMembers = {};
-		$http.get('/members')
-		.success(function(data){
+		$http.get('/members').success(function(data){
 			$scope.listMembers = data;
 		});
 
@@ -37,8 +33,8 @@ angular.module('loops').controller('LoopSettingsController', ['$scope', '$stateP
 			});
 		};
 		$scope.checkPerson = function(index){
-			var loop = $scope.loop;
-			$scope.loop.$promise.then(function(something){
+
+			if($scope.loop.$resolved) {
 				var length = $scope.loop.member.length;
 				for (var i=0; i<length; i++){
 					if (userInfo[index]._id === $scope.loop.member[i]){
@@ -51,7 +47,7 @@ angular.module('loops').controller('LoopSettingsController', ['$scope', '$stateP
 				else{
 					return true;
 				}
-			});
+			}
 		};
 		$scope.makePublic = function(){
 			var loop = $scope.loop;
@@ -80,7 +76,6 @@ angular.module('loops').controller('LoopSettingsController', ['$scope', '$stateP
 			else{
 				return true;
 			}
-
 		};
 		$scope.isPrivate = function(){
 			var loop = $scope.loop;
