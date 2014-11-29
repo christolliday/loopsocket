@@ -16,6 +16,16 @@ angular.module('loops').factory('LoopSync', ['$location', function($location) {
 		};
 		this.sendState = sendState;
 
+		var connect = function(userName) {
+			socket.emit('conn', {'sid' : sid, 'userName' : userName});
+		};
+		this.connect = connect;
+
+		var disconnect = function(userName) {
+			socket.emit('disconn', {'sid' : sid, 'userName' : userName});
+		};
+		this.disconnect = disconnect;
+
 		socket.emit('toServer_initNewClient', sid);
 		socket.on('toAllClients_initNewClient', function(sidFromServer) {
 			if (sidFromServer === sid) {
@@ -28,6 +38,9 @@ angular.module('loops').factory('LoopSync', ['$location', function($location) {
 				console.log('Data for me!');
 				receiveState(data);
 			}
+		});
+		socket.on('activeUsers', function (data) {
+			console.log(data);
 		});
 	};
 

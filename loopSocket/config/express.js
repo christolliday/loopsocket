@@ -150,6 +150,7 @@ module.exports = function(db) {
 	//Attaching SocketIO
 	var server = http.createServer(app);
 	var io = socketio.listen(server);
+	var activeUsers = [];
 
 	io.on('connection', function(socket){
 		socket.on('toServer', function (data){
@@ -158,6 +159,28 @@ module.exports = function(db) {
 		});
 		socket.on('toServer_initNewClient', function(sid){
 			socket.broadcast.emit('toAllClients_initNewClient', sid);
+		});
+		socket.on('disconn', function (data) {
+			//console.log("Disconnected " + data.userName + " from " + data.sid);
+			var index = activeUsers.indexOf(data.userName);
+			if (index !== '-1')
+				activeUsers.splice(index, 1);
+			console.log(activeUsers);
+			//io.emit('activeUsers', activeUsers);
+			// Remove client from loop
+		});
+		socket.on('conn', function (data) {
+			//console.log("Connected " + data.userName + " to " + data.sid);
+			var sid = data.sid;
+			var userName = data.userName;
+			var temp = {};
+			temp[sid] = userName;
+			var index = activeUsers.indexOf(data.userName);
+			//if (index === '-1')
+				activeUsers.push(temp);
+			console.log(activeUsers);
+			//io.emit('activeUsers', activeUsers);
+			// Add client to loop
 		});
 	});
 

@@ -5,6 +5,8 @@
 angular.module('loops').controller('PlaybackController', ['$scope', '$document', 'Samples', '$interval', 'LoopSync',
 	function($scope, $document, Samples, $interval, LoopSync) {
 
+		console.log($scope.authentication.user.username);
+
 		var getState = function() {
 			return $scope.loop_state;
 		};
@@ -13,6 +15,15 @@ angular.module('loops').controller('PlaybackController', ['$scope', '$document',
 			$scope.$apply();
 		};
 		var loopsync = new LoopSync(receiveState,getState);
+
+		/*var userName = $scope.authentication.user.username;
+		loopsync.connect(userName);
+		$scope.$on("$destroy", function(){
+			loopsync.disconnect(userName);
+    	});*/
+    	/*$scope.$on("$stateChangeStart", function(){
+			loopsync.disconnect(userName);
+    	});*/
 
 		var sampleBuffers = {};
 		window.AudioContext = window.AudioContext || window.webkitAudioContext;
