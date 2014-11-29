@@ -3,7 +3,7 @@
     <div class="loopHeader">
         <label class="loopName">{{loop.name}}</label>
 
-        <div class="loopControls">
+        <div class="loopControls" data-ng-show="showControls()">
             <button class="btn controlBtn" ng-click="updateState()">Save</button>
             <button class="btn controlBtn" ng-click="revertState()">Revert</button>
             <button class="btn controlBtn" ng-click="show_settings=!show_settings">
