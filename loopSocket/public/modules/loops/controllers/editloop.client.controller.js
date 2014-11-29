@@ -19,6 +19,19 @@ angular.module('loops').controller('EditLoopController', ['$scope', '$stateParam
 			});
 		};
 
+		$scope.showControls = function() {
+			if($scope.authentication.user && ($scope.authentication.user._id == $scope.loop.user._id)) {
+				return true;
+			} else {
+				for (var i=0; i<$scope.loop.member.length; i++){
+					if ($scope.authentication.user._id === $scope.loop.member[i]) {
+						return true;
+					}
+				}
+				return false;
+			}
+		};
+
 		// Update existing Loop
 		$scope.update = function() {
 			var loop = $scope.loop ;

@@ -3,8 +3,9 @@
     <div class="loopHeader">
         <label class="loopName">{{loop.name}}</label>
 
-        <div class="loopControls">
+        <div class="loopControls"  data-ng-show="showControls()">
             <button class="btn controlBtn" ng-click="hideSettings()" ng-show="isSettingsVisible()">Back to Edit</button>
+
             <button class="btn controlBtn" ng-click="updateState()">Save</button>
             <button class="btn controlBtn" ng-click="revertState()">Revert</button>
             
@@ -12,13 +13,6 @@
             </button>
 
             <button class="btn controlBtn" ng-click="showSettings()">Settings</button>
-
-            <!--
-            <button class="btn controlBtn" ng-click="show_settings=!show_settings">
-                <span ng-show="show_settings">Edit</span>
-                <span ng-show="!show_settings">Settings</span>
-            </button>
-            -->
         </div>
     </div>
 
