@@ -167,31 +167,21 @@ angular.module('loops').controller('PlaybackController', ['$scope', '$document',
 
 		function stateChanged() {
 			loopsync.sendState();
+			$scope.$parent.loop.state = $scope.loop_state;
 		}
-
-		$scope.trackState = function(loop) {
-			loop.state = $scope.loop_state;
-		};
-
 
 		$scope.$on('revert', function(event, args) {
 			if(args.state.instruments.length === 0){
 				console.log('empty');
 				//clear it instead?
-				for (var instrument in $scope.loop_state.instruments) {
-					$scope.loop_state.instruments[instrument].beats = [];
-				}
-				$scope.loop_state.bpm = 100;
-				$scope.loop_state.beats_per_bar = 4;
-				$scope.loop_state.num_bars = 4;
-				stateChanged();
+				initLoop();
 			} else {
 				$scope.loop_state = args.state;
 				console.log('revert');
 				console.log(args.state);
+				$scope.loop_state.playing = false;
+				$scope.loop_state.time = 0;
 			}
-			$scope.loop_state.playing = false;
-			$scope.loop_state.time = 0;
 			clearTimeout(timeout);
 			stateChanged();
 		});

@@ -20,7 +20,7 @@
         <label>{{loop.user.username}}</label>
     </div>
 
-    <section data-ng-controller="LoopSettingsController">
+    <section data-ng-controller="LoopSettingsController" data-ng-init="findOne()">
         <div ng-show="show_settings" class="sequencer">
             <h1>Loop Settings</h1>
             <div ng-show="isPublic()">
@@ -31,12 +31,12 @@
                 <span> This loop is currently public to everyone </span>
                 <a class="btn btn-default" data-ng-click="makePrivate()">Make Private</a>
             </div>
-            <div data-ng-repeat="User in information"> 
+            <div ng-show="isPublic()" data-ng-repeat="User in information"> 
                 <div ng-hide="checkPerson($index)">
-                    <span> {{information[$index].firstName}} has access to this loop. </span>
+                    <span> {{information[$index].username}} has access to this loop. </span>
                 </div>
                 <div ng-show="checkPerson($index)">
-                    <span ng-hide="show" data-ng-bind="information[$index].firstName"></span>
+                    <span ng-hide="show" data-ng-bind="information[$index].username"></span>
                     <a class="btn btn-default" data-ng-click="addPerson($index); show=true" ng-hide="show">Add</a>
                 </div>
             </div>
