@@ -196,7 +196,7 @@ angular.module('loops').controller('PlaybackController', ['$scope', '$document',
 			stateChanged();
 		});
 
-		$scope.getInstruments() {
+		$scope.getInstruments = function() {
 			return $scope.loop_state.instruments;
 		}
 
