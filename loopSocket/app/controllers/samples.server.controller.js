@@ -81,7 +81,7 @@ exports.delete = function(req, res) {
  * List of Samples
  */
 exports.list = function(req, res) { 
-	Sample.find().sort('-created').populate('user', 'displayName').exec(function(err, samples) {
+	Sample.find().sort('-created').populate('user', 'username').exec(function(err, samples) {
 		if (err) {
 			return res.status(400).send({
 				message: errorHandler.getErrorMessage(err)
@@ -96,7 +96,7 @@ exports.list = function(req, res) {
  * Sample middleware
  */
 exports.sampleByID = function(req, res, next, id) { 
-	Sample.findById(id).populate('user', 'displayName').exec(function(err, sample) {
+	Sample.findById(id).populate('user', 'username').exec(function(err, sample) {
 		if (err) return next(err);
 		if (! sample) return next(new Error('Failed to load Sample ' + id));
 		req.sample = sample;
