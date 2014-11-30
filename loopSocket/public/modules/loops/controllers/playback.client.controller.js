@@ -5,8 +5,6 @@
 angular.module('loops').controller('PlaybackController', ['$scope', '$document', 'Samples', '$interval', 'LoopSync',
 	function($scope, $document, Samples, $interval, LoopSync) {
 
-		console.log($scope.authentication.user.username);
-
 		var getState = function() {
 			return $scope.loop_state;
 		};

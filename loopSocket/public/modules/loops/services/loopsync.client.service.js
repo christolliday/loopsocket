@@ -4,7 +4,7 @@ angular.module('loops').factory('LoopSync', ['$location', function($location) {
 	return function(receiveState,getState) {
 
 		var relpath = $location.path();
-		var sid = relpath.substring(7);
+		var sid = relpath.substring(7); // TO-DO use login var and extract lid/sid from there
 		var connectedUsers = [];
 		//console.log(sid);
 
@@ -44,6 +44,7 @@ angular.module('loops').factory('LoopSync', ['$location', function($location) {
 			//console.log("active_users_socket_init");
 			socket.on('activeUsers', function (data) {
 				//console.log(data);
+				connectedUsers = [];
 				for (var i = 0; i < data.length; i++){
 					if (data[i].sid === sid){
 						connectedUsers.push(data[i].userName);
