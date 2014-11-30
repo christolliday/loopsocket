@@ -46,7 +46,6 @@ angular.module('loops').factory('LoopSync', ['$location', function($location) {
 				//console.log(data);
 				for (var i = 0; i < data.length; i++){
 					if (data[i].sid === sid){
-						console.log(data[i].sid);
 						connectedUsers.push(data[i].userName);
 					}
 					console.log(connectedUsers);

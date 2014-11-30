@@ -173,8 +173,8 @@ module.exports = function(db) {
 			var sid = data.sid;
 			var userName = data.userName;
 			var temp = {'sid': sid, 'userName' : userName};
-			activeUsers.push(temp); // TO-DO DO NOT PUSH IF ALREADY THERE (MIGHT OCCUR ON REFRESH)
-			console.log(activeUsers);
+			activeUsers.push(temp); // TO-DO: DO NOT PUSH IF ALREADY THERE (MIGHT OCCUR ON REFRESH)
+			//console.log(activeUsers);
 			io.emit('activeUsers', activeUsers);
 		});
 	});
