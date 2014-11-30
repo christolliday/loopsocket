@@ -162,9 +162,12 @@ module.exports = function(db) {
 		});
 		socket.on('disconn', function (data) {
 			//console.log("Disconnected " + data.userName + " from " + data.sid);
-			var index = activeUsers.indexOf(data.userName);
-			if (index !== '-1')
-				activeUsers.splice(index, 1);
+			var sid = data.sid;
+			var userName = data.userName;
+			for (var i = 0; i < activeUsers.length; i++){
+				if (activeUsers[i].sid === sid && activeUsers[i].userName === userName)
+					activeUsers.splice(i, 1);
+			}
 			//console.log(activeUsers);
 			io.emit('activeUsers', activeUsers);
 		});
