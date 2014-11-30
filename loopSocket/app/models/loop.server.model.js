@@ -22,7 +22,7 @@ var LoopSchema = new Schema({
 	name: {
 		type: String,
 		default: '',
-		required: 'Please fill Loop name',
+		required: 'Please enter Loop name',
 		trim: true
 	},
 	created: {
@@ -33,21 +33,22 @@ var LoopSchema = new Schema({
 		type: Schema.ObjectId,
 		ref: 'User'
 	},
-
-	permission_mode: {
-		type: String,
-		default: 'Private'
-	},
-	member: {
-		type: Array,
-		default: []
-	},
 	/*connected: [ConnectUsers],*/
 	state: {
 		instruments: { type: Array},
 		bpm: {type: Number},
 		beats_per_bar: {type: Number},
 		num_bars: { type: Number}
+	},
+	permissions: {
+		mode: {
+			type: String,
+			default: 'Private'
+		}
+		members: {
+			type: Array,
+			default: []
+		}
 	}
 });
 

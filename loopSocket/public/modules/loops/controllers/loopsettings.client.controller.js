@@ -16,53 +16,48 @@ angular.module('loops').controller('LoopSettingsController', ['$scope', '$stateP
 		}
 
 		$scope.addMember = function(user){
-			var loop = $scope.loop;
-			var length = $scope.loop.member.length;
-			loop.member[length] = user._id;
-			loop.$update(function() {
-				$location.path('loops/' + loop._id);
-			}, function(errorResponse) {
-				$scope.error = errorResponse.data.message;
-			});
-		};
-		$scope.isMember = function(index){
-			if($scope.loop.$resolved) {
-				for (var i=0; i<$scope.loop.member.length; i++){
-					if ($scope.users[index]._id === $scope.loop.member[i]){
-						return false;
-					}
-				}
-				if ($scope.loop.user._id === $scope.users[index]._id){
-					return false;
-				}
-			}
-			return true;
+			$scope.loop.permissions.members.push(user._id);
+			updateLoop();
 		};
 		$scope.makePublic = function(){
 			var loop = $scope.loop;
-			loop.permission_mode = 'Public';
-			loop.$update(function() {
-				$location.path('loops/' + loop._id);
-			}, function(errorResponse) {
-				$scope.error = errorResponse.data.message;
-			});
+			loop.permissions.mode = 'Public';
+			updateLoop();
 		};
 		$scope.makePrivate = function(){
 			var loop = $scope.loop;
-			loop.permission_mode = 'Private';
-			loop.$update(function() {
-				$location.path('loops/' + loop._id);
+			loop.permissions.mode = 'Private';
+			updateLoop();
+		}
+		$scope.isMember = function(user){
+			if($scope.loop.$resolved) {
+				var members = $scope.loop.permissions.members;
+				for (var i=0; i<members.length; i++){
+					if (user._id === members[i]){
+						return true;
+					}
+				}
+				if (user._id === $scope.loop.user._id){
+					return true;
+				}
+			}
+			return false;
+		};
+		$scope.isPublic = function(){
+			return $scope.loop.permissions.mode === 'Public';
+		};
+		$scope.isPrivate = function(){
+			return $scope.loop.permissions.mode === 'Private';
+		};
+
+
+		function updateLoop() {
+			$scope.loop.$update(function() {
+				$location.path('loops/' + $scope.loop._id);
 			}, function(errorResponse) {
 				$scope.error = errorResponse.data.message;
 			});
-		};
-
-		$scope.isPublic = function(){
-			return $scope.loop.permission_mode === 'Public';
-		};
-		$scope.isPrivate = function(){
-			return $scope.loop.permission_mode === 'Private';
-		};
+		}
 
 		// ???
 		$scope.checkList = function(index){
