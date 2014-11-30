@@ -110,23 +110,18 @@ exports.hasAuthorization = function(req, res, next) {
 		}
 		else{
 			for(var i=0; i<length; i++){
-				if(req.user._id === req.loop.member[i]){
+				console.log(i);
+				console.log(req.loop.user.id);
+				console.log(req.user.id);
+				console.log(req.loop.member[i]);
+				if(req.user._id == req.loop.member[i]){
 					return next();
 				}
 			}
-
+			return res.status(403).send({
+				message: 'User is not authorized'
+			});
 		}
 	}
 };
 
-exports.getMember = function(req, res){
-	Loop.find().exec(function(err, docs) {
-		if (err) {
-			return res.status(400).send({
-				message: errorHandler.getErrorMessage(err)
-			});
-		} else {
-			res.jsonp(docs);
-		}
-	});
-};

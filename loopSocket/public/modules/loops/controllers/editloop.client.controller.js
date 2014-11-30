@@ -32,8 +32,8 @@ angular.module('loops').controller('EditLoopController', ['$scope', '$stateParam
 					if ($scope.authentication.user._id === $scope.loop.member[i]) {
 						return true;
 					}
+					return false;
 				}
-				return false;
 			}
 		};
 

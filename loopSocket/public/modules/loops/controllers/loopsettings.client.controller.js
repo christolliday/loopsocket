@@ -52,7 +52,6 @@ angular.module('loops').controller('LoopSettingsController', ['$scope', '$stateP
 			return $scope.loop.permissions.mode === 'Private';
 		};
 
-
 		function updateLoop() {
 			$scope.loop.$update(function() {
 				$location.path('loops/' + $scope.loop._id);
@@ -60,22 +59,5 @@ angular.module('loops').controller('LoopSettingsController', ['$scope', '$stateP
 				$scope.error = errorResponse.data.message;
 			});
 		}
-
-		// ???
-		$scope.checkList = function(index){
-			/*var list = $scope.listMembers[index];
-			var length = $scope.listMembers[index].member.length;
-			if ($scope.listMembers[index].permission_mode === 'Public'){
-				return false;
-			}
-			else{
-				if ($scope.listMembers[index].user._id === $scope.user._id){
-					return false;
-				}
-				else{
-					return true;
-				}
-			}*/
-		};
 	}
 ]);
