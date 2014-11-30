@@ -85,7 +85,7 @@ angular.module('loops').controller('PlaybackController', ['$scope', '$document',
 
 		$scope.getSamples = function() {
 			return $scope.samples;
-		}
+		};
 		$scope.changeSample = function(sample,instrument) {
 			instrument.sample = sample;
 			loadAudio(instrument.sample._id);
@@ -115,7 +115,7 @@ angular.module('loops').controller('PlaybackController', ['$scope', '$document',
 				$scope.loop_state.playing = true;
 				console.log('play');
 				playback();
-				timeout = setTimeout(update_clock, getBeatDuration());
+				timeout = setTimeout(updateClock, getBeatDuration());
 			} else {
 				$scope.loop_state.playing = false;
 				clearTimeout(timeout);
@@ -135,12 +135,12 @@ angular.module('loops').controller('PlaybackController', ['$scope', '$document',
 			stateChanged();
 		};
 
-		$scope.total_beats = function() {
+		$scope.getTotalBeats = function() {
 			return $scope.loop_state.num_bars*$scope.loop_state.beats_per_bar;
 		};
 
-		function time_tick() {
-			$scope.loop_state.time = (($scope.loop_state.time + 1) % $scope.total_beats());
+		function timeTick() {
+			$scope.loop_state.time = (($scope.loop_state.time + 1) % $scope.getTotalBeats());
 		}
 
 		function playback() {
@@ -152,28 +152,28 @@ angular.module('loops').controller('PlaybackController', ['$scope', '$document',
 			}
 		}
 
-		function update_clock() {
-			time_tick();
+		function updateClock() {
+			timeTick();
 			playback();
 			$scope.$apply();
 			if ($scope.loop_state.playing) {
-				timeout = setTimeout(update_clock, getBeatDuration());
+				timeout = setTimeout(updateClock, getBeatDuration());
 			}
 		}
-		$scope.sample_click = function(beat,instrument) {
+		$scope.toggleBeat = function(beat,instrument) {
 			instrument.beats[beat] = !instrument.beats[beat];
 			stateChanged();
 		};
-		$scope.at_time = function(i) {
-			return $scope.loop_state.time === (i - 1);
+		$scope.atTime = function(time) {
+			return $scope.loop_state.time === time;
 		};
 
-		$scope.pressed = function (beat, instrument) {
+		$scope.beatEnabled = function (beat, instrument) {
 			return instrument.beats[beat];
 		};
 
-		$scope.beat_group = function(beat,group) {
-			return Math.floor((beat-1)/$scope.loop_state.beats_per_bar)%2===(group-1);
+		$scope.beatGroup = function(beat,group) {
+			return Math.floor((beat)/$scope.loop_state.beats_per_bar)%2===(group-1);
 		};
 
 		function stateChanged() {
@@ -199,11 +199,11 @@ angular.module('loops').controller('PlaybackController', ['$scope', '$document',
 
 		$scope.getInstruments = function() {
 			return $scope.loop_state.instruments;
-		}
+		};
 
 		$scope.getTime = function() {
 			return $scope.loop_state.time;
-		}
+		};
 		$scope.isPlaying = function() {
 			return $scope.loop_state.playing;
 		};
@@ -217,61 +217,27 @@ angular.module('loops').controller('PlaybackController', ['$scope', '$document',
 			return $scope.loop_state.bpm;
 		};
 
-		$scope.incrNumBar = function() {
-			if ($scope.loop_state.num_bars < 9) { //max number of bars
-				$scope.loop_state.num_bars = $scope.loop_state.num_bars + 1;
-			}
+		$scope.getAdder = function(factor) {
+			return function(val) {
+				return val+factor;
+			};
+		};
+		$scope.getMultiplier = function(factor) {
+			return function(val) {
+				return val*factor;
+			};
+		};
+		$scope.changeBeatsPerBar = function(modifier) {
+			$scope.loop_state.beats_per_bar = Math.min(9,Math.max(1,modifier($scope.loop_state.beats_per_bar)));
 			stateChanged();
 		};
-		$scope.decrNumBar = function () {
-			if ($scope.loop_state.num_bars > 1) {
-				$scope.loop_state.num_bars = $scope.loop_state.num_bars - 1;
-			}
+		$scope.changeNumBars = function(modifier) {
+			$scope.loop_state.num_bars = Math.min(9,Math.max(1,modifier($scope.loop_state.num_bars)));
 			stateChanged();
 		};
-
-		$scope.incrBeatsPerBar = function() {
-			if ($scope.loop_state.beats_per_bar < 9) { //max number of beats per bar
-				$scope.loop_state.beats_per_bar = $scope.loop_state.beats_per_bar + 1;
-			}
-			stateChanged();
-		};
-		$scope.decrBeatsPerBar = function () {
-			if ($scope.loop_state.beats_per_bar > 1) {
-				$scope.loop_state.beats_per_bar = $scope.loop_state.beats_per_bar - 1;
-			}
-			stateChanged();
-		};
-
-		$scope.incrBPM = function() {
-			if ($scope.loop_state.bpm < 995) {
-				$scope.loop_state.bpm = $scope.loop_state.bpm + 5;
-			}
-			stateChanged();
-		};
-		$scope.decrBPM = function () {
-			if ($scope.loop_state.bpm > 10) {
-				$scope.loop_state.bpm = $scope.loop_state.bpm - 5;
-			}
-			stateChanged();
-		};
-
-		$scope.doubleBPM = function() {
-			if (($scope.loop_state.bpm * 2 )< 999) { //max BPM is 995
-				$scope.loop_state.bpm = $scope.loop_state.bpm * 2;
-			}
-			else {
-				$scope.loop_state.bpm = 995;
-			}
-			stateChanged();
-		};
-		$scope.halfBPM = function () { //min BPM is 5
-			if (($scope.loop_state.bpm/2) - (($scope.loop_state.bpm/2)%5) > 10) {
-				$scope.loop_state.bpm = ($scope.loop_state.bpm/2) - (($scope.loop_state.bpm/2)%5);
-			}
-			else {
-				$scope.loop_state.bpm = 10;
-			}
+		$scope.changeBpm = function(modifier) {
+			$scope.loop_state.bpm = Math.min(995,Math.max(10,modifier($scope.loop_state.bpm)));
+			$scope.loop_state.bpm = Math.round($scope.loop_state.bpm/5)*5;
 			stateChanged();
 		};
 	}

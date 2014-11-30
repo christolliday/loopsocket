@@ -19,12 +19,13 @@ angular.module('loops').controller('EditLoopController', ['$scope', '$stateParam
 			});
 			
 
-			console.log("here1");
+			console.log('here1');
 			
 		};
 
 		$scope.showControls = function() {
-			if($scope.authentication.user && ($scope.authentication.user._id == $scope.loop.user._id)) {
+			if(!$scope.loop.$resolved) return false;
+			if($scope.authentication.user && ($scope.authentication.user._id === $scope.loop.user._id)) {
 				return true;
 			} else {
 				for (var i=0; i<$scope.loop.member.length; i++){
@@ -76,14 +77,14 @@ angular.module('loops').controller('EditLoopController', ['$scope', '$stateParam
 
 		$scope.isSettingsVisible = function() {
 			return $scope.show_settings;
-		}
+		};
 
 		$scope.showSettings = function() {
 			$scope.show_settings = true;
-		}
+		};
 
 		$scope.hideSettings = function() {
 			$scope.show_settings = false;
-		}
+		};
 	}
 ]);

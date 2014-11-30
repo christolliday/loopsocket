@@ -44,7 +44,7 @@ var LoopSchema = new Schema({
 		mode: {
 			type: String,
 			default: 'Private'
-		}
+		},
 		members: {
 			type: Array,
 			default: []

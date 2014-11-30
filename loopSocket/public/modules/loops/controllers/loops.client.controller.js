@@ -78,7 +78,7 @@ angular.module('loops').controller('LoopsController', ['$scope', '$stateParams',
 				}
 			}
 			if ($scope.authentication.user._id === loop.user._id){
-				return false
+				return false;
 			}
 			else {
 				if ((loop.permissions.mode === 'Public') && (isCollaborator === false)){

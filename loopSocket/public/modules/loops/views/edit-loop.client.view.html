@@ -68,23 +68,23 @@
                 <label style="width: 30px;"></label>
 
                 <div class="btn-group">
-                    <button class="btn btn-sm controlBtn" ng-click="decrBeatsPerBar()"><span class="glyphicon glyphicon-minus"></span> </button>
+                    <button class="btn btn-sm controlBtn" ng-click="changeBeatsPerBar(getAdder(-1))"><span class="glyphicon glyphicon-minus"></span> </button>
                     <button class="btn btn-sm controlBtn" disabled>{{getNumBeatsPerBar()}} beats per bar</button>
-                    <button class="btn btn-sm controlBtn" ng-click="incrBeatsPerBar()"><span class="glyphicon glyphicon-plus"></span> </button>
+                    <button class="btn btn-sm controlBtn" ng-click="changeBeatsPerBar(getAdder(1))"><span class="glyphicon glyphicon-plus"></span> </button>
                 </div>
 
                 <div class="btn-group">
-                    <button class="btn btn-sm controlBtn" ng-click="decrNumBar()"><span class="glyphicon glyphicon-minus"></span> </button>
+                    <button class="btn btn-sm controlBtn" ng-click="changeNumBars(getAdder(-1))"><span class="glyphicon glyphicon-minus"></span> </button>
                     <button class="btn btn-sm controlBtn" disabled>{{getNumBars()}} bars</button>
-                    <button class="btn btn-sm controlBtn" ng-click="incrNumBar()"><span class="glyphicon glyphicon-plus"></span> </button>
+                    <button class="btn btn-sm controlBtn" ng-click="changeNumBars(getAdder(1))"><span class="glyphicon glyphicon-plus"></span> </button>
                 </div>
 
-                <div class="btn-group bpm-ctrl">
-                    <button class="btn btn-sm controlBtn" ng-click="halfBPM()"><span>/ 2</span></button>
-                    <button class="btn btn-sm controlBtn" ng-click="decrBPM()"><span class="glyphicon glyphicon-minus"></span> </button>
+                <div class="btn-group bpmCtrl">
+                    <button class="btn btn-sm controlBtn" ng-click="changeBpm(getMultiplier(1/2))"><span>/ 2</span></button>
+                    <button class="btn btn-sm controlBtn" ng-click="changeBpm(getAdder(-5))"><span class="glyphicon glyphicon-minus"></span> </button>
                     <button class="btn btn-sm controlBtn" disabled>{{getBpm()}} BPM</button>
-                    <button class="btn btn-sm controlBtn" ng-click="incrBPM()"><span class="glyphicon glyphicon-plus"></span> </button>
-                    <button class="btn btn-sm controlBtn" ng-click="doubleBPM()"><span>x2</span> </button>
+                    <button class="btn btn-sm controlBtn" ng-click="changeBpm(getAdder(5))"><span class="glyphicon glyphicon-plus"></span> </button>
+                    <button class="btn btn-sm controlBtn" ng-click="changeBpm(getMultiplier(2))"><span>x2</span> </button>
                 </div>
             </div>
 
@@ -93,7 +93,7 @@
                     <td></td>
 
                     <td/>
-                    <td ng-repeat="j in []|range:1:total_beats()" class = "sequencerBtn sequencerTimeBtn" ng-class="{timeActive:at_time(j), timeInactive:!at_time(j)}"/>
+                    <td ng-repeat="j in []|range:0:(getTotalBeats()-1)" class = "sequencerBtn sequencerTimeBtn" ng-class="{timeActive:atTime(j), timeInactive:!atTime(j)}"/>
 
                     <td/>
                 </tr>
@@ -113,14 +113,14 @@
                 
                     <td/>
                     
-                    <td ng-repeat="j in []|range:1:total_beats()" class="sequencerBtn sequencerBeatBtn" ng-click="sample_click(j-1,i)" 
-                    ng-class="{inactiveBeat1:beat_group(j,1)&&!pressed(j-1,i), inactiveBeat2:beat_group(j,2)&&!pressed(j-1,i), 
-                    inactiveBeatPlaying:!pressed(j-1,i)&&isPlaying()&&getTime()==(j-1),
-                    activeBeat:pressed(j-1,i),activeBeatPlaying:pressed(j-1,i)&&isPlaying()&&getTime()==(j-1)}"/> </td>
+                    <td ng-repeat="j in []|range:0:(getTotalBeats()-1)" class="sequencerBtn sequencerBeatBtn" ng-click="toggleBeat(j,i)" 
+                    ng-class="{inactiveBeat1:beatGroup(j,1)&&!beatEnabled(j,i), inactiveBeat2:beatGroup(j,2)&&!beatEnabled(j,i), 
+                    inactiveBeatPlaying:!beatEnabled(j,i)&&isPlaying()&&getTime()==(j),
+                    activeBeat:beatEnabled(j,i),activeBeatPlaying:beatEnabled(j,i)&&isPlaying()&&getTime()==(j)}"/> </td>
 
 
                     <td>
-                        <button class="btn btn-sm glyphicon controlBtn" ng-click="removeInstrument(i)"><span class="glyphicon-remove"></span></button>
+                        <button class="btn glyphicon controlBtn removeSampleBtn" ng-click="removeInstrument(i)"><span class="glyphicon-remove"></span></button>
                     </td>
                 </tr>
                 <tr >

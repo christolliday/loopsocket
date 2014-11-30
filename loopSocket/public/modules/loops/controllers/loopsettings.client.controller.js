@@ -13,7 +13,7 @@ angular.module('loops').controller('LoopSettingsController', ['$scope', '$stateP
 
 		$scope.getUsers = function(index){
 			return $scope.users;
-		}
+		};
 
 		$scope.addMember = function(user){
 			$scope.loop.permissions.members.push(user._id);
@@ -28,9 +28,9 @@ angular.module('loops').controller('LoopSettingsController', ['$scope', '$stateP
 			var loop = $scope.loop;
 			loop.permissions.mode = 'Private';
 			updateLoop();
-		}
+		};
 		$scope.isMember = function(user){
-			if($scope.loop.$resolved) {
+			if($scope.loop.$resolved&&user) {
 				var members = $scope.loop.permissions.members;
 				for (var i=0; i<members.length; i++){
 					if (user._id === members[i]){
@@ -44,9 +44,11 @@ angular.module('loops').controller('LoopSettingsController', ['$scope', '$stateP
 			return false;
 		};
 		$scope.isPublic = function(){
+			if(!$scope.loop.$resolved) return false;
 			return $scope.loop.permissions.mode === 'Public';
 		};
 		$scope.isPrivate = function(){
+			if(!$scope.loop.$resolved) return false;
 			return $scope.loop.permissions.mode === 'Private';
 		};
 
