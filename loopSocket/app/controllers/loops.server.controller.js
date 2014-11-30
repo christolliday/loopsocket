@@ -100,21 +100,17 @@ exports.loopByID = function(req, res, next, id) {
  * Loop authorization middleware
  */
 exports.hasAuthorization = function(req, res, next) {
-	var length = req.loop.member.length;
+	var length = req.loop.permissions.members.length;
 	if (req.loop.user.id === req.user.id) {
 		next();
 	}
 	else{
-		if (req.loop.permission_mode === 'Public'){
+		if (req.loop.permissions.mode === 'Public'){
 			next();
 		}
 		else{
 			for(var i=0; i<length; i++){
-				console.log(i);
-				console.log(req.loop.user.id);
-				console.log(req.user.id);
-				console.log(req.loop.member[i]);
-				if(req.user._id == req.loop.member[i]){
+				if(req.user._id == req.loop.permissions.members[i]){
 					return next();
 				}
 			}
