@@ -30,26 +30,26 @@
             <br/>
             <label>Date Created: </label> <!-- insert owner here -->
             <br/>
-            <label>Collaborator(s):  <div data-ng-repeat="User in information" ng-show="!checkPerson($index)"> {{information[$index].username}}</div>
+            <label>Collaborator(s):  <div data-ng-repeat="User in getUsers()" ng-show="!isMember(user)"> {{user.username}}</div>
 
             </label>
 
 
-            <div ng-show="isPublic()">
+            <div ng-show="isPrivate()">
                 <span> This loop is currently private. </span>
                 <a class="btn btn-default" data-ng-click="makePublic()">Make Public</a>
             </div>
-            <div ng-show="isPrivate()">
+            <div ng-show="isPublic()">
                 <span> This loop is currently public to everyone </span>
                 <a class="btn btn-default" data-ng-click="makePrivate()">Make Private</a>
             </div>
-            <div ng-show="isPublic()" data-ng-repeat="User in information"> 
-                <div ng-hide="checkPerson($index)">
-                    <span> {{information[$index].username}} has access to this loop. </span>
+            <div ng-show="isPublic()" data-ng-repeat="user in getUsers()"> 
+                <div ng-show="isMember(user)">
+                    <span> {{user.username}} has access to this loop. </span>
                 </div>
-                <div ng-show="checkPerson($index)">
-                    <span ng-hide="show" data-ng-bind="information[$index].username"></span>
-                    <a class="btn btn-default" data-ng-click="addPerson($index); show=true" ng-hide="show">Add</a>
+                <div ng-hide="isMember(user)">
+                    <span ng-hide="show" data-ng-bind="user.username"></span>
+                    <a class="btn btn-default" data-ng-click="addMember(user); show=true" ng-hide="show">Add</a>
                 </div>
             </div>
         </div>
