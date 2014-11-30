@@ -16,11 +16,12 @@ angular.module('loops').controller('PlaybackController', ['$scope', '$document',
 		};
 		var loopsync = new LoopSync(receiveState,getState);
 
-		/*var userName = $scope.authentication.user.username;
+		var userName = $scope.authentication.user.username;
 		loopsync.connect(userName);
 		$scope.$on("$destroy", function(){
 			loopsync.disconnect(userName);
-    	});*/
+    	});
+    	loopsync.activeUsersSocket();
     	/*$scope.$on("$stateChangeStart", function(){
 			loopsync.disconnect(userName);
     	});*/

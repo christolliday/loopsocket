@@ -5,6 +5,7 @@ angular.module('loops').factory('LoopSync', ['$location', function($location) {
 
 		var relpath = $location.path();
 		var sid = relpath.substring(7);
+		var connectedUsers = [];
 		//console.log(sid);
 
 		//var socket = io.connect('http://localhost:3000'); // port# not needed?!
@@ -33,15 +34,26 @@ angular.module('loops').factory('LoopSync', ['$location', function($location) {
 			}
 		});
 		socket.on('toAllClients', function (data) {
-			console.log(data);
+			//console.log(data);
 			if (data.sid === sid){
-				console.log('Data for me!');
+				//console.log('Data for me!');
 				receiveState(data);
 			}
 		});
-		socket.on('activeUsers', function (data) {
-			console.log(data);
-		});
+		var activeUsersSocket = function() {
+			//console.log("active_users_socket_init");
+			socket.on('activeUsers', function (data) {
+				//console.log(data);
+				for (var i = 0; i < data.length; i++){
+					if (data[i].sid === sid){
+						console.log(data[i].sid);
+						connectedUsers.push(data[i].userName);
+					}
+					console.log(connectedUsers);
+				}
+			});
+		};
+		this.activeUsersSocket = activeUsersSocket;
 	};
 
 }]);

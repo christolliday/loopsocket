@@ -165,22 +165,17 @@ module.exports = function(db) {
 			var index = activeUsers.indexOf(data.userName);
 			if (index !== '-1')
 				activeUsers.splice(index, 1);
-			console.log(activeUsers);
-			//io.emit('activeUsers', activeUsers);
-			// Remove client from loop
+			//console.log(activeUsers);
+			io.emit('activeUsers', activeUsers);
 		});
 		socket.on('conn', function (data) {
 			//console.log("Connected " + data.userName + " to " + data.sid);
 			var sid = data.sid;
 			var userName = data.userName;
-			var temp = {};
-			temp[sid] = userName;
-			var index = activeUsers.indexOf(data.userName);
-			//if (index === '-1')
-				activeUsers.push(temp);
+			var temp = {'sid': sid, 'userName' : userName};
+			activeUsers.push(temp); // TO-DO DO NOT PUSH IF ALREADY THERE (MIGHT OCCUR ON REFRESH)
 			console.log(activeUsers);
-			//io.emit('activeUsers', activeUsers);
-			// Add client to loop
+			io.emit('activeUsers', activeUsers);
 		});
 	});
 
