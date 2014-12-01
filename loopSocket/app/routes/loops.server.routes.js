@@ -9,7 +9,6 @@ module.exports = function(app) {
 
 	// Loops Routes
 	router.route('/loops')
-		.get(users.requiresLogin)
 		.get(loops.list)
 		.post(users.requiresLogin, loops.create);
 
