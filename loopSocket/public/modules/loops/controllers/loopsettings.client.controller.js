@@ -19,6 +19,18 @@ angular.module('loops').controller('LoopSettingsController', ['$scope', '$stateP
 			$scope.loop.permissions.members.push(user._id);
 			updateLoop();
 		};
+
+		$scope.deleteMember = function(user){
+			var members = $scope.loop.permissions.members;
+			for (var i=0; i<members.length; i++){
+				if (user._id === members[i]){
+					members.splice(i, 1);
+					updateLoop();
+					console.log(members);
+				}
+			}
+		};
+
 		$scope.makePublic = function(){
 			var loop = $scope.loop;
 			loop.permissions.mode = 'Public';

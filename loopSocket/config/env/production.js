@@ -26,12 +26,12 @@ module.exports = {
 		js: 'public/dist/application.min.js'
 	},
 	mailer: {
-		from: process.env.MAILER_FROM || 'MAILER_FROM',
+		from: 'noreply@loopsocket.com',
 		options: {
-			service: process.env.MAILER_SERVICE_PROVIDER || 'MAILER_SERVICE_PROVIDER',
+			service: 'Gmail',
 			auth: {
-				user: process.env.MAILER_EMAIL_ID || 'MAILER_EMAIL_ID',
-				pass: process.env.MAILER_PASSWORD || 'MAILER_PASSWORD'
+				user: 'loopsocket@gmail.com',
+				pass: 'loopSocket470'
 			}
 		}
 	}
