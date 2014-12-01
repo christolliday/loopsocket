@@ -37,9 +37,6 @@ angular.module('loops').controller('EditLoopController', ['$scope', '$stateParam
 			$scope.loop.$remove(function() {
 				$location.path('loops');
 			});
-
-			console.log('here1');
-
 		};
 
 		$scope.showControls = function() {
