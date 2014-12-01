@@ -9,7 +9,7 @@ angular.module('loops').factory('LoopSync', ['$location', function($location) {
 		//console.log(sid);
 
 		//var socket = io.connect('http://localhost:3000'); // port# not needed?!
-		var socket = io(); // jshint ignore:line
+		var socket = io({path: '/'+baseUrl+'/socket.io'}); // jshint ignore:line
 
 		var sendState = function() {
 			var state = {'sid' : sid, 'loop' : getState()};
