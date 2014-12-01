@@ -18,7 +18,8 @@
 
     <div class="loopUsers">
         <label>Active User(s): </label>
-        <label>{{loop.user.username}}</label>
+        <!-- <label>{{loop.user.username}}</label> -->
+        <label>{{activeUsers()}}</label>
     </div>
 
     <section data-ng-controller="LoopSettingsController" data-ng-init="findOne()">
@@ -38,6 +39,7 @@
             <div ng-show="isPrivate()">
                 <span> This loop is currently private. </span>
                 <a class="btn btn-default" data-ng-click="makePublic()">Make Public</a>
+                    <input type="text" ng-model="addUser" typeahead-min-length='1' typeahead="user.username for user in getUsers() | filter:{username: $viewValue} | limitTo:5" class="form-control">
             </div>
             <div ng-show="isPublic()">
                 <span> This loop is currently public to everyone </span>

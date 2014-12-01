@@ -3,15 +3,14 @@
 angular.module('loops').factory('LoopSync', ['$stateParams', function($stateParams) {
 	return function(receiveState,getState) {
 
-		//var relpath = $location.path();
-		//var sid = relpath.substring(7); // TO-DO use login var and extract lid/sid from there
 		var sid = $stateParams.loopId;
-		//console.log($stateParams.loopId);
 		var connectedUsers = [];
+		this.connectedUsers = connectedUsers;
+		
 		//console.log(sid);
 
 		//var socket = io.connect('http://localhost:3000'); // port# not needed?!
-		var socket = io(); // jshint ignore:line
+		var socket = io({path: '/'+baseUrl+'/socket.io'}); // jshint ignore:line
 
 		var sendState = function() {
 			var state = {'sid' : sid, 'loop' : getState()};
@@ -56,6 +55,11 @@ angular.module('loops').factory('LoopSync', ['$stateParams', function($statePara
 			});
 		};
 		this.activeUsersSocket = activeUsersSocket;
+
+		var getActiveUsers = function() {
+			return connectedUsers;
+		};
+		this.getActiveUsers = getActiveUsers;
 	};
 
 }]);

@@ -24,15 +24,5 @@ module.exports = {
 		},
 		css: 'public/dist/application.min.css',
 		js: 'public/dist/application.min.js'
-	},
-	mailer: {
-		from: 'noreply@loopsocket.com',
-		options: {
-			service: 'Gmail',
-			auth: {
-				user: 'loopsocket@gmail.com',
-				pass: 'loopSocket470'
-			}
-		}
 	}
 };

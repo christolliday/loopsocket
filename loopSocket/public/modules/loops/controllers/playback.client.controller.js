@@ -12,17 +12,8 @@ angular.module('loops').controller('PlaybackController', ['$scope', '$document',
 			$scope.loop_state = data.loop;
 			$scope.$apply();
 		};
-		var loopsync = new LoopSync(receiveState,getState);
 
-		var userName = $scope.authentication.user.username;
-		loopsync.connect(userName);
-		$scope.$on("$destroy", function(){
-			loopsync.disconnect(userName);
-    	});
-    	loopsync.activeUsersSocket();
-    	/*$scope.$on("$stateChangeStart", function(){
-			loopsync.disconnect(userName);
-    	});*/
+		var loopsync = new LoopSync(receiveState,getState);
 
 		var sampleBuffers = {};
 		window.AudioContext = window.AudioContext || window.webkitAudioContext;

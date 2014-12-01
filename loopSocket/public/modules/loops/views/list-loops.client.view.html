@@ -4,7 +4,7 @@
     </div>
     <div class="list-loop-group"> 
         <label class="listLoopsHeader">Private Loops</label>
-        <a data-ng-repeat="loop in loops" data-ng-href="#!/loops/{{loop._id}}" class="list-group-item" ng-show="hasAccess(loop)">
+        <a data-ng-repeat="loop in loops" data-ng-href="#!/loops/{{loop._id}}" class="list-group-item" ng-if="hasAccess(loop)">
             <div> 
                 <small class="list-group-item-text">
                     Posted on
@@ -19,7 +19,7 @@
 
     <div class="list-loop-group"> 
         <label class="listLoopsHeader">Public Loops</label>
-        <a data-ng-repeat="loop in loops" data-ng-href="#!/loops/{{loop._id}}" class="list-group-item" ng-show="isPublic(loop)">
+        <a data-ng-repeat="loop in loops" data-ng-href="#!/loops/{{loop._id}}" class="list-group-item" ng-if="isPublic(loop)">
             <div> 
                 <small class="list-group-item-text">
                     Posted on
