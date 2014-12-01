@@ -16,7 +16,7 @@ angular.module('loops').controller('LoopSettingsController', ['$scope', '$stateP
 		};
 
 		// gets users that are not in the loop
-		$scope.getNonmembers = function(){
+		$scope.getNonMembers = function(){
 			var otherUsers = [];
 			var length = $scope.users.length;
 			var looplength = $scope.loop.permissions.members.length;
@@ -40,10 +40,6 @@ angular.module('loops').controller('LoopSettingsController', ['$scope', '$stateP
 				}
 			}
 			return otherUsers;
-		};
-
-		$scope.test = function(user){
-			console.log($scope.loop.permissions.members);
 		};
 
 		$scope.getMembers = function(index) {
@@ -123,6 +119,7 @@ angular.module('loops').controller('LoopSettingsController', ['$scope', '$stateP
 		}
 
 		$scope.isCreatedByMe = function() {
+			if($scope.loop.$resolved) return false;
 			if($scope.loop.user._id	== $scope.authentication.user._id) {
 				return true;
 			}
