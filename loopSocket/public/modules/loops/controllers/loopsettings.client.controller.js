@@ -16,7 +16,9 @@ angular.module('loops').controller('LoopSettingsController', ['$scope', '$stateP
 		};
 
 		$scope.getMembers = function(index) {
-			return $scope.loop.permissions.members;
+			if($scope.loop.$resolved){
+				return $scope.loop.permissions.members;
+			}
 		}
 
 		$scope.addMember = function(user){

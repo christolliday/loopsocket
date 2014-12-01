@@ -5,6 +5,13 @@ angular.module('loops').controller('EditLoopController', ['$scope', '$stateParam
 	function($scope, $stateParams, $location, Authentication, Loops, LoopSync, $interval) {
 		$scope.authentication = Authentication;
 
+		var loadState = Loops.get({
+			loopId: $stateParams.loopId
+		});
+		loadState.$promise.then(function(data) {
+			$scope.$broadcast('loadpage', data);
+		});
+
 		var loopsync = new LoopSync(0,0);
 
 		var userName = $scope.authentication.user.username;
@@ -73,8 +80,6 @@ angular.module('loops').controller('EditLoopController', ['$scope', '$stateParam
 
 		$scope.updateState = function() {
 			var loop = $scope.loop;
-			console.log('server');
-			console.log(loop);
 
 			loop.$update(function() {
 				$location.path('loops/' + loop._id);
