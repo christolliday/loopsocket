@@ -13,6 +13,20 @@ angular.module('loops').controller('PlaybackController', ['$scope', '$document',
 			$scope.$apply();
 		};
 
+		$scope.$on('loadpage', function(event, args) {
+			if(args.state.instruments.length === 0){
+				console.log('empty');
+				//clear it instead?
+				initLoop();
+			} else {
+				$scope.loop_state = args.state;
+				$scope.loop_state.playing = false;
+				$scope.loop_state.time = 0;
+			}
+			clearTimeout(timeout);
+			//stateChanged();
+		});
+
 		var loopsync = new LoopSync(receiveState,getState);
 
 		var sampleBuffers = {};
@@ -178,8 +192,6 @@ angular.module('loops').controller('PlaybackController', ['$scope', '$document',
 				initLoop();
 			} else {
 				$scope.loop_state = args.state;
-				console.log('revert');
-				console.log(args.state);
 				$scope.loop_state.playing = false;
 				$scope.loop_state.time = 0;
 			}
