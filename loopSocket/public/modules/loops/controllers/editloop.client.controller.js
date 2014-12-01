@@ -28,12 +28,12 @@ angular.module('loops').controller('EditLoopController', ['$scope', '$stateParam
 			if($scope.authentication.user && ($scope.authentication.user._id === $scope.loop.user._id)) {
 				return true;
 			} else {
-				for (var i=0; i<$scope.loop.member.length; i++){
-					if ($scope.authentication.user._id === $scope.loop.member[i]) {
+				for (var i=0; i<$scope.loop.permissions.members.length; i++){
+					if ($scope.authentication.user._id === $scope.loop.permissions.members[i]) {
 						return true;
 					}
+					return false;
 				}
-				return false;
 			}
 		};
 

@@ -2,7 +2,8 @@
     <div class="page-header">
         <h1>Loops</h1>
     </div>
-    <div class="list-private-group"> Created Loops and Collaborating Loops
+    <div class="list-loop-group"> 
+        <label class="listLoopsHeader">Private Loops</label>
         <a data-ng-repeat="loop in loops" data-ng-href="#!/loops/{{loop._id}}" class="list-group-item" ng-show="hasAccess(loop)">
             <div> 
                 <small class="list-group-item-text">
@@ -15,10 +16,9 @@
             </div>
         </a>
     </div>
-    <div class="alert alert-warning text-center" data-ng-hide="!loops.$resolved || loops.length">
-        No Loops yet, why don't you <a href="#!/loops/create">create one</a>?
-    </div>
-    <div class="list-public-group"> Public Loops
+
+    <div class="list-loop-group"> 
+        <label class="listLoopsHeader">Public Loops</label>
         <a data-ng-repeat="loop in loops" data-ng-href="#!/loops/{{loop._id}}" class="list-group-item" ng-show="isPublic(loop)">
             <div> 
                 <small class="list-group-item-text">
@@ -31,5 +31,10 @@
             </div>
         </a>
     </div>
+
+    <div class="alert alert-warning text-center" data-ng-hide="!loops.$resolved || loops.length">
+        No Loops yet, why don't you <a href="#!/loops/create">create one</a>?
+    </div>
+    
 
 </section>

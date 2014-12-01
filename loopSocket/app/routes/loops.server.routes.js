@@ -9,16 +9,16 @@ module.exports = function(app) {
 
 	// Loops Routes
 	router.route('/loops')
+		.get(users.requiresLogin)
 		.get(loops.list)
 		.post(users.requiresLogin, loops.create);
 
 	router.route('/loops/:loopId')
+		.get(users.requiresLogin)
+		.get(loops.hasAuthorization)
 		.get(loops.read)
 		.put(users.requiresLogin, loops.hasAuthorization, loops.update)
 		.delete(users.requiresLogin, loops.hasAuthorization, loops.delete);
-
-	app.route('/members')
-		.get(loops.getMember);
 
 	// Finish by binding the Loop middleware
 	router.param('loopId', loops.loopByID);
