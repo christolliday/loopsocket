@@ -54,7 +54,7 @@ angular.module('loops').factory('LoopSync', ['$stateParams', function($statePara
 					if (data[i].sid === sid){
 						connectedUsers.push(data[i].userName);
 					}
-					console.log(connectedUsers);
+					//console.log(connectedUsers);
 				}
 				callback(connectedUsers);
 			});

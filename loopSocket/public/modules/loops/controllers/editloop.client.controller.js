@@ -15,7 +15,7 @@ angular.module('loops').controller('EditLoopController', ['$scope', '$stateParam
 		var loopsync = new LoopSync(0,0);
 
 		loopsync.activeUsersSocket(function(activeUsers){
-    		console.log('Setting Active Users');
+    		//console.log('Setting Active Users');
     		$scope.activeUsers = activeUsers;/*function() {
     			return activeUsers;
     			console.log('activeuser ' + activeusers);
@@ -28,17 +28,7 @@ angular.module('loops').controller('EditLoopController', ['$scope', '$stateParam
 		$scope.$on("$destroy", function(){
 			loopsync.disconnect(userName);
     	});
-    	//console.log(loopsync.connectedUsers);
-    	/*$scope.$on("$stateChangeStart", function(){
-			loopsync.disconnect(userName);
-    	});*/
-		
-		//$interval(console.log(loopsync.getActiveUsers()), 500);
-		/*$scope.activeUsers = function() {
-			//$scope.activeUsers = loopsync.getActiveUsers();
-			return loopsync.getActiveUsers();
-		};*/
-
+    	
 		//$scope.loop = {};
 		$scope.findOne = function(){
 			$scope.loop = Loops.get({
