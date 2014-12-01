@@ -20,8 +20,10 @@ angular.module('loops').controller('LoopSettingsController', ['$scope', '$stateP
 		}
 
 		$scope.addMember = function(user){
+			console.log(user);
 			$scope.loop.permissions.members.push(user);
 			updateLoop();
+			$scope.newMember = '';
 		};
 
 		$scope.deleteMember = function(user){

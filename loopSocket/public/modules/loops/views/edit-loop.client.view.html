@@ -19,11 +19,16 @@
     <div class="loopUsers">
         <label>Active User(s): </label>
         <!-- <label>{{loop.user.username}}</label> -->
-        <label>{{activeUsers()}}</label>
+        
+        <span data-ng-repeat="activeUsers in activeUsers()" class="membersList">
+            <label>{{activeUsers}}</label>
+        </span>
+        
+        <!--<label>{{activeUsers()}}</label>-->
     </div>
 
     <section data-ng-controller="LoopSettingsController" data-ng-init="findOne()">
-        <div ng-show="isSettingsVisible()" class="sequencer">
+        <div ng-show="!isSettingsVisible()" class="sequencer">
             <label <label class="settingsHeader">Settings</label>
             
             <table class = "settingsTable">
@@ -66,12 +71,22 @@
                         </span>
                     </td>
                 </tr>
+                <tr>
+                </tr>
+                <tr>
+                    <td><label>Add Member: </label></td>
+                    <td>
+                        
+                        <input type="text" data-ng-model="newMember" typeahead-min-length='1' typeahead="user as user.username for user in getUsers() | filter:{username: $viewValue} | limitTo:5" class="form-settings" placeholder="Add Member">
+                        <button type="submit" class="btn btn-sm controlBtn" ng-click="addMember(newMember)"><span class="glyphicon glyphicon-plus"></span></button>
+                        
+                    </td>
+                </tr>
                 
             </table>
 
-            <input type="text" ng-model="addUser" typeahead-min-length='1' typeahead="user.username for user in getUsers() | filter:{username: $viewValue} | limitTo:5" class="form-control">
-
-            <!-- don't delete yet, used for testing things -John
+            <!-- don't delete yet, used for testing things -John -->
+            <!--
             <div ng-show="isPrivate()" data-ng-repeat="user in getUsers()">
                 <div ng-show="isMember(user)">
                     <span> {{user.username}} has access to this loop. </span>
