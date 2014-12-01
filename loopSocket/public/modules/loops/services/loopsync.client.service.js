@@ -12,8 +12,8 @@ angular.module('loops').factory('LoopSync', ['$stateParams', function($statePara
 		//var socket = io.connect('http://localhost:3000'); // port# not needed?!
 		var socket = io(); //{path: '/'+baseUrl+'/socket.io'}); // jshint ignore:line
 
-		if (receiveState !== 0 || getState !==0){
-			
+		if (receiveState !== 0 && getState !== 0){
+
 			var sendState = function() {
 				var state = {'sid' : sid, 'loop' : getState()};
 				socket.emit('toServer', state);
@@ -29,7 +29,7 @@ angular.module('loops').factory('LoopSync', ['$stateParams', function($statePara
 			socket.emit('disconn', {'sid' : sid, 'userName' : userName});
 		};
 		this.disconnect = disconnect;
-		if (receiveState !== 0 || getState !==0){
+		if (receiveState !== 0 && getState !== 0){
 
 			socket.emit('toServer_initNewClient', sid);
 			socket.on('toAllClients_initNewClient', function(sidFromServer) {
@@ -45,7 +45,7 @@ angular.module('loops').factory('LoopSync', ['$stateParams', function($statePara
 				}
 			});
 		}
-		var activeUsersSocket = function() {
+		var activeUsersSocket = function(callback) {
 			//console.log("active_users_socket_init");
 			socket.on('activeUsers', function (data) {
 				//console.log(data);
@@ -56,6 +56,7 @@ angular.module('loops').factory('LoopSync', ['$stateParams', function($statePara
 					}
 					console.log(connectedUsers);
 				}
+				callback(connectedUsers);
 			});
 		};
 		this.activeUsersSocket = activeUsersSocket;
