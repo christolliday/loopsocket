@@ -110,7 +110,7 @@ exports.hasAuthorization = function(req, res, next) {
 		}
 		else{
 			for(var i=0; i<length; i++){
-				if(req.user._id == req.loop.permissions.members[i]){
+				if(req.user.id == req.loop.permissions.members[i]._id){		
 					return next();
 				}
 			}

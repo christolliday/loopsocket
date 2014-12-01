@@ -13,9 +13,7 @@ module.exports = function(app) {
 		.post(users.requiresLogin, loops.create);
 
 	router.route('/loops/:loopId')
-		.get(users.requiresLogin)
-		.get(loops.hasAuthorization)
-		.get(loops.read)
+		.get(users.requiresLogin, loops.hasAuthorization, loops.read)
 		.put(users.requiresLogin, loops.hasAuthorization, loops.update)
 		.delete(users.requiresLogin, loops.hasAuthorization, loops.delete);
 
