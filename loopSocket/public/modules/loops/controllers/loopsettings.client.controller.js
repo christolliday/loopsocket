@@ -48,11 +48,49 @@ angular.module('loops').controller('LoopSettingsController', ['$scope', '$stateP
 			}
 		}
 
+		function validUsername(user) {
+			var nonMembers = $scope.getNonMembers();
+			//console.log(nonMembers);
+			for(var i=0; i<nonMembers.length; i++) {
+			 	if (user == nonMembers[i].username) {
+			 		return true;
+			 	}
+			}
+			return false;
+		}
+
+		function getObjectID(user) {
+			var nonMembers = $scope.getNonMembers();
+			//console.log(nonMembers);
+			for(var i=0; i<nonMembers.length; i++) {
+			 	if (user == nonMembers[i].username) {
+			 		return nonMembers[i];
+			 	}
+			}
+		}
+
+		$scope.addError = false;
+
+		$scope.getAddError = function () {
+			return $scope.addError;
+		}
+
 		$scope.addMember = function(user){
-			console.log(user);
-			$scope.loop.permissions.members.push(user);
-			updateLoop();
-			$scope.newMember = '';
+			if (validUsername(user)) {
+				var addUser = getObjectID(user);
+				console.log(addUser);
+				$scope.loop.permissions.members.push(addUser);
+				updateLoop();
+				$scope.newMember = '';
+				$scope.addError = false;
+			}
+			else {
+				$scope.newMember = '';
+				$scope.addError = true;
+			}
+
+
+			
 		};
 
 		$scope.deleteMember = function(user){

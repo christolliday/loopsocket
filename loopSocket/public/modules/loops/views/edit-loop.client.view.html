@@ -73,9 +73,15 @@
                     <td><label>Add Member: </label></td>
                     <td>
                         
-                        <input type="text" data-ng-model="user" typeahead-min-length='1' typeahead="user as user.username for user in getNonMembers() | filter:{username: $viewValue} | limitTo:5" class="form-settings" placeholder="Add Member">
-                        <button type="submit" class="btn btn-sm controlBtn" ng-click="addMember(user)"><span class="glyphicon glyphicon-plus"></span></button>
+                        <input type="text" data-ng-model="newMember" typeahead-min-length='1' typeahead="user.username for user in getNonMembers() | filter:{username: $viewValue} | limitTo:5" class="form-settings" placeholder="Add Member">
+                        <button type="submit" class="btn btn-sm controlBtn" ng-click="addMember(newMember)"><span class="glyphicon glyphicon-plus"></span></button>
                         
+                    </td>
+                </tr>
+                <tr>
+                    <td />
+                    <td>
+                        <div ng-show="getAddError()" class="text-danger"><strong>*UserName invalid</strong></div>
                     </td>
                 </tr>
                 
