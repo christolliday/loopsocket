@@ -45,10 +45,10 @@ var LoopSchema = new Schema({
 			type: String,
 			default: 'Private'
 		},
-		members: {
-			type: Array,
-			default: []
-		}
+		members: [{
+			type: Schema.ObjectId,
+			ref: 'User'
+		}]
 	}
 });
 

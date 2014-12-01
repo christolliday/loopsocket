@@ -15,15 +15,20 @@ angular.module('loops').controller('LoopSettingsController', ['$scope', '$stateP
 			return $scope.users;
 		};
 
+		$scope.getMembers = function(index) {
+			return $scope.loop.permissions.members;
+		}
+
 		$scope.addMember = function(user){
-			$scope.loop.permissions.members.push(user._id);
+			$scope.loop.permissions.members.push(user);
 			updateLoop();
 		};
 
 		$scope.deleteMember = function(user){
 			var members = $scope.loop.permissions.members;
 			for (var i=0; i<members.length; i++){
-				if (user._id === members[i]){
+				//if (user._id === members[i]._id){
+				if (user === members[i]._id){
 					members.splice(i, 1);
 					updateLoop();
 					console.log(members);
@@ -45,7 +50,7 @@ angular.module('loops').controller('LoopSettingsController', ['$scope', '$stateP
 			if($scope.loop.$resolved&&user) {
 				var members = $scope.loop.permissions.members;
 				for (var i=0; i<members.length; i++){
-					if (user._id === members[i]){
+					if (user._id === members[i]._id){
 						return true;
 					}
 				}
@@ -70,6 +75,10 @@ angular.module('loops').controller('LoopSettingsController', ['$scope', '$stateP
 			}, function(errorResponse) {
 				$scope.error = errorResponse.data.message;
 			});
+		}
+
+		$scope.updateLoopName = function() {
+			updateLoop();
 		}
 	}
 ]);

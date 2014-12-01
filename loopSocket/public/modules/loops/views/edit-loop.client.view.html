@@ -24,26 +24,54 @@
 
     <section data-ng-controller="LoopSettingsController" data-ng-init="findOne()">
         <div ng-show="isSettingsVisible()" class="sequencer">
-            <label class="settingsHeader">Settings</label>
-            <br/>
+            <label <label class="settingsHeader">Settings</label>
+            
+            <table class = "settingsTable">
+                <!--
+                <tr>
+                    <td><label>Loop Name: </label></td>
+                    <td>
+                        <form data-ng-submit = "updateLoopName()" novalidate>
+                        <fieldset>
+                            <input type="text" name="name" class="form-settings" placeholder="New Loop Name" data-ng-model="loop.name">
+                            <input type="submit" value="Update Name" class="btn btn-sm controlBtn">
+                        </fieldset>
+                        </form>
+                    </td>
+                </tr>
+                -->
+                <tr>
+                    <td><label>Owner: </label></td>
+                    <td> {{loop.user.username}}
+                </tr>
+                <tr>
+                    <td><label>Date Created: </label></td>
+                    <td> {{loop.created | date:'medium'}}
+                </tr>
+                <tr ng-show="isPrivate()">
+                    <td><label>Access Mode: </label></td>
+                    <td>Private <button class = "btn btn-sm controlBtn" data-ng-click="makePublic()">Make Public</button> </td>
+                </tr>
+                <tr ng-show="isPublic()">
+                    <td><label>Access Mode: </label></td>
+                    <td> Public <button class = "btn controlBtn miniBtn" data-ng-click="makePrivate()">Make Private</button> </td>
+                </tr>
+                
+                <tr>
+                    <td><label>Members: </label></td>
+                    <td>
+                        <span data-ng-repeat="members in getMembers()" class="membersList">
+                                {{members.username}}
+                                <button class="btn controlBtn miniBtn" data-ng-click="deleteMember(members._id)"><span class="glyphicon glyphicon-remove"></span></button>
+                        </span>
+                    </td>
+                </tr>
+                
+            </table>
 
-            <label>Owner: </label> <!-- insert owner here -->
-            <br/>
-            <label>Date Created: </label> <!-- insert owner here -->
-            <br/>
-            <label>Collaborator(s):  <div data-ng-repeat="User in getUsers()" ng-show="!isMember(user)"> {{user.username}}</div>
+            <input type="text" ng-model="addUser" typeahead-min-length='1' typeahead="user.username for user in getUsers() | filter:{username: $viewValue} | limitTo:5" class="form-control">
 
-            </label>
-
-
-            <div ng-show="isPrivate()">
-                <span> This loop is currently private. </span>
-                <a class="btn btn-default" data-ng-click="makePublic()">Make Public</a>
-            </div>
-            <div ng-show="isPublic()">
-                <span> This loop is currently public to everyone </span>
-                <a class="btn btn-default" data-ng-click="makePrivate()">Make Private</a>
-            </div>
+            <!-- don't delete yet, used for testing things -John
             <div ng-show="isPrivate()" data-ng-repeat="user in getUsers()">
                 <div ng-show="isMember(user)">
                     <span> {{user.username}} has access to this loop. </span>
@@ -54,7 +82,10 @@
                     <a class="btn btn-default" data-ng-click="addMember(user); show=true" ng-hide="show">Add</a>
                 </div>
             </div>
+            -->
+            
         </div>
+
     </section>
     <section data-ng-controller="PlaybackController">
         <div ng-show="!show_settings" class = "sequencer">
