@@ -1,4 +1,0 @@
-This is a standard socket IO based chat application.
-Here's what I plan to do for our project (based on the chat application):
-I'll modify our project to have a slight bit of client side and server side logic i.e. I'll package the information into a JSON every second from all clients and send to the server and the server will broadcast it back to all connected clients, thereby keeping everyone in sync. Simple, right. If you guys can have extractable information for me that would be great like if say one of the clients turns on a particular sound button, perhaps you can append to the said JSON file and I'll pick it up from there. It's okay if you can't do it, I'll add my logic to your code as needed.
-PS: I pushed the modules too since they are pretty small.
