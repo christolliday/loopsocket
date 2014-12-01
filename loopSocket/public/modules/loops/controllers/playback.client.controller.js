@@ -83,7 +83,7 @@ angular.module('loops').controller('PlaybackController', ['$scope', '$document',
 		}
 
 		var timeout;
-		var default_num_samples = 1;
+		var default_num_samples = 7;
 
 		$scope.samples = Samples.query(function() {
 			initLoop();
