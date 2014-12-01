@@ -28,7 +28,7 @@
 
 .settingsHeader {
 	font-size: 1.5em;
-	margin-bottom: 30px;
+	margin-bottom: 20px;
 }
 
 .listLoopsHeader {
@@ -37,7 +37,10 @@
 }
 .list-loop-group {
 	margin-bottom: 20px;
+}
 
+.membersList {
+	margin-right: 10px;
 }
 
 /* main section */
@@ -85,6 +88,23 @@
 	width:50px;
 }
 
+.settingsTable{
+	width: 100%;
+}
+
+.settingsTable tr{
+	height:36px;
+	vertical-align: middle;
+}
+
+.settingsTable td:first-child {
+	width:15%;
+}
+
+.settingsTable td {
+	padding: 3px;
+}
+
 .instrument-select {
 	width:170px;
 	text-align: center;
@@ -111,6 +131,7 @@
 	background-color: #CCCCCC;
 	border-color:#BBBBBB;
 	min-width: 40px;
+
 }
 .controlBtn:hover {
 	background-color: #AAAAAA;
@@ -177,6 +198,14 @@
 	outline: 0;
 	-webkit-box-shadow: inset 0 3px 5px rgba(0, 0, 0, .125);
 	box-shadow: inset 0 3px 5px rgba(0, 0, 0, .125);
+}
+
+.miniBtn {
+	padding: 2px 5px;
+  	font-size: 12px;
+  	line-height: 1.5;
+  	border-radius: 3px;
+  	min-width: 20px;
 }
 
 .inactiveBeat1 {
