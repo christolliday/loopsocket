@@ -153,11 +153,10 @@ angular.module('loops').controller('LoopSettingsController', ['$scope', '$stateP
 
 		$scope.updateLoopName = function() {
 			updateLoop();
-	
 		}
 
 		$scope.isCreatedByMe = function() {
-			if($scope.loop.$resolved) return false;
+			if(!$scope.loop.$resolved) return false;
 			if($scope.loop.user._id	== $scope.authentication.user._id) {
 				return true;
 			}

@@ -25,6 +25,7 @@ angular.module('loops').controller('PlaybackController', ['$scope', '$document',
 				//clear it instead?
 				initLoop();
 			} else {
+				console.log('load page');
 				$scope.loop_state = args.state;
 				$scope.loop_state.playing = false;
 				$scope.loop_state.time = 0;
@@ -123,7 +124,6 @@ angular.module('loops').controller('PlaybackController', ['$scope', '$document',
 		$scope.play = function() {
 			if (!$scope.loop_state.playing) {
 				$scope.loop_state.playing = true;
-				console.log('play');
 				playback();
 				timeout = setTimeout(updateClock, getBeatDuration());
 			} else {
@@ -193,8 +193,6 @@ angular.module('loops').controller('PlaybackController', ['$scope', '$document',
 
 		$scope.$on('revert', function(event, args) {
 			if(args.state.instruments.length === 0){
-				console.log('empty');
-				//clear it instead?
 				initLoop();
 			} else {
 				$scope.loop_state = args.state;
