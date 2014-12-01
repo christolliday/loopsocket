@@ -9,7 +9,13 @@ angular.module('loops').controller('PlaybackController', ['$scope', '$document',
 			return $scope.loop_state;
 		};
 		var receiveState = function(data) {
+			var time = $scope.loop_state.time;
+			var playing = $scope.loop_state.playing;
+			data.loop.playing = playing;
+			data.loop.time = time;
 			$scope.loop_state = data.loop;
+			$scope.loop_state.playing = playing;
+			$scope.loop_state.time = time;
 			$scope.$apply();
 		};
 
