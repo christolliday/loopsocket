@@ -8,6 +8,7 @@ angular.module('loops').factory('LoopSync', ['$stateParams', function($statePara
 		var sid = $stateParams.loopId;
 		//console.log($stateParams.loopId);
 		var connectedUsers = [];
+		this.connectedUsers = connectedUsers;
 		//console.log(sid);
 
 		//var socket = io.connect('http://localhost:3000'); // port# not needed?!
@@ -56,6 +57,11 @@ angular.module('loops').factory('LoopSync', ['$stateParams', function($statePara
 			});
 		};
 		this.activeUsersSocket = activeUsersSocket;
+
+		var getActiveUsers = function() {
+			return connectedUsers;
+		};
+		this.getActiveUsers = getActiveUsers;
 	};
 
 }]);

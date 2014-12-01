@@ -18,7 +18,8 @@
 
     <div class="loopUsers">
         <label>Active User(s): </label>
-        <label>{{loop.user.username}}</label>
+        <!-- <label>{{loop.user.username}}</label> -->
+        <label>{{activeUsers()}}</label>
     </div>
 
     <section data-ng-controller="LoopSettingsController" data-ng-init="findOne()">
