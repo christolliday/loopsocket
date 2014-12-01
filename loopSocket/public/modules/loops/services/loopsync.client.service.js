@@ -4,13 +4,12 @@ angular.module('loops').factory('LoopSync', ['$stateParams', function($statePara
 	return function(receiveState,getState) {
 
 		var sid = $stateParams.loopId;
+		//console.log(sid);
 		var connectedUsers = [];
 		this.connectedUsers = connectedUsers;
-		
-		//console.log(sid);
 
 		//var socket = io.connect('http://localhost:3000'); // port# not needed?!
-		var socket = io(); //{path: '/'+baseUrl+'/socket.io'}); // jshint ignore:line
+		var socket = io();  // jshint ignore:line //{path: '/'+baseUrl+'/socket.io'});
 
 		if (receiveState !== 0 && getState !== 0){
 
@@ -29,6 +28,7 @@ angular.module('loops').factory('LoopSync', ['$stateParams', function($statePara
 			socket.emit('disconn', {'sid' : sid, 'userName' : userName});
 		};
 		this.disconnect = disconnect;
+		
 		if (receiveState !== 0 && getState !== 0){
 
 			socket.emit('toServer_initNewClient', sid);
