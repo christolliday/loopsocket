@@ -90,9 +90,12 @@ angular.module('loops').controller('PlaybackController', ['$scope', '$document',
 		var timeout;
 		var default_num_samples = 7;
 
-		$scope.samples = Samples.query(function() {
+		$scope.samples = Samples.query(function(samples) {
     			if (!loopLoaded) {
 				initLoop();
+			}
+			for(var i=0;i<samples.length;i++) {
+				loadAudio(samples[i]._id);
 			}
 		});
 
