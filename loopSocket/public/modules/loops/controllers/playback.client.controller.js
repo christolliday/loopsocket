@@ -19,6 +19,10 @@ angular.module('loops').controller('PlaybackController', ['$scope', '$document',
 			$scope.$apply();
 		};
 
+		$scope.$on("$destroy", function() {
+			$scope.loop_state.playing = false;
+    	});
+
 		$scope.$on('loadpage', function(event, args) {
 			if(args.state.instruments.length === 0){
 				console.log('empty');
