@@ -8,6 +8,7 @@ angular.module('loops').controller('PlaybackController', ['$scope', '$document',
 		var getState = function() {
 			return $scope.loop_state;
 		};
+		var loopLoaded = false;
 		var receiveState = function(data) {
 			var time = $scope.loop_state.time;
 			var playing = $scope.loop_state.playing;
@@ -21,13 +22,14 @@ angular.module('loops').controller('PlaybackController', ['$scope', '$document',
 
 		$scope.$on("$destroy", function() {
 			$scope.loop_state.playing = false;
-    	});
+    		});
 
 		$scope.$on('loadpage', function(event, args) {
 			if(args.state.instruments.length === 0){
 				//clear it instead?
-				initLoop();
+				//initLoop();
 			} else {
+				loopLoaded = true;
 				$scope.loop_state = args.state;
 				$scope.loop_state.playing = false;
 				$scope.loop_state.time = 0;
@@ -37,10 +39,6 @@ angular.module('loops').controller('PlaybackController', ['$scope', '$document',
 		});
 
 		var loopsync = new LoopSync(receiveState,getState);
-
-		$scope.$on('$destroy', function(){
-			$scope.stop();
-    		});
 
 		var sampleBuffers = {};
 		window.AudioContext = window.AudioContext || window.webkitAudioContext;
@@ -93,7 +91,9 @@ angular.module('loops').controller('PlaybackController', ['$scope', '$document',
 		var default_num_samples = 7;
 
 		$scope.samples = Samples.query(function() {
-			initLoop();
+    			if (!loopLoaded) {
+				initLoop();
+			}
 		});
 
 		$scope.getInstrumentsPretty = function() {
@@ -199,7 +199,7 @@ angular.module('loops').controller('PlaybackController', ['$scope', '$document',
 
 		$scope.$on('revert', function(event, args) {
 			if(args.state.instruments.length === 0){
-				initLoop();
+				//initLoop();
 			} else {
 				$scope.loop_state = args.state;
 				$scope.loop_state.playing = false;
