@@ -22,3 +22,15 @@
   top: 50%;
   transform: translateY(-50%);
 }
+
+.credits {
+  display: inline;
+  position:absolute;
+  bottom:0;
+  font-size: small;
+}
+.credits li {
+  display: inline;
+  list-style-type: none;
+  padding-right: 20px;
+}

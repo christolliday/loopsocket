@@ -3,7 +3,7 @@
         <h1>Loops</h1>
     </div>
     <div class="list-loop-group"> 
-        <label class="listLoopsHeader">Private Loops</label>
+        <label class="listLoopsHeader">My Loops</label>
         <a data-ng-repeat="loop in loops" data-ng-href="#!/loops/{{loop._id}}" class="list-group-item" ng-if="hasAccess(loop)">
             <div> 
                 <small class="list-group-item-text">
@@ -18,7 +18,7 @@
     </div>
 
     <div class="list-loop-group"> 
-        <label class="listLoopsHeader">Public Loops</label>
+        <label class="listLoopsHeader">Public and Shared Loops</label>
         <a data-ng-repeat="loop in loops" data-ng-href="#!/loops/{{loop._id}}" class="list-group-item" ng-if="isPublic(loop)">
             <div> 
                 <small class="list-group-item-text">

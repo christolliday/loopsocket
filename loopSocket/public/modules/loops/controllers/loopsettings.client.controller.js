@@ -46,13 +46,12 @@ angular.module('loops').controller('LoopSettingsController', ['$scope', '$stateP
 			if($scope.loop.$resolved){
 				return $scope.loop.permissions.members;
 			}
-		}
+		};
 
 		function validUsername(user) {
 			var nonMembers = $scope.getNonMembers();
-			//console.log(nonMembers);
 			for(var i=0; i<nonMembers.length; i++) {
-			 	if (user == nonMembers[i].username) {
+			 	if (user === nonMembers[i].username) {
 			 		return true;
 			 	}
 			}
@@ -61,9 +60,8 @@ angular.module('loops').controller('LoopSettingsController', ['$scope', '$stateP
 
 		function getObjectID(user) {
 			var nonMembers = $scope.getNonMembers();
-			//console.log(nonMembers);
 			for(var i=0; i<nonMembers.length; i++) {
-			 	if (user == nonMembers[i].username) {
+			 	if (user === nonMembers[i].username) {
 			 		return nonMembers[i];
 			 	}
 			}
@@ -73,12 +71,11 @@ angular.module('loops').controller('LoopSettingsController', ['$scope', '$stateP
 
 		$scope.getAddError = function () {
 			return $scope.addError;
-		}
+		};
 
 		$scope.addMember = function(user){
 			if (validUsername(user)) {
 				var addUser = getObjectID(user);
-				console.log(addUser);
 				$scope.loop.permissions.members.push(addUser);
 				updateLoop();
 				$scope.newMember = '';
@@ -101,7 +98,7 @@ angular.module('loops').controller('LoopSettingsController', ['$scope', '$stateP
 					updateLoop();
 					
 					//redirect
-					if (user == $scope.authentication.user._id){
+					if (user === $scope.authentication.user._id){
 						$location.path('loops/');
 					}
 
@@ -111,13 +108,11 @@ angular.module('loops').controller('LoopSettingsController', ['$scope', '$stateP
 		};
 
 		$scope.makePublic = function(){
-			var loop = $scope.loop;
-			loop.permissions.mode = 'Public';
+			$scope.loop.permissions.mode = 'Public';
 			updateLoop();
 		};
 		$scope.makePrivate = function(){
-			var loop = $scope.loop;
-			loop.permissions.mode = 'Private';
+			$scope.loop.permissions.mode = 'Private';
 			updateLoop();
 		};
 		$scope.isMember = function(user){
@@ -134,6 +129,11 @@ angular.module('loops').controller('LoopSettingsController', ['$scope', '$stateP
 			}
 			return false;
 		};
+
+		$scope.hasMembers = function(){
+			if(!$scope.loop.$resolved) return false;
+			return $scope.loop.permissions.members.length!==0;
+		}
 		$scope.isPublic = function(){
 			if(!$scope.loop.$resolved) return false;
 			return $scope.loop.permissions.mode === 'Public';
@@ -153,14 +153,14 @@ angular.module('loops').controller('LoopSettingsController', ['$scope', '$stateP
 
 		$scope.updateLoopName = function() {
 			updateLoop();
-		}
+		};
 
 		$scope.isCreatedByMe = function() {
 			if(!$scope.loop.$resolved) return false;
-			if($scope.loop.user._id	== $scope.authentication.user._id) {
+			if($scope.loop.user._id	=== $scope.authentication.user._id) {
 				return true;
 			}
 			return false;
-		}
+		};
 	}
 ]);

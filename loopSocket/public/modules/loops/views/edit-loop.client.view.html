@@ -58,7 +58,7 @@
                     <td> Public <button class = "btn controlBtn miniBtn" data-ng-click="makePrivate()" ng-show="isCreatedByMe()">Make Private</button> </td>
                 </tr>
                 
-                <tr>
+                <tr ng-show="isPrivate()&&hasMembers()">
                     <td><label>Members: </label></td>
                     <td>
                         <span data-ng-repeat="members in getMembers()" class="membersList">
@@ -69,7 +69,7 @@
                 </tr>
                 <tr>
                 </tr>
-                <tr>
+                <tr ng-show="isPrivate()">
                     <td><label>Add Member: </label></td>
                     <td>
                         
@@ -78,7 +78,7 @@
                         
                     </td>
                 </tr>
-                <tr>
+                <tr ng-show="isPrivate()">
                     <td />
                     <td>
                         <div ng-show="getAddError()" class="text-danger"><strong>*UserName invalid</strong></div>

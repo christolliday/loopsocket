@@ -15,15 +15,15 @@ angular.module('loops').controller('EditLoopController', ['$scope', '$stateParam
 		var loopsync = new LoopSync(0,0);
 
 		loopsync.activeUsersSocket(function(activeUsers){
-    		$scope.activeUsers = activeUsers;
-    		$scope.$apply();
-    	});
+    			$scope.activeUsers = activeUsers;
+    			$scope.$apply();
+    		});
 
 		var userName = $scope.authentication.user.username;
 		loopsync.connect(userName);
-		$scope.$on("$destroy", function(){
+		$scope.$on('$destroy', function(){
 			loopsync.disconnect(userName);
-    	});
+    		});
 
 		//$scope.loop = {};
 		$scope.findOne = function(){

@@ -1,22 +1,52 @@
 <section data-ng-controller="HomeController">
 
 	<div data-ng-hide="authentication.user">
-		<h2>Welcome to loopSocket.</h2>
-		<p>loopSocket is a collaborative loop based sequencer/drum machine.</p>
-		<p>This is work in progress.</p>
+		<h2>Welcome to LoopSocket</h2>
+		<p>LoopSocket is a collaborative loop based sequencer/drum machine</p>
 		<ul>
 			<li>
 				Click
 				<em>Sign Up</em>
-				on the top-right corner to get started.
+				on the top-right corner to get started
 			</li>
 			<li>
 				Go to
 				<em>Loops</em>
-				to create a new session or view/edit existing sesssions.
+				to create a new session or view/edit existing sesssions
+			</li>
+			<li>
+				Add other members to your loop or make them public to collaborate.
+			</li>
+			<li>
+				Public and shared loops can be viewed and edited by others but only the owner can save them, so just be sure to save before making your loops public
+			</li>
+			<li>
+				Have fun!
 			</li>
 		</ul>
-		<br>JJTCU CMPT470
+		<br><br><br>
+		<div class="license">
+			Sample audio taken from Creative Commons works on freesound.org
+			<ul>
+				<li><a href="http://www.freesound.org/people/alexthegr81/sounds/212208/">Snare by alexthegr81</a></li>
+				<li><a href="http://www.freesound.org/people/smileylovers/sounds/148634/">Kick hi by smileylovers</a></li>
+				<li><a href="http://www.freesound.org/people/triangelx/sounds/189174/">Kick low by triangelx</a></li>
+				<li><a href="http://www.freesound.org/people/rocknessmonster89/sounds/173837/">Low tom by rocknessmonster89</a></li>
+				<li><a href="http://www.freesound.org/people/Veiler/sounds/209879/">Mid tom by Veiler</a></li>
+				<li><a href="http://www.freesound.org/people/thealmightysound/sounds/87725/">Hi hat closed by thealmightysound</a></li>
+				<li><a href="http://www.freesound.org/people/minorr/sounds/104231/">Hi hat semi open by minorr</a></li>
+			</ul>
+		</div>
+		<div class="credits">
+			LoopSocket by JJTCU
+			<ul>
+				<li>Chris Tolliday</li>
+				<li>Umesh Dinkar</li>
+				<li>Tiffany Cheng</li>
+				<li>John Estrada</li>
+				<li>Jason Chow</li>
+			</ul>
+		</credits>
 	</div>
 	<div ng-controller="LoopsController" data-ng-hide="!authentication.user">
 		<div ng-include="'modules/loops/views/list-loops.client.view.html'"></div>

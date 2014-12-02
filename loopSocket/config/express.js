@@ -180,7 +180,7 @@ module.exports = function(db) {
 			for (var i = 0; i < activeUsers.length; i++){
 				if (activeUsers[i].sid === sid && activeUsers[i].userName === userName)
 					push = 'false';
-			}; 
+			}
 			if (push === 'true')
 				activeUsers.push(temp); // TO-DO: DO NOT PUSH IF ALREADY THERE (MIGHT OCCUR ON REFRESH)
 			//console.log(activeUsers);
